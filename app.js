@@ -1,4 +1,4 @@
-import { Game } from 'game'
+import { Game } from './game.js'
 
 class App { // eslint-disable-line no-unused-vars
 	/**
@@ -7,7 +7,7 @@ class App { // eslint-disable-line no-unused-vars
 	 */
 	constructor(pageState) {
 		this.pageState = pageState;
-		this.game = Game();
+		this.game = new Game();
 	}
 
 	// Home page
@@ -84,3 +84,5 @@ class App { // eslint-disable-line no-unused-vars
 	}
 
 }
+
+window.App = App;
