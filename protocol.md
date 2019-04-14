@@ -1,33 +1,79 @@
-# Const
-## Archivement
-  + String    description
+# <center> Const </center>
+
+# <center> Class </center>
+### MaterialEntry
+#### MaterialEntry(materialName, fileNames)
+  + String    materialName
+  + Array     fileNames[String]
+
+### AchievementEntry
+#### new AchievementEntry(type, description, gifts, unlocked, hasGift)
   + Number    type
     0. 一般
     1. 特殊
     2. 隱藏
+  + String    description
   + Number    gifts
     0. 兌換券
     n. 第n方塊
-  + Boolean   taken
+  + Boolean   unlocked
+  + Boolean   hasGift
 
-# Class
-## Brick
-  + Game      game
-  + String    materialName
-  + Object    rotation { x, y, z }
-  + Function  deltaXY(deltaX, deltaY)
-
-## Game
-  + Number    brickCount
-  + Array     bricks [Brick]
+### Displayer
+#### new Displayer(appElem)
+  + Object    renderer
+  + Object    scene
+  + Object    camera
+  + Object    pointLight
+  + Object    cameraInfo
   + Function  display(displayType)
     0. just Background
     1. gaming bricks
     2. select bricks
+  + Function  resize(width, height)
+  + Function  calcCamera()
+  + Function  setGameBricks(bricks)
+    + Array   bricks[Brick]
+  + Function  setBrickSelectors(bricks)
+    + Array   bricks[Brick]
 
-## App
-  + Number    pageState
+  <!-- mouse events -->
+  + Function  mouseDownEvent(e)
+  + Function  mouseMoveEvent(e)
+  + Function  mouseUpEvent(e)
+  + Function  mouseLeaveEvent(e)
+  + Function  wheelEvent(e)
+
+### Brick
+#### new Brick(game, materialName, facePattern)
   + Game      game
+  + String    materialName
+  + Array     facePattern [faceId: 0-5], len: 2-n
+  + Object    rotation
+    + get set x
+    + get set y
+    + get set z
+
+  <!-- mouse events  -->
+  + Function  mouseDownEvent(x, y, faceX, faceY, faceZ)
+  + Function  mouseMoveEvent(x, y)
+  + Function  mouseLeaveEvent()
+
+### Game
+#### new Game(displayer, brickCount)
+  + Displayer displayer
+  + Array     gameBricks [Brick]
+  + Number    timeCounter
+  + Number    stepCounter
+  + Function  isResolve()
+
+### App
+#### new App()
+  + Displayer displayer
+  + Number    brickCount
+  + Game      game
+  + Number    volume
+  + Audio     bgm
 
   <!-- 主頁 -->
   + Function  start()
@@ -47,12 +93,12 @@
   <!-- setting page -->
   + Function  increaseBrickCount()
   + Function  decreaseBrickCount()
-  + Function  useTexture(textureId)
+  + Function  setBrickTexture(textureId)
 
   <!-- achievement page -->
   + Function  pickupGift(achievementId)
 
-# Html
-## 主畫面
+# <center> Html </center>
+### 主畫面
   + <button onclick="app.start()">開始按鈕</button>
   + etc...
