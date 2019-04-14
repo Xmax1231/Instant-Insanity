@@ -1,0 +1,18 @@
+{
+  "name": "instant-insanity",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Straight-A-students/Instant-Insanity.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/Straight-A-students/Instant-Insanity/issues"
+  },
+  "homepage": "https://github.com/Straight-A-students/Instant-Insanity#readme"
+}
