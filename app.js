@@ -1,88 +1,127 @@
-import { Game } from './game.js'
+import {Game} from './game.js';
 
+/**
+ * 控制遊戲畫面
+ */
 class App { // eslint-disable-line no-unused-vars
-	/**
-	 * 初始化App
-	 * @param {number} pageState - 頁面狀態
-	 */
-	constructor(pageState) {
-		this.pageState = pageState;
-		this.game = new Game();
-	}
+  /**
+   * 初始化App
+   */
+  constructor() {
+    this.pageState = pageState;
+    this.displayer = new Displayer(null); // TODO
+    this.brickCount = 0; // TODO
+    this.game = new Game();
+    this.volume = 1;
+    this.bgm = null; // TODO
+  }
 
-	// Home page
+  // Home page
 
-	start() {
-		// TODO
-	}
+  /**
+   * 開始遊戲
+   */
+  start() {
+    // TODO
+  }
 
-	gotoSetting() {
-		// TODO
-	}
+  /**
+   * 前往設定頁
+   */
+  gotoSetting() {
+    // TODO
+  }
 
-	gotoAchievement() {
-		// TODO
-	}
-
-
-	// Game page: playing
-
-	pause() {
-		// TODO
-	}
-
-	submit() {
-		// TODO
-	}
-
-	// Game page: pause
-
-	continue() {
-		// TODO
-	}
-
-	restart() {
-		// TODO
-	}
-
-	exit() {
-		// TODO
-	}
-
-	setVolume() {
-		// TODO
-	}
+  /**
+   * 前往成就頁
+   */
+  gotoAchievement() {
+    // TODO
+  }
 
 
-	// Setting page
+  // Game page: playing
 
-	increaseBrickCount() {
-		// TODO
-	}
+  /**
+   * 暫停遊戲
+   */
+  pause() {
+    // TODO
+  }
 
-	decreaseBrickCount() {
-		// TODO
-	}
+  /**
+   * 檢查是否通關
+   */
+  submit() {
+    // TODO
+  }
 
-	/**
-	 * TODO
-	 * @param {number} textureId - TODO
-	 */
-	useTexture(textureId) { // eslint-disable-line no-unused-vars
-		// TODO
-	}
+  // Game page: pause
+
+  /**
+   * 繼續遊戲
+   */
+  continue() {
+    // TODO
+  }
+
+  /**
+   * 重新開始遊戲
+   */
+  restart() {
+    // TODO
+  }
+
+  /**
+   * 結束遊戲
+   */
+  exit() {
+    // TODO
+  }
+
+  /**
+   * 設定音量
+   * @param {number} value
+   */
+  setVolume(value) {
+    // TODO
+  }
 
 
-	// Achievement page
+  // Setting page
 
-	/**
-	 * TODO
-	 * @param {number} achievementId - TODO
-	 */
-	pickupGift(achievementId) { // eslint-disable-line no-unused-vars
-		// TODO
-	}
+  /**
+   * 增加遊戲方塊數
+   */
+  increaseBrickCount() {
+    // TODO
+  }
 
+  /**
+   * 減少遊戲方塊數
+   */
+  decreaseBrickCount() {
+    // TODO
+  }
+
+  /**
+   * TODO
+   * @param {number} textureId - TODO
+   */
+  setBrickTexture(textureId) {
+    // TODO
+  }
+
+
+  // Achievement page
+
+  /**
+   * TODO
+   * @param {number} achievementId - TODO
+   */
+  pickupGift(achievementId) { // eslint-disable-line no-unused-vars
+    // TODO
+  }
 }
 
 window.App = App;

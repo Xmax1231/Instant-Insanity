@@ -1,20 +1,23 @@
-class Achievement { // eslint-disable-line no-unused-vars
-	/**
-	 * 初始化成就
-	 * @param {boolean} taken - 是否已領取
-	 */
-	constructor(taken) {
-		this.taken = taken;
-	}
-}
-
-
 /**
- * 成就類型
- * @enum {number}
+ * 成就
  */
-const AchievementType = { // eslint-disable-line no-unused-vars
-	NORMAL: 0, // 一般
-	SPECAIL: 1, // 特殊
-	HIDDEN: 2, // 隱藏
+class AchievementEntry { // eslint-disable-line no-unused-vars
+  /**
+   * 初始化成就
+   * @param {number} type
+   * @param {string} description
+   * @param {number} gifts
+   * @param {boolean} unlocked
+   * @param {boolean} hasGift
+   */
+  constructor(type, description, gifts, unlocked, hasGift) {
+    this.description = description;
+    this.gifts = gifts;
+    this.unlocked = unlocked;
+    this.hasGift = hasGift;
+  }
 }
+
+AchievementEntry.NORMAL = 0; // 一般
+AchievementEntry.SPECAIL = 1; // 特殊
+AchievementEntry.HIDDEN = 2; // 隱藏

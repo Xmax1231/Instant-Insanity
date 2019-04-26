@@ -1,20 +1,44 @@
+/**
+ * 方塊
+ */
 class Brick { // eslint-disable-line no-unused-vars
-	/**
-	 * 初始化方塊
-	 * @param {!string} materialName - 材質名稱
-	 * @param {{x:number, y:number, z:number}} rotation 
-	 */
-	constructor(materialName, rotation) {
-		this.materialName = materialName;
-		this.rotation = rotation;
-	}
+  /**
+   * 初始化方塊
+   * @param {Game} game
+   * @param {!string} materialName - 材質名稱
+   * @param {{x:number, y:number, z:number}} facePattern
+   */
+  constructor(game, materialName, facePattern) {
+    this.materialName = materialName;
+    this.facePattern = facePattern;
+    this.rotation = null; // TODO
+  }
 
-	/**
-	 * TODO
-	 * @param {number} deltaX - TODO
-	 * @param {number} deltaY - TODO
-	 */
-	deltaXY(deltaX, deltaY) { // eslint-disable-line no-unused-vars
-		// TODO
-	}
+  /**
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {number} faceX
+   * @param {number} faceY
+   * @param {number} faceZ
+   */
+  mouseDownEvent(x, y, faceX, faceY, faceZ) {
+    // TODO
+  }
+
+  /**
+   *
+   * @param {number} x
+   * @param {number} y
+   */
+  mouseMoveEvent(x, y) {
+    // TODO
+  }
+
+  /**
+   * @todo
+   */
+  mouseLeaveEvent() {
+    // TODO
+  }
 }

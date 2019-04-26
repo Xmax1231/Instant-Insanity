@@ -1,26 +1,28 @@
+/**
+ * 操控方塊遊戲本身
+ */
 class Game { // eslint-disable-line no-unused-vars
-	/**
-	 * 初始化遊戲
-	 * @param {number} brickCount - 方塊數量
-	 */
-	constructor(brickCount) {
-		this.brickCount = brickCount;
+  /**
+   * 初始化遊戲
+   * @param {Displayer} displayer
+   * @param {number} brickCount - 方塊數量
+   */
+  constructor(displayer, brickCount) {
+    this.brickCount = brickCount;
 
-		/** @type {Brick[]} */
-		this.bricks = []; // TODO
-	}
+    /** @type {Brick[]} */
+    this.bricks = []; // TODO
+    this.timeCounter = 0;
+    this.stepCounter = 0;
+  }
 
-	/**
-	 * 顯示
-	 * @param {number} displayType - 顯示模式
-	 *     0. just Background
-     *     1. gaming bricks
-     *     2. select bricks
-	 */
-	display(displayType) { // eslint-disable-line no-unused-vars
-		// TODO
-	}
+  /**
+   * @todo
+   */
+  isResolve() {
+    // TODO
+  }
 }
 
 
-export { Game };
+export {Game};
