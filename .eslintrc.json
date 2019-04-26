@@ -9,6 +9,6 @@
     "globals": {
         "Game": true
     },
-    "extends": "eslint:recommended",
+    "extends": "google",
     "rules": {}
 }
