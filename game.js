@@ -17,7 +17,7 @@ class Game { // eslint-disable-line no-unused-vars
   }
 
   /**
-   * @todo
+   *
    */
   isResolve() {
     // TODO

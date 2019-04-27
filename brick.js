@@ -36,7 +36,7 @@ class Brick { // eslint-disable-line no-unused-vars
   }
 
   /**
-   * @todo
+   *
    */
   mouseLeaveEvent() {
     // TODO
