@@ -43,11 +43,14 @@ class App { // eslint-disable-line no-unused-vars
     start_btm.id = "start";
     setting_btm.id = "gotoSetting";
     achievement_btm.id = "gotoAchievement";
+    start_btm.innerText = "開始";
+    setting_btm.innerText = "設定";
+    achievement_btm.innerText = "稱號";
     home_div.appendChild(icon_div);
     home_div.appendChild(start_btm);
     home_div.appendChild(setting_btm);
     home_div.appendChild(achievement_btm);
-    document.body.appendChild(home_div);
+    document.getElementById("game").appendChild(home_div);
   }
 
   /**
