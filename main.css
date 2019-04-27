@@ -141,3 +141,49 @@ body{
     height: 200px;
     border: 2px black solid;
 }
+#achievement{
+    margin: 0px auto;
+    width: 60%;
+	height: 100%;
+}
+#achievement > div{
+    margin: 10px 0;
+}
+#normal-area > div{
+    margin: 5px 0;
+    border: 2px black solid;
+    border-radius:10px;
+    padding: 2px;
+}
+#normal-area > .unlocked{
+    background: rgb(255, 255, 255);
+}
+#normal-area > .locked{
+    background: rgba(0, 0, 0, 0.25);
+}
+#special-area > div{
+    margin: 5px 0;
+    border: 2px orange solid;
+    border-radius:10px;
+    padding: 2px;
+}
+#special-area > .unlocked{
+    background: rgb(255, 255, 255);
+}
+#special-area > .locked{
+    color: white;
+    background: rgb(255, 165, 0);
+}
+#hide-area > div{
+    margin: 5px 0;
+    border: 2px black solid;
+    border-radius:10px;
+    padding: 2px;
+}
+#hide-area > .unlocked{
+    background: rgb(255, 255, 255);
+}
+#hide-area > .locked{
+    color: white;
+    background: black;
+}

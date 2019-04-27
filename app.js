@@ -165,7 +165,53 @@ class App { // eslint-disable-line no-unused-vars
    * 前往成就頁
    */
   gotoAchievement() {
+    this.clearPage();
+    var achievement_div = document.createElement("div");
+    var normal_div = document.createElement("div");
+    var special_div = document.createElement("div");
+    var hide_div = document.createElement("div");
+
+    achievement_div.id = "achievement";
+    normal_div.id = "normal-area";
+    special_div.id = "special-area";
+    hide_div.id = "hide-area";
+
+    achievement_div.appendChild(normal_div);
+    achievement_div.appendChild(special_div);
+    achievement_div.appendChild(hide_div);
+
+    document.getElementById("game").appendChild(achievement_div);
+
     // TODO
+
+    // Test Script
+    var normal_unlocked_div = document.createElement("div");
+    var normal_locked_div = document.createElement("div");
+    var special_unlocked_div = document.createElement("div");
+    var special_locked_div = document.createElement("div");
+    var hide_unlocked_div = document.createElement("div");
+    var hide_locked_div = document.createElement("div");
+
+    normal_unlocked_div.innerText = "一般成就 已解鎖";
+    normal_locked_div.innerText = "一般成就 未解鎖";
+    special_unlocked_div.innerText = "特殊成就 已解鎖";
+    special_locked_div.innerText = "特殊成就 未解鎖";
+    hide_unlocked_div.innerText = "隱藏成就 已解鎖";
+    hide_locked_div.innerText = "隱藏成就 未解鎖";
+
+    normal_unlocked_div.classList.add("unlocked");
+    normal_locked_div.classList.add("locked");
+    special_unlocked_div.classList.add("unlocked");
+    special_locked_div.classList.add("locked");
+    hide_unlocked_div.classList.add("unlocked");
+    hide_locked_div.classList.add("locked");
+
+    document.getElementById("normal-area").appendChild(normal_unlocked_div);
+    document.getElementById("normal-area").appendChild(normal_locked_div);
+    document.getElementById("special-area").appendChild(special_unlocked_div);
+    document.getElementById("special-area").appendChild(special_locked_div);
+    document.getElementById("hide-area").appendChild(hide_unlocked_div);
+    document.getElementById("hide-area").appendChild(hide_locked_div);
   }
 
 
