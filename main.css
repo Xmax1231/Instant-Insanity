@@ -11,7 +11,7 @@ body{
     width: 100%;
     background-color: rgb(255, 255, 255);
 }
-button{
+#home > button{
     margin: 15px auto;
     width: 30%;
     height: 10%;
@@ -34,8 +34,58 @@ button{
     width: 60%;
 	height: 100%;
 }
+#play{
+    margin: 0px auto;
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
 #icon-area{
     margin: 0px auto;
     width: 300px;
 	height: 300px;
+}
+#pause{
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    width: 50px;
+    height: 50px;
+    background: black;
+}
+#submit{
+    position: absolute;
+    bottom: 3%;
+    left: 80%;
+    width: 130px;
+    height: 65px;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#canvas-area{
+    margin: 0px auto;
+    width: 60%;
+    height: 100%;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#time{
+    padding: 2px;
+    position: absolute;
+    top: 5%;
+    left: 80%;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#move{
+    padding: 2px;
+    position: absolute;
+    top: 12%;
+    left: 80%;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
 }

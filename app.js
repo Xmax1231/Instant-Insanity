@@ -38,6 +38,11 @@ class App { // eslint-disable-line no-unused-vars
     var start_btm = document.createElement("button");
     var setting_btm = document.createElement("button");
     var achievement_btm = document.createElement("button");
+
+    start_btm.onclick = () => {app.start();};
+    setting_btm.onclick = () => {app.gotoSetting();};
+    achievement_btm.onclick = () => {app.gotoAchievement();};
+
     home_div.id = "home";
     icon_div.id = "icon-area";
     start_btm.id = "start";
@@ -46,10 +51,12 @@ class App { // eslint-disable-line no-unused-vars
     start_btm.innerText = "開始";
     setting_btm.innerText = "設定";
     achievement_btm.innerText = "稱號";
+
     home_div.appendChild(icon_div);
     home_div.appendChild(start_btm);
     home_div.appendChild(setting_btm);
     home_div.appendChild(achievement_btm);
+
     document.getElementById("game").appendChild(home_div);
   }
 
@@ -57,7 +64,28 @@ class App { // eslint-disable-line no-unused-vars
    * 開始遊戲
    */
   start() {
-    // TODO
+    this.clearPage();
+    var play_div = document.createElement("div");
+    var pause_btm = document.createElement("button");
+    var submit_btm = document.createElement("button");
+    var canvas_div = document.createElement("div");
+    var time_div = document.createElement("div");
+    var move_div = document.createElement("div");
+
+    pause_btm.onclick = () => {app.pause();};
+    submit_btm.onclick = () => {app.submit();};
+    
+    submit_btm.id = "submit";
+    time_div.id = "time:00.00";
+    move_div.id = "move:0";
+
+    play_div.appendChild(pause_btm);
+    play_div.appendChild(submit_btm);
+    play_div.appendChild(canvas_div);
+    play_div.appendChild(time_div);
+    play_div.appendChild(move_div);
+
+    document.getElementById("game").appendChild(play_div);
   }
 
   /**
