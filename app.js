@@ -8,7 +8,6 @@ class App { // eslint-disable-line no-unused-vars
    * 初始化App
    */
   constructor() {
-    this.pageState = pageState;
     this.displayer = new Displayer(null); // TODO
     this.brickCount = 0; // TODO
     this.game = new Game();
