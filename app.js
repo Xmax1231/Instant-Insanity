@@ -48,6 +48,7 @@ class App { // eslint-disable-line no-unused-vars
     start_btm.id = "start";
     setting_btm.id = "gotoSetting";
     achievement_btm.id = "gotoAchievement";
+
     start_btm.innerText = "開始";
     setting_btm.innerText = "設定";
     achievement_btm.innerText = "稱號";
@@ -75,9 +76,16 @@ class App { // eslint-disable-line no-unused-vars
     pause_btm.onclick = () => {app.pause();};
     submit_btm.onclick = () => {app.submit();};
     
+    play_div.id = "play";
+    pause_btm.id = "pause";
     submit_btm.id = "submit";
-    time_div.id = "time:00.00";
-    move_div.id = "move:0";
+    canvas_div.id = "canvas-area";
+    time_div.id = "time";
+    move_div.id = "move";
+    
+    submit_btm.innerText = "submit";
+    time_div.innerText = "time:00.00";
+    move_div.innerText = "move:0";
 
     play_div.appendChild(pause_btm);
     play_div.appendChild(submit_btm);
