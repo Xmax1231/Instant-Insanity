@@ -35,28 +35,28 @@ class App { // eslint-disable-line no-unused-vars
     this.clearPage();
     var home_div = document.createElement("div");
     var icon_div = document.createElement("div");
-    var start_btm = document.createElement("button");
-    var setting_btm = document.createElement("button");
-    var achievement_btm = document.createElement("button");
+    var start_btn = document.createElement("button");
+    var setting_btn = document.createElement("button");
+    var achievement_btn = document.createElement("button");
 
-    start_btm.onclick = () => {app.start();};
-    setting_btm.onclick = () => {app.gotoSetting();};
-    achievement_btm.onclick = () => {app.gotoAchievement();};
+    start_btn.onclick = () => {app.start();};
+    setting_btn.onclick = () => {app.gotoSetting();};
+    achievement_btn.onclick = () => {app.gotoAchievement();};
 
     home_div.id = "home";
     icon_div.id = "icon-area";
-    start_btm.id = "start";
-    setting_btm.id = "gotoSetting";
-    achievement_btm.id = "gotoAchievement";
+    start_btn.id = "start";
+    setting_btn.id = "gotoSetting";
+    achievement_btn.id = "gotoAchievement";
 
-    start_btm.innerText = "開始";
-    setting_btm.innerText = "設定";
-    achievement_btm.innerText = "稱號";
+    start_btn.innerText = "開始";
+    setting_btn.innerText = "設定";
+    achievement_btn.innerText = "稱號";
 
     home_div.appendChild(icon_div);
-    home_div.appendChild(start_btm);
-    home_div.appendChild(setting_btm);
-    home_div.appendChild(achievement_btm);
+    home_div.appendChild(start_btn);
+    home_div.appendChild(setting_btn);
+    home_div.appendChild(achievement_btn);
 
     document.getElementById("game").appendChild(home_div);
   }
@@ -67,51 +67,51 @@ class App { // eslint-disable-line no-unused-vars
   start() {
     this.clearPage();
     var play_div = document.createElement("div");
-    var pause_btm = document.createElement("button");
-    var submit_btm = document.createElement("button");
+    var pause_btn = document.createElement("button");
+    var submit_btn = document.createElement("button");
     var canvas_div = document.createElement("div");
     var time_div = document.createElement("div");
     var move_div = document.createElement("div");
     var pauseBackgroundPage_div = document.createElement("div");
     var pausePage_div = document.createElement("div");
-    var continue_btm = document.createElement("button");
-    var restart_btm = document.createElement("button");
-    var exit_btm = document.createElement("button");
+    var continue_btn = document.createElement("button");
+    var restart_btn = document.createElement("button");
+    var exit_btn = document.createElement("button");
 
-    pause_btm.onclick = () => {app.pause();};
-    submit_btm.onclick = () => {app.submit();};
-    continue_btm.onclick = () => {app.continue();};
-    restart_btm.onclick = () => {app.restart();};
-    exit_btm.onclick = () => {app.exit();};
+    pause_btn.onclick = () => {app.pause();};
+    submit_btn.onclick = () => {app.submit();};
+    continue_btn.onclick = () => {app.continue();};
+    restart_btn.onclick = () => {app.restart();};
+    exit_btn.onclick = () => {app.exit();};
     
     play_div.id = "play";
-    pause_btm.id = "pause";
-    submit_btm.id = "submit";
+    pause_btn.id = "pause";
+    submit_btn.id = "submit";
     canvas_div.id = "canvas-area";
     time_div.id = "time";
     move_div.id = "move";
     pauseBackgroundPage_div.id = "pauseBackgroundPage";
     pausePage_div.id = "pausePage";
-    continue_btm.id = "continue";
-    restart_btm.id = "restart";
-    exit_btm.id = "exit";
+    continue_btn.id = "continue";
+    restart_btn.id = "restart";
+    exit_btn.id = "exit";
     
-    submit_btm.innerText = "submit";
+    submit_btn.innerText = "submit";
     time_div.innerText = "time:00.00";
     move_div.innerText = "move:0";
-    continue_btm.innerText = "繼續遊戲";
-    restart_btm.innerText = "重新遊戲";
-    exit_btm.innerText = "結束遊戲";
+    continue_btn.innerText = "繼續遊戲";
+    restart_btn.innerText = "重新遊戲";
+    exit_btn.innerText = "結束遊戲";
 
-    play_div.appendChild(pause_btm);
-    play_div.appendChild(submit_btm);
+    play_div.appendChild(pause_btn);
+    play_div.appendChild(submit_btn);
     play_div.appendChild(canvas_div);
     play_div.appendChild(time_div);
     play_div.appendChild(move_div);
     pauseBackgroundPage_div.appendChild(pausePage_div);
-    pauseBackgroundPage_div.appendChild(continue_btm);
-    pauseBackgroundPage_div.appendChild(restart_btm);
-    pauseBackgroundPage_div.appendChild(exit_btm);
+    pauseBackgroundPage_div.appendChild(continue_btn);
+    pauseBackgroundPage_div.appendChild(restart_btn);
+    pauseBackgroundPage_div.appendChild(exit_btn);
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
