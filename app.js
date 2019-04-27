@@ -31,7 +31,22 @@ class App { // eslint-disable-line no-unused-vars
    * 前往遊戲首頁
    */
   gotoHome() {
-    // TODO
+    this.clearPage();
+    var home_div = document.createElement("div");
+    var icon_div = document.createElement("div");
+    var start_btm = document.createElement("button");
+    var setting_btm = document.createElement("button");
+    var achievement_btm = document.createElement("button");
+    home_div.id = "home";
+    icon_div.id = "icon-area";
+    start_btm.id = "start";
+    setting_btm.id = "gotoSetting";
+    achievement_btm.id = "gotoAchievement";
+    home_div.appendChild(icon_div);
+    home_div.appendChild(start_btm);
+    home_div.appendChild(setting_btm);
+    home_div.appendChild(icon_dachievement_btmiv);
+    document.body.appendChild(home_div);
   }
 
   /**
