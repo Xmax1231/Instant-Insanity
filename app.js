@@ -10,7 +10,7 @@ class App { // eslint-disable-line no-unused-vars
    */
   constructor() {
     this.displayer = new Displayer(null); // TODO
-    this.brickCount = 0; // TODO
+    this.brickCount = 4; // TODO
     this.game = new Game();
     this.volume = 1;
     this.bgm = null; // TODO
@@ -121,7 +121,44 @@ class App { // eslint-disable-line no-unused-vars
    * 前往設定頁
    */
   gotoSetting() {
-    // TODO
+    this.clearPage();
+    var setting_div = document.createElement("div");
+    var brickNumSetting_div = document.createElement("div");
+    var brickStyleSetting_div = document.createElement("div");
+    var brickNumTXT_div = document.createElement("div");
+    var increaseBrickCount_div = document.createElement("button");
+    var BrickCount_div = document.createElement("div");
+    var decreaseBrickCount_div = document.createElement("button");
+    var brickStyleTXT_div = document.createElement("div");
+    var brickShow_div = document.createElement("div");
+    
+    increaseBrickCount_div.onclick = () => {app.increaseBrickCount();};
+    decreaseBrickCount_div.onclick = () => {app.decreaseBrickCount();};
+
+    setting_div.id = "setting";
+    brickNumSetting_div.id = "brickNumSetting";
+    brickStyleSetting_div.id = "brickStyleSetting";
+    brickNumTXT_div.id = "brickNumTXT";
+    increaseBrickCount_div.id = "increaseBrickCount";
+    BrickCount_div.id = "BrickCount";
+    decreaseBrickCount_div.id = "decreaseBrickCount";
+    brickStyleTXT_div.id = "brickStyleTXT";
+    brickShow_div.id = "brickShow";
+    
+    brickNumTXT_div.innerText = "方塊數：";
+    brickStyleTXT_div.innerText = "方塊樣式：";
+    BrickCount_div.innerText = this.brickCount.toString();
+
+    brickNumSetting_div.appendChild(brickNumTXT_div);
+    brickNumSetting_div.appendChild(increaseBrickCount_div);
+    brickNumSetting_div.appendChild(BrickCount_div);
+    brickNumSetting_div.appendChild(decreaseBrickCount_div);
+    brickStyleSetting_div.appendChild(brickStyleTXT_div);
+    brickStyleSetting_div.appendChild(brickShow_div);
+    setting_div.appendChild(brickNumSetting_div);
+    setting_div.appendChild(brickStyleSetting_div);
+    
+    document.getElementById("game").appendChild(setting_div);
   }
 
   /**
@@ -186,14 +223,16 @@ class App { // eslint-disable-line no-unused-vars
    * 增加遊戲方塊數
    */
   increaseBrickCount() {
-    // TODO
+    this.brickCount++;
+    document.getElementById("BrickCount").innerText = this.brickCount.toString();
   }
 
   /**
    * 減少遊戲方塊數
    */
   decreaseBrickCount() {
-    // TODO
+    this.brickCount--;
+    document.getElementById("BrickCount").innerText = this.brickCount.toString();
   }
 
   /**

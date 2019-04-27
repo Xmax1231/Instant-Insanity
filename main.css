@@ -115,3 +115,29 @@ body{
     border-radius:10px;
     background: rgb(255, 255, 255);
 }
+#setting{
+    margin: 0px auto;
+    width: 60%;
+	height: 100%;
+}
+#brickNumSetting{
+    width: 500px;
+    margin: 250px auto 0px auto;
+}
+#brickNumSetting > div, button{
+    display: inline-block;
+}
+#BrickCount{
+    padding: 3px;
+    border: 2px black solid;
+}
+#brickStyleSetting{
+    width: 500px;
+    height: 250px;
+    margin: 0 auto;
+}
+#brickShow{
+    width: 90%;
+    height: 200px;
+    border: 2px black solid;
+}
