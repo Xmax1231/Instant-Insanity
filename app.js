@@ -19,6 +19,13 @@ class App { // eslint-disable-line no-unused-vars
   // Home page
 
   /**
+   * 前往遊戲首頁
+   */
+  gotoHome() {
+    // TODO
+  }
+
+  /**
    * 開始遊戲
    */
   start() {
