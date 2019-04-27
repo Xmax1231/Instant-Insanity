@@ -94,3 +94,5 @@ class Displayer { // eslint-disable-line no-unused-vars
     // TODO
   }
 }
+
+export {Displayer};
