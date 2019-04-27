@@ -18,6 +18,16 @@ class App { // eslint-disable-line no-unused-vars
   // Home page
 
   /**
+   * 清除畫面
+   */
+  clearPage(){
+    var myNode = document.getElementById("game");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+  }
+
+  /**
    * 前往遊戲首頁
    */
   gotoHome() {
