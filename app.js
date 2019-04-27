@@ -1,4 +1,5 @@
 import {Game} from './game.js';
+import {Displayer} from './displayer.js';
 
 /**
  * 控制遊戲畫面
@@ -45,7 +46,7 @@ class App { // eslint-disable-line no-unused-vars
     home_div.appendChild(icon_div);
     home_div.appendChild(start_btm);
     home_div.appendChild(setting_btm);
-    home_div.appendChild(icon_dachievement_btmiv);
+    home_div.appendChild(achievement_btm);
     document.body.appendChild(home_div);
   }
 
