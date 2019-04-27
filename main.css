@@ -89,3 +89,29 @@ body{
     border-radius:10px;
     background: rgb(255, 255, 255);
 }
+#pauseBackgroundPage{
+    z-index: 99;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+#pausePage{
+    margin: 0px auto;
+    width: 500px;
+    height: 250px;
+    position: relative;
+    transform:translateY(50%);
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#pausePage > button{
+    margin: 15px auto;
+    display: block;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}

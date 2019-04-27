@@ -72,9 +72,17 @@ class App { // eslint-disable-line no-unused-vars
     var canvas_div = document.createElement("div");
     var time_div = document.createElement("div");
     var move_div = document.createElement("div");
+    var pauseBackgroundPage_div = document.createElement("div");
+    var pausePage_div = document.createElement("div");
+    var continue_btm = document.createElement("button");
+    var restart_btm = document.createElement("button");
+    var exit_btm = document.createElement("button");
 
     pause_btm.onclick = () => {app.pause();};
     submit_btm.onclick = () => {app.submit();};
+    continue_btm.onclick = () => {app.continue();};
+    restart_btm.onclick = () => {app.restart();};
+    exit_btm.onclick = () => {app.exit();};
     
     play_div.id = "play";
     pause_btm.id = "pause";
@@ -82,18 +90,31 @@ class App { // eslint-disable-line no-unused-vars
     canvas_div.id = "canvas-area";
     time_div.id = "time";
     move_div.id = "move";
+    pauseBackgroundPage_div.id = "pauseBackgroundPage";
+    pausePage_div.id = "pausePage";
+    continue_btm.id = "continue";
+    restart_btm.id = "restart";
+    exit_btm.id = "exit";
     
     submit_btm.innerText = "submit";
     time_div.innerText = "time:00.00";
     move_div.innerText = "move:0";
+    continue_btm.innerText = "繼續遊戲";
+    restart_btm.innerText = "重新遊戲";
+    exit_btm.innerText = "結束遊戲";
 
     play_div.appendChild(pause_btm);
     play_div.appendChild(submit_btm);
     play_div.appendChild(canvas_div);
     play_div.appendChild(time_div);
     play_div.appendChild(move_div);
+    pauseBackgroundPage_div.appendChild(pausePage_div);
+    pauseBackgroundPage_div.appendChild(continue_btm);
+    pauseBackgroundPage_div.appendChild(restart_btm);
+    pauseBackgroundPage_div.appendChild(exit_btm);
 
     document.getElementById("game").appendChild(play_div);
+    document.getElementById("game").appendChild(pauseBackgroundPage_div);
   }
 
   /**
@@ -117,7 +138,7 @@ class App { // eslint-disable-line no-unused-vars
    * 暫停遊戲
    */
   pause() {
-    // TODO
+    document.getElementById('pauseBackgroundPage').style.display='block';
   }
 
   /**
@@ -133,21 +154,21 @@ class App { // eslint-disable-line no-unused-vars
    * 繼續遊戲
    */
   continue() {
-    // TODO
+    document.getElementById('pauseBackgroundPage').style.display='none';
   }
 
   /**
    * 重新開始遊戲
    */
   restart() {
-    // TODO
+    document.getElementById('pauseBackgroundPage').style.display='none';
   }
 
   /**
    * 結束遊戲
    */
   exit() {
-    // TODO
+    this.gotoHome();
   }
 
   /**
