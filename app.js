@@ -9,7 +9,7 @@ class App { // eslint-disable-line no-unused-vars
    * 初始化App
    */
   constructor() {
-    this.displayer = new Displayer(null); // TODO
+    this.displayer = new Displayer(document.getElementById('render'));
     this.brickCount = 4; // TODO
     this.game = new Game();
     this.volume = 1;
