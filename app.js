@@ -1,5 +1,6 @@
 import {Game} from './game.js';
 import {Displayer} from './displayer.js';
+import { getMaterial } from './material.js';
 
 /**
  * 控制遊戲畫面
@@ -14,6 +15,7 @@ class App { // eslint-disable-line no-unused-vars
     this.game = new Game();
     this.volume = 1;
     this.bgm = null; // TODO
+    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('test').fileNames.map(n => `img/${n}`))
   }
 
   // Home page
