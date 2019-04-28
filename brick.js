@@ -1,3 +1,5 @@
+import { getMaterial } from './material.js';
+
 /**
  * 方塊
  */
@@ -9,9 +11,21 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {{x:number, y:number, z:number}} facePattern
    */
   constructor(game, materialName, facePattern) {
-    this.materialName = materialName;
-    this.facePattern = facePattern;
-    this.rotation = null; // TODO
+    let textures = getMaterial(materialName).fileNames
+      , geometry = new THREE.BoxGeometry( 2, 2, 2 )
+      , material = facePattern.map(i => 
+        new THREE.MeshPhongMaterial({
+          map: new THREE
+            .TextureLoader()
+            .load('img/' + textures[i]),
+        }))
+    this.materialName = materialName
+    this.facePattern = facePattern
+    this.renderObject = new THREE.Mesh(geometry, material)
+  }
+
+  get rotation() {
+    return this.renderObject.rotation
   }
 
   /**
@@ -42,3 +56,5 @@ class Brick { // eslint-disable-line no-unused-vars
     // TODO
   }
 }
+
+export { Brick }
