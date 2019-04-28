@@ -109,9 +109,11 @@ class App { // eslint-disable-line no-unused-vars
     play_div.appendChild(time_div);
     play_div.appendChild(move_div);
     pauseBackgroundPage_div.appendChild(pausePage_div);
-    pauseBackgroundPage_div.appendChild(continue_btn);
-    pauseBackgroundPage_div.appendChild(restart_btn);
-    pauseBackgroundPage_div.appendChild(exit_btn);
+    pausePage_div.appendChild(continue_btn);
+    pausePage_div.appendChild(restart_btn);
+    pausePage_div.appendChild(exit_btn);
+    
+    pauseBackgroundPage_div.style.display = "none";
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
