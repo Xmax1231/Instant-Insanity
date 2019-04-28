@@ -1,0 +1,189 @@
+*{
+    font-family: Consolas;
+    font-size: 1.12em;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+body{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
+#home > button{
+    margin: 15px auto;
+    width: 30%;
+    height: 10%;
+    min-width: 300px;
+    max-height: 90px;
+    display: block;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#game{
+    width: 100%;
+	height: 100%;
+    display: inline-block;
+    border: 5px black solid;
+    border-radius:10px;
+}
+#home{
+    margin: 0px auto;
+    width: 60%;
+	height: 100%;
+}
+#play{
+    margin: 0px auto;
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
+#icon-area{
+    margin: 0px auto;
+    width: 300px;
+	height: 300px;
+}
+#pause{
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    width: 50px;
+    height: 50px;
+    background: black;
+}
+#submit{
+    position: absolute;
+    bottom: 3%;
+    left: 80%;
+    width: 130px;
+    height: 65px;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#canvas-area{
+    margin: 0px auto;
+    width: 60%;
+    height: 100%;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#time{
+    padding: 2px;
+    position: absolute;
+    top: 5%;
+    left: 80%;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#move{
+    padding: 2px;
+    position: absolute;
+    top: 12%;
+    left: 80%;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#pauseBackgroundPage{
+    z-index: 99;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+#pausePage{
+    margin: 0px auto;
+    width: 500px;
+    height: 250px;
+    position: relative;
+    transform:translateY(50%);
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#pausePage > button{
+    margin: 15px auto;
+    display: block;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+#setting{
+    margin: 0px auto;
+    width: 60%;
+	height: 100%;
+}
+#brickNumSetting{
+    width: 500px;
+    margin: 250px auto 0px auto;
+}
+#brickNumSetting > div, button{
+    display: inline-block;
+}
+#BrickCount{
+    padding: 3px;
+    border: 2px black solid;
+}
+#brickStyleSetting{
+    width: 500px;
+    height: 250px;
+    margin: 0 auto;
+}
+#brickShow{
+    width: 90%;
+    height: 200px;
+    border: 2px black solid;
+}
+#achievement{
+    margin: 0px auto;
+    width: 60%;
+	height: 100%;
+}
+#achievement > div{
+    margin: 10px 0;
+}
+#normal-area > div{
+    margin: 5px 0;
+    border: 2px black solid;
+    border-radius:10px;
+    padding: 2px;
+}
+#normal-area > .unlocked{
+    background: rgb(255, 255, 255);
+}
+#normal-area > .locked{
+    background: rgba(0, 0, 0, 0.25);
+}
+#special-area > div{
+    margin: 5px 0;
+    border: 2px orange solid;
+    border-radius:10px;
+    padding: 2px;
+}
+#special-area > .unlocked{
+    background: rgb(255, 255, 255);
+}
+#special-area > .locked{
+    color: white;
+    background: rgb(255, 165, 0);
+}
+#hide-area > div{
+    margin: 5px 0;
+    border: 2px black solid;
+    border-radius:10px;
+    padding: 2px;
+}
+#hide-area > .unlocked{
+    background: rgb(255, 255, 255);
+}
+#hide-area > .locked{
+    color: white;
+    background: black;
+}
