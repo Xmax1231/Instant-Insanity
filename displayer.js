@@ -65,7 +65,10 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {number} displayType
    */
   display(displayType) {
+    let { gameBricks, selectorBricks } = this
     this.displayType = displayType
+    gameBricks.visible = (displayType == Displayer.GAMMING)
+    selectorBricks.visible = (displayType == Displayer.SELECTING)
   }
 
   /**
@@ -108,7 +111,9 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {Brick[]} bricks
    */
   setGameBricks(bricks) {
-    this.gameBricks = Array.from(bricks)
+    let gameBricks = Array.from(bricks)
+    this.gameBricks = gameBricks
+    this.gameGroup.children = gameBricks
   }
 
   /**
@@ -116,7 +121,9 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {Brick[]} bricks
    */
   setBrickSelectors(bricks) {
-    this.selectorBricks = Array.from(bricks)
+    let selectorBricks = Array.from(bricks)
+    this.selectorBricks = selectorBricks
+    this.selectorGroup.children = selectorBricks
   }
 
   /**
@@ -193,7 +200,7 @@ class Displayer { // eslint-disable-line no-unused-vars
     rayCaster.setFromCamera(mouseVector, camera)
     switch (displayType) {
       case Displayer.BACKGROUND: 
-        return
+        return []
       case Displayer.GAMMING: 
         bricks = gameBricks
         break
