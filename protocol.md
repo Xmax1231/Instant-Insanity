@@ -26,6 +26,17 @@
   + Object    camera
   + Object    pointLight
   + Object    cameraInfo
+  + Object    mouseInfo
+  + Number    displayType
+  + Object    rayCaster
+  + Array     gameBricks[Brick]
+  + Array     selectorBricks[Brick]
+  + Object    gameGroup
+  + Object    selectorGroup
+  + Object    mouseVector
+  + Number    appWidth
+  + Number    appHeight
+  + Object    appElem
   + Function  display(displayType)
     0. just Background
     1. gaming bricks
@@ -41,8 +52,8 @@
   + Function  mouseDownEvent(e)
   + Function  mouseMoveEvent(e)
   + Function  mouseUpEvent(e)
-  + Function  mouseLeaveEvent(e)
   + Function  wheelEvent(e)
+  + Function  calcMouseRay(e)
 
 ### Brick
 #### new Brick(game, materialName, facePattern)
@@ -57,7 +68,6 @@
   <!-- mouse events  -->
   + Function  mouseDownEvent(x, y, faceX, faceY, faceZ)
   + Function  mouseMoveEvent(x, y)
-  + Function  mouseLeaveEvent()
 
 ### Game
 #### new Game(displayer, brickCount)
