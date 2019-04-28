@@ -49,6 +49,8 @@ class Displayer { // eslint-disable-line no-unused-vars
     this.camera.lookAt(0, 0, 0)
     this.pointLight.position.setFromMatrixPosition(this.camera.matrix)
     this.scene.add(this.pointLight)
+    this.scene.add(this.gameGroup)
+    this.scene.add(this.selectorGroup)
     this.calcCamera()
     this.resize()
     window.addEventListener('resize', () => this.resize())
@@ -65,10 +67,10 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {number} displayType
    */
   display(displayType) {
-    let { gameBricks, selectorBricks } = this
+    let { gameGroup, selectorGroup } = this
     this.displayType = displayType
-    gameBricks.visible = (displayType == Displayer.GAMMING)
-    selectorBricks.visible = (displayType == Displayer.SELECTING)
+    gameGroup.visible = (displayType == Displayer.GAMMING)
+    selectorGroup.visible = (displayType == Displayer.SELECTING)
   }
 
   /**
@@ -113,7 +115,8 @@ class Displayer { // eslint-disable-line no-unused-vars
   setGameBricks(bricks) {
     let gameBricks = Array.from(bricks)
     this.gameBricks = gameBricks
-    this.gameGroup.children = gameBricks
+    this.gameGroup.children = gameBricks.map(b => 
+      b.renderObject)
   }
 
   /**
@@ -123,7 +126,8 @@ class Displayer { // eslint-disable-line no-unused-vars
   setBrickSelectors(bricks) {
     let selectorBricks = Array.from(bricks)
     this.selectorBricks = selectorBricks
-    this.selectorGroup.children = selectorBricks
+    this.selectorGroup.children = selectorBricks.map(b => 
+      b.renderObject)
   }
 
   /**
@@ -131,6 +135,7 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {Event} e
    */
   mouseDownEvent(e) {
+    e.preventDefault()
     let { mouseInfo } = this
     mouseInfo.lastX = e.clientX
     mouseInfo.lastY = e.clientY
