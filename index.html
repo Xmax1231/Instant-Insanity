@@ -2,12 +2,15 @@
 
 <head>
 	<script src="./app.js" type="module"></script>
+	<link rel="stylesheet" href="main.css">
 </head>
 
 <body>
+	<div id="game"></div>
 	<script>
 		window.onload = function() {
 			window.app = new App();
+			app.gotoHome();
 		}
 	</script>
 </body>
