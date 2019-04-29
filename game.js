@@ -25,4 +25,4 @@ class Game { // eslint-disable-line no-unused-vars
 }
 
 
-export {Game};
+export { Game };

@@ -1,4 +1,4 @@
-import {Game} from './game.js';
+import { Game } from './game.js';
 
 /**
  * 控制遊戲畫面
