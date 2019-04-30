@@ -15,9 +15,11 @@ class Displayer { // eslint-disable-line no-unused-vars
       r: 6,
       theta: 1/4,
       phi: 1/4,
+      displayer: this,
       deltaXY (dx, dy) {
-        this.theta += dy / 500
-        this.phi += dx / 500
+        let { displayer: { displayType } } = this
+        this.theta += (dy / 500) * (displayType == Displayer.GAMMING ? 1 : -1)
+        this.phi += (dx / 500) * (displayType == Displayer.GAMMING ? 1 : -1)
         if (this.theta > .4) 
           this.theta = .4
         else if (this.theta < -.4) 
@@ -34,7 +36,7 @@ class Displayer { // eslint-disable-line no-unused-vars
       mouseDown: false,
       interObject: null,
     }
-    this.displayType = 0
+    this.displayType = Displayer.BACKGROUND
     this.rayCaster = new THREE.Raycaster()
     this.mouseVector = new THREE.Vector2(-1, -1)
     this.gameBricks = []
