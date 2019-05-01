@@ -51,7 +51,7 @@ class App { // eslint-disable-line no-unused-vars
 
     start_btn.innerText = "開始";
     setting_btn.innerText = "設定";
-    achievement_btn.innerText = "稱號";
+    achievement_btn.innerText = "成就";
 
     home_div.appendChild(icon_div);
     home_div.appendChild(start_btn);
