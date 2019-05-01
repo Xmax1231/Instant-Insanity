@@ -133,9 +133,11 @@ class App { // eslint-disable-line no-unused-vars
     var decreaseBrickCount_div = document.createElement("button");
     var brickStyleTXT_div = document.createElement("div");
     var brickShow_div = document.createElement("div");
+    var gohome_btn = document.createElement("button");
     
     increaseBrickCount_div.onclick = () => {app.increaseBrickCount();};
     decreaseBrickCount_div.onclick = () => {app.decreaseBrickCount();};
+    gohome_btn.onclick = () => {app.gotoHome()};
 
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
@@ -146,6 +148,7 @@ class App { // eslint-disable-line no-unused-vars
     decreaseBrickCount_div.id = "decreaseBrickCount";
     brickStyleTXT_div.id = "brickStyleTXT";
     brickShow_div.id = "brickShow";
+    gohome_btn.id = "gohome";
     
     brickNumTXT_div.innerText = "方塊數：";
     brickStyleTXT_div.innerText = "方塊樣式：";
@@ -162,6 +165,7 @@ class App { // eslint-disable-line no-unused-vars
     setting_div.appendChild(brickNumSetting_div);
     setting_div.appendChild(brickStyleSetting_div);
     
+    document.getElementById("game").appendChild(gohome_btn);
     document.getElementById("game").appendChild(setting_div);
   }
 
@@ -174,16 +178,20 @@ class App { // eslint-disable-line no-unused-vars
     var normal_div = document.createElement("div");
     var special_div = document.createElement("div");
     var hide_div = document.createElement("div");
+    var gohome_btn = document.createElement("button");
+    gohome_btn.onclick = () => {app.gotoHome()};
 
     achievement_div.id = "achievement";
     normal_div.id = "normal-area";
     special_div.id = "special-area";
     hide_div.id = "hide-area";
+    gohome_btn.id = "gohome";
 
     achievement_div.appendChild(normal_div);
     achievement_div.appendChild(special_div);
     achievement_div.appendChild(hide_div);
 
+    document.getElementById("game").appendChild(gohome_btn);
     document.getElementById("game").appendChild(achievement_div);
 
     // TODO
