@@ -103,7 +103,6 @@ class App { // eslint-disable-line no-unused-vars
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
 
-    play_div.appendChild(pause_btn);
     play_div.appendChild(submit_btn);
     play_div.appendChild(canvas_div);
     play_div.appendChild(time_div);
@@ -115,6 +114,7 @@ class App { // eslint-disable-line no-unused-vars
 
     pauseBackgroundPage_div.style.display = "none";
 
+    document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
   }
@@ -179,6 +179,7 @@ class App { // eslint-disable-line no-unused-vars
     var special_div = document.createElement("div");
     var hide_div = document.createElement("div");
     var gohome_btn = document.createElement("button");
+
     gohome_btn.onclick = () => {app.gotoHome()};
 
     achievement_div.id = "achievement";
