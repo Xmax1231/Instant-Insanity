@@ -7,8 +7,8 @@ module.exports = {
     'sourceType': 'module'
   },
   'globals': {
-    'Game': true,
     'THREE': true,
+    'App': true,
   },
   'extends': 'eslint:recommended',
   'rules': {
