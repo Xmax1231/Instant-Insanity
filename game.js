@@ -94,7 +94,6 @@ class Game {
     time -= Math.floor(time);
     result += '.';
     result += this.timePadding(Math.floor(time * 100));
-    result += ' s';
     return result;
   }
 
@@ -103,7 +102,7 @@ class Game {
   }
 
   getStepFormatted() {
-    return this.getStep() + '步';
+    return this.getStep();
   }
 
   /**
