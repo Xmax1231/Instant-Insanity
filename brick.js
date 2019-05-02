@@ -1,5 +1,6 @@
 import { getMaterial } from './material.js';
 
+const BRICKFACEKEYS = [ "front", "back", "top", "bottom", "left", "right" ]
 /**
  * 方塊
  */
@@ -13,15 +14,15 @@ class Brick { // eslint-disable-line no-unused-vars
   constructor(game, materialName, facePattern) {
     let textures = getMaterial(materialName).fileNames
       , geometry = new THREE.BoxGeometry( 2, 2, 2 )
-      , material = facePattern.map(i => 
+      , material = BRICKFACEKEYS.map(k => 
         new THREE.MeshPhongMaterial({
           map: new THREE
             .TextureLoader()
-            .load('img/' + textures[i]),
+            .load('img/' + textures[facePattern[k]]),
         }))
     this.materialName = materialName
     this.facePattern = facePattern
-    this.facePatternOriginal = facePattern.slice()
+    this.facePatternOriginal = { ...facePattern }
     this.orientation = { x: 0, y: 0, z: 0 }
     this.renderObject = new THREE.Mesh(geometry, material)
   }
