@@ -1,5 +1,5 @@
-import {Game} from './game.js';
-import {Displayer} from './displayer.js';
+import { Game } from './game.js';
+import { Displayer } from './displayer.js';
 
 /**
  * 控制遊戲畫面
@@ -128,7 +128,7 @@ class App {
     let createBrick = (brickId, face) => {
       let brick = document.createElement('div');
       brick.id = 'brick' + brickId + face;
-      if (face == 2 || face == 5) {
+      if (face == 'top' || face == 'bottom') {
         brick.className = 'facetop';
       } else {
         brick.className = 'faceside';
@@ -142,12 +142,12 @@ class App {
       let td_top = document.createElement('td');
       td_top.colSpan = 4;
       td_top.style = 'text-align: center;';
-      td_top.appendChild(createBrick(brickId, 2));
+      td_top.appendChild(createBrick(brickId, 'top'));
       tr_top.appendChild(td_top);
       brick_table.appendChild(tr_top);
       // side
       let tr_side = document.createElement('tr');
-      [0, 1, 3, 4].forEach(face => {
+      ['left', 'front', 'right', 'back'].forEach(face => {
         let td_side = document.createElement('td');
         td_side.appendChild(createBrick(brickId, face));
         tr_side.appendChild(td_side);
@@ -158,7 +158,7 @@ class App {
       let td_bottom = document.createElement('td');
       td_bottom.colSpan = 4;
       td_bottom.style = 'text-align: center;';
-      td_bottom.appendChild(createBrick(brickId, 5));
+      td_bottom.appendChild(createBrick(brickId, 'bottom'));
       tr_bottom.appendChild(td_bottom);
       brick_table.appendChild(tr_bottom);
     }
@@ -167,13 +167,13 @@ class App {
 
     let draw = () => {
       for (let bid = 0; bid < this.brickCount; bid++) {
-        for (let face = 0; face < 6; face++) {
+        ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
           const el = document.getElementById('brick' + bid + face);
           for (let bid2 = 1; bid2 <= this.brickCount; bid2++) {
             el.classList.remove('face' + bid2);
           }
-          el.classList.add('face' + this.game.bricks[bid][face]);
-        }
+          el.classList.add('face' + this.game.bricksNumber[bid][face]);
+        });
       }
       move_div.innerText = 'Move: ' + this.game.getStepFormatted();
     }

@@ -1,3 +1,5 @@
+import { Brick } from './brick.js';
+
 /**
  * 操控方塊遊戲本身
  */
@@ -9,24 +11,24 @@ class Game {
   constructor(brickCount) {
     this.brickCount = brickCount;
 
-    this.bricks = [];
-    for (let i = 1; i <= brickCount; i++) {
-      const brick = [
-        i,
-        i,
-        Math.floor(Math.random() * brickCount + 1),
-        i,
-        i,
-        Math.floor(Math.random() * brickCount + 1),
-      ];
-      this.bricks.push(brick);
+    this.bricksNumber = [];
+    for (let i = 1; i <= this.brickCount; i++) {
+      const brick = {
+        front: i,
+        back: i,
+        left: i,
+        right: i,
+        top: Math.floor(Math.random() * this.brickCount + 1),
+        bottom: Math.floor(Math.random() * this.brickCount + 1),
+      };
+      this.bricksNumber.push(brick);
     }
     // 打亂同一側面
-    [0, 1, 3, 4].forEach((face) => {
-      for (let bid = 0; bid < brickCount - 1; bid++) {
-        const j = Math.floor(Math.random() * (this.brickCount - bid) + bid);
-        [this.bricks[bid][face], this.bricks[j][face]] =
-          [this.bricks[j][face], this.bricks[bid][face]];
+    ['front', 'back', 'left', 'right'].forEach((face) => {
+      for (let bid = 0; bid < this.brickCount - 1; bid++) {
+        const bid2 = Math.floor(Math.random() * (this.brickCount - bid) + bid);
+        [this.bricksNumber[bid][face], this.bricksNumber[bid2][face]] =
+          [this.bricksNumber[bid2][face], this.bricksNumber[bid][face]];
       }
     });
     // 打亂單個 brick
@@ -34,7 +36,6 @@ class Game {
       for (let i = 0; i < 10; i++) {
         const dir = Math.floor(Math.random() * 3);
         const angle = Math.floor(Math.random() * 3 + 1);
-        this.rotateY(bid, angle);
         switch (dir) {
           case 0:
             this.rotateX(bid, angle);
@@ -48,6 +49,11 @@ class Game {
         }
       }
     }
+
+    this.bricks = [];
+    this.bricksNumber.forEach(brick => {
+      this.bricks.push(new Brick(this, '', brick));
+    });
 
     this.timeCounter = 0;
     this.stepCounter = 0;
@@ -118,16 +124,16 @@ class Game {
     angle = (angle % 4 + 4) % 4;
     for (let i = 0; i < angle; i++) {
       [
-        this.bricks[brickId][1],
-        this.bricks[brickId][5],
-        this.bricks[brickId][4],
-        this.bricks[brickId][2],
+        this.bricksNumber[brickId]['top'],
+        this.bricksNumber[brickId]['left'],
+        this.bricksNumber[brickId]['bottom'],
+        this.bricksNumber[brickId]['right'],
       ] =
         [
-          this.bricks[brickId][2],
-          this.bricks[brickId][1],
-          this.bricks[brickId][5],
-          this.bricks[brickId][4],
+          this.bricksNumber[brickId]['right'],
+          this.bricksNumber[brickId]['top'],
+          this.bricksNumber[brickId]['left'],
+          this.bricksNumber[brickId]['bottom'],
         ];
     }
     this.stepCounter++;
@@ -146,16 +152,16 @@ class Game {
     angle = (angle % 4 + 4) % 4;
     for (let i = 0; i < angle; i++) {
       [
-        this.bricks[brickId][0],
-        this.bricks[brickId][2],
-        this.bricks[brickId][3],
-        this.bricks[brickId][5],
+        this.bricksNumber[brickId]['top'],
+        this.bricksNumber[brickId]['front'],
+        this.bricksNumber[brickId]['bottom'],
+        this.bricksNumber[brickId]['back'],
       ] =
         [
-          this.bricks[brickId][5],
-          this.bricks[brickId][0],
-          this.bricks[brickId][2],
-          this.bricks[brickId][3],
+          this.bricksNumber[brickId]['back'],
+          this.bricksNumber[brickId]['top'],
+          this.bricksNumber[brickId]['front'],
+          this.bricksNumber[brickId]['bottom'],
         ];
     }
     this.stepCounter++;
@@ -174,16 +180,16 @@ class Game {
     angle = (angle % 4 + 4) % 4;
     for (let i = 0; i < angle; i++) {
       [
-        this.bricks[brickId][0],
-        this.bricks[brickId][4],
-        this.bricks[brickId][3],
-        this.bricks[brickId][1],
+        this.bricksNumber[brickId]['front'],
+        this.bricksNumber[brickId]['right'],
+        this.bricksNumber[brickId]['back'],
+        this.bricksNumber[brickId]['left'],
       ] =
         [
-          this.bricks[brickId][1],
-          this.bricks[brickId][0],
-          this.bricks[brickId][4],
-          this.bricks[brickId][3],
+          this.bricksNumber[brickId]['left'],
+          this.bricksNumber[brickId]['front'],
+          this.bricksNumber[brickId]['right'],
+          this.bricksNumber[brickId]['back'],
         ];
     }
     this.stepCounter++;
@@ -212,4 +218,4 @@ class Game {
 }
 
 
-export {Game};
+export { Game };

@@ -42,3 +42,5 @@ class Brick {
     // TODO
   }
 }
+
+export { Brick }
