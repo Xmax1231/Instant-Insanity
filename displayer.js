@@ -1,7 +1,7 @@
 /**
  * 顯示方塊
  */
-class Displayer { // eslint-disable-line no-unused-vars
+class Displayer {
   /**
    * 初始化
    * @param {*} appElem

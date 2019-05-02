@@ -1,7 +1,7 @@
 /**
  * 操控方塊遊戲本身
  */
-class Game { // eslint-disable-line no-unused-vars
+class Game {
   /**
    * 初始化遊戲
    * @param {number} brickCount - 方塊數量
