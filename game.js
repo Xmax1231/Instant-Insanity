@@ -1,3 +1,4 @@
+import { Brick } from './brick.js';
 /**
  * 操控方塊遊戲本身
  */
@@ -6,24 +7,25 @@ class Game {
    * 初始化遊戲
    * @param {number} brickCount - 方塊數量
    */
-  constructor(brickCount) {
-    this.brickCount = brickCount;
+  constructor(app) {
+    this.app = app
+    this.brickCount = app.brickCount;
 
     this.bricks = [];
-    for (let i = 1; i <= brickCount; i++) {
-      const brick = [
+    for (let i = 1; i <= this.brickCount; i++) {
+      const facePattern = [
         i,
         i,
-        Math.floor(Math.random() * brickCount + 1),
+        Math.floor(Math.random() * this.brickCount + 1),
         i,
         i,
-        Math.floor(Math.random() * brickCount + 1),
+        Math.floor(Math.random() * this.brickCount + 1),
       ];
-      this.bricks.push(brick);
+      this.bricks.push(new Brick(this, app.materialName, facePattern));
     }
     // 打亂同一側面
     [0, 1, 3, 4].forEach((face) => {
-      for (let bid = 0; bid < brickCount - 1; bid++) {
+      for (let bid = 0; bid < this.brickCount - 1; bid++) {
         const j = Math.floor(Math.random() * (this.brickCount - bid) + bid);
         [this.bricks[bid][face], this.bricks[j][face]] =
           [this.bricks[j][face], this.bricks[bid][face]];
@@ -52,6 +54,7 @@ class Game {
     this.timeCounter = 0;
     this.stepCounter = 0;
     this.start();
+    this.app.displayer.setGameBricks(this.bricks)
   }
 
   start() {
@@ -227,4 +230,4 @@ class Game {
 }
 
 
-window.Game = Game;
+export { Game }

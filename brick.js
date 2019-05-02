@@ -21,11 +21,20 @@ class Brick { // eslint-disable-line no-unused-vars
         }))
     this.materialName = materialName
     this.facePattern = facePattern
+    this.facePatternOriginal = facePattern.slice()
+    this.orientation = { x: 0, y: 0, z: 0 }
     this.renderObject = new THREE.Mesh(geometry, material)
   }
 
   get rotation() {
     return this.renderObject.rotation
+  }
+
+  /**
+   * 從 orientation 更新 facePattern 
+   */
+  updateFacePattern () {
+    // TODO
   }
 
   /**
@@ -52,7 +61,7 @@ class Brick { // eslint-disable-line no-unused-vars
   /**
    *
    */
-  mouseLeaveEvent() {
+  mouseUpEvent() {
     // TODO
   }
 }
