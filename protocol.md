@@ -60,18 +60,23 @@
   + Game      game
   + String    materialName
   + Array     facePattern [faceId: 0-5], len: 2-n
+  + Array     facePatternOriginal [faceId: 0-5], len: 2-n
+  + Object    orientation
+    + get x,y,z [0,1,2,3]
   + Object    rotation
     + get set x
     + get set y
     + get set z
+  + Function  updateFacePattern()
 
   <!-- mouse events  -->
   + Function  mouseDownEvent(x, y, faceX, faceY, faceZ)
   + Function  mouseMoveEvent(x, y)
+  + Function  mouseUpEvent()
 
 ### Game
-#### new Game(displayer, brickCount)
-  + Displayer displayer
+#### new Game(app)
+  + App       app
   + Array     gameBricks [Brick]
   + Number    timeCounter
   + Number    stepCounter
@@ -81,6 +86,7 @@
 #### new App()
   + Displayer displayer
   + Number    brickCount
+  + String    materialName
   + Game      game
   + Number    volume
   + Audio     bgm
