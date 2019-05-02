@@ -172,7 +172,7 @@ class App {
           for (let bid2 = 1; bid2 <= this.brickCount; bid2++) {
             el.classList.remove('face' + bid2);
           }
-          el.classList.add('face' + this.game.bricksNumber[bid][face]);
+          el.classList.add('face' + this.game.bricks[bid].facePattern[face]);
         });
       }
       move_div.innerText = 'Move: ' + this.game.getStepFormatted();
