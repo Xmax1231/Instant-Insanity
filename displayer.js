@@ -177,6 +177,10 @@ class Displayer { // eslint-disable-line no-unused-vars
    */
   mouseUpEvent(e) {
     let { mouseInfo } = this
+      , { interObject } = mouseInfo
+    if (interObject) 
+      interObject.mouseUpEvent()
+    
     mouseInfo.mouseDown = false
     mouseInfo.interObject = null
   }
