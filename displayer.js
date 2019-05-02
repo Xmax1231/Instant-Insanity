@@ -119,9 +119,15 @@ class Displayer { // eslint-disable-line no-unused-vars
    */
   setGameBricks(bricks) {
     let gameBricks = Array.from(bricks)
+      , { gameGroup } = this
+      , startY = bricks.length / 2 * 3 - 1.5
     this.gameBricks = gameBricks
-    this.gameGroup.children = gameBricks.map(b => 
-      b.renderObject)
+    for (let { renderObject } of bricks) {
+      gameGroup.add(renderObject)
+      renderObject.position.y = startY
+      startY -= 3
+    }
+
   }
 
   /**
