@@ -203,28 +203,28 @@ class App { // eslint-disable-line no-unused-vars
     var special_unlocked_div = document.createElement("div");
     var special_locked_div = document.createElement("div");
     var hide_unlocked_div = document.createElement("div");
-    var hide_locked_div = document.createElement("div");
+    // var hide_locked_div = document.createElement("div");
 
     normal_unlocked_div.innerText = "一般成就 已解鎖";
     normal_locked_div.innerText = "一般成就 未解鎖";
     special_unlocked_div.innerText = "特殊成就 已解鎖";
     special_locked_div.innerText = "特殊成就 未解鎖";
     hide_unlocked_div.innerText = "隱藏成就 已解鎖";
-    hide_locked_div.innerText = "隱藏成就 未解鎖";
+    // hide_locked_div.innerText = "隱藏成就 未解鎖";
 
     normal_unlocked_div.classList.add("unlocked");
     normal_locked_div.classList.add("locked");
     special_unlocked_div.classList.add("unlocked");
     special_locked_div.classList.add("locked");
     hide_unlocked_div.classList.add("unlocked");
-    hide_locked_div.classList.add("locked");
+    // hide_locked_div.classList.add("locked");
 
     document.getElementById("normal-area").appendChild(normal_unlocked_div);
     document.getElementById("normal-area").appendChild(normal_locked_div);
     document.getElementById("special-area").appendChild(special_unlocked_div);
     document.getElementById("special-area").appendChild(special_locked_div);
     document.getElementById("hide-area").appendChild(hide_unlocked_div);
-    document.getElementById("hide-area").appendChild(hide_locked_div);
+    // document.getElementById("hide-area").appendChild(hide_locked_div);
   }
 
 
