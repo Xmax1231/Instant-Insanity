@@ -55,7 +55,7 @@ class App { // eslint-disable-line no-unused-vars
 
     start_btn.innerText = "開始";
     setting_btn.innerText = "設定";
-    achievement_btn.innerText = "稱號";
+    achievement_btn.innerText = "成就";
 
     home_div.appendChild(icon_div);
     home_div.appendChild(start_btn);
@@ -109,7 +109,6 @@ class App { // eslint-disable-line no-unused-vars
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
 
-    play_div.appendChild(pause_btn);
     play_div.appendChild(submit_btn);
     play_div.appendChild(canvas_div);
     play_div.appendChild(time_div);
@@ -121,6 +120,7 @@ class App { // eslint-disable-line no-unused-vars
 
     pauseBackgroundPage_div.style.display = "none";
 
+    document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
   }
@@ -140,9 +140,11 @@ class App { // eslint-disable-line no-unused-vars
     var decreaseBrickCount_div = document.createElement("button");
     var brickStyleTXT_div = document.createElement("div");
     var brickShow_div = document.createElement("div");
+    var gohome_btn = document.createElement("button");
     
     increaseBrickCount_div.onclick = () => {app.increaseBrickCount();};
     decreaseBrickCount_div.onclick = () => {app.decreaseBrickCount();};
+    gohome_btn.onclick = () => {app.gotoHome()};
 
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
@@ -153,6 +155,7 @@ class App { // eslint-disable-line no-unused-vars
     decreaseBrickCount_div.id = "decreaseBrickCount";
     brickStyleTXT_div.id = "brickStyleTXT";
     brickShow_div.id = "brickShow";
+    gohome_btn.id = "gohome";
     
     brickNumTXT_div.innerText = "方塊數：";
     brickStyleTXT_div.innerText = "方塊樣式：";
@@ -169,6 +172,7 @@ class App { // eslint-disable-line no-unused-vars
     setting_div.appendChild(brickNumSetting_div);
     setting_div.appendChild(brickStyleSetting_div);
     
+    document.getElementById("game").appendChild(gohome_btn);
     document.getElementById("game").appendChild(setting_div);
   }
 
@@ -181,16 +185,21 @@ class App { // eslint-disable-line no-unused-vars
     var normal_div = document.createElement("div");
     var special_div = document.createElement("div");
     var hide_div = document.createElement("div");
+    var gohome_btn = document.createElement("button");
+
+    gohome_btn.onclick = () => {app.gotoHome()};
 
     achievement_div.id = "achievement";
     normal_div.id = "normal-area";
     special_div.id = "special-area";
     hide_div.id = "hide-area";
+    gohome_btn.id = "gohome";
 
     achievement_div.appendChild(normal_div);
     achievement_div.appendChild(special_div);
     achievement_div.appendChild(hide_div);
 
+    document.getElementById("game").appendChild(gohome_btn);
     document.getElementById("game").appendChild(achievement_div);
 
     // TODO
@@ -201,28 +210,28 @@ class App { // eslint-disable-line no-unused-vars
     var special_unlocked_div = document.createElement("div");
     var special_locked_div = document.createElement("div");
     var hide_unlocked_div = document.createElement("div");
-    var hide_locked_div = document.createElement("div");
+    // var hide_locked_div = document.createElement("div");
 
     normal_unlocked_div.innerText = "一般成就 已解鎖";
     normal_locked_div.innerText = "一般成就 未解鎖";
     special_unlocked_div.innerText = "特殊成就 已解鎖";
     special_locked_div.innerText = "特殊成就 未解鎖";
     hide_unlocked_div.innerText = "隱藏成就 已解鎖";
-    hide_locked_div.innerText = "隱藏成就 未解鎖";
+    // hide_locked_div.innerText = "隱藏成就 未解鎖";
 
     normal_unlocked_div.classList.add("unlocked");
     normal_locked_div.classList.add("locked");
     special_unlocked_div.classList.add("unlocked");
     special_locked_div.classList.add("locked");
     hide_unlocked_div.classList.add("unlocked");
-    hide_locked_div.classList.add("locked");
+    // hide_locked_div.classList.add("locked");
 
     document.getElementById("normal-area").appendChild(normal_unlocked_div);
     document.getElementById("normal-area").appendChild(normal_locked_div);
     document.getElementById("special-area").appendChild(special_unlocked_div);
     document.getElementById("special-area").appendChild(special_locked_div);
     document.getElementById("hide-area").appendChild(hide_unlocked_div);
-    document.getElementById("hide-area").appendChild(hide_locked_div);
+    // document.getElementById("hide-area").appendChild(hide_locked_div);
   }
 
 
