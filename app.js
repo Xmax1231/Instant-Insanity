@@ -120,8 +120,8 @@ class App {
 
     this.game = new Game(this.brickCount);
     this.timeInt = setInterval(() => {
-      time_div.innerText = 'Time: ' + this.game.getTimeFormatted();
-    }, 10);
+      time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
+    }, 100);
 
     let brick_table = document.createElement('table');
 
