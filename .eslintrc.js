@@ -9,8 +9,10 @@ module.exports = {
   'globals': {
     'Game': true
   },
-  'extends': 'google',
+  'extends': 'eslint:recommended',
   'rules': {
-    'object-curly-spacing': [2, 'always'] // https://eslint.org/docs/2.0.0/rules/object-curly-spacing
+    'no-unused-vars': [
+      'warn'
+    ],
   }
 };

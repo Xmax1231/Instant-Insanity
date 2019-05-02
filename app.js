@@ -3,12 +3,12 @@ import { Game } from './game.js';
 /**
  * 控制遊戲畫面
  */
-class App { // eslint-disable-line no-unused-vars
+class App {
   /**
    * 初始化App
    */
   constructor() {
-    this.displayer = new Displayer(null); // TODO
+    this.displayer = null; // TODO
     this.brickCount = 0; // TODO
     this.game = new Game();
     this.volume = 1;
@@ -118,7 +118,7 @@ class App { // eslint-disable-line no-unused-vars
    * TODO
    * @param {number} achievementId - TODO
    */
-  pickupGift(achievementId) { // eslint-disable-line no-unused-vars
+  pickupGift(achievementId) {
     // TODO
   }
 }
