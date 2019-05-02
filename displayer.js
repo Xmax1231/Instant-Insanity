@@ -59,6 +59,9 @@ class Displayer { // eslint-disable-line no-unused-vars
     window.addEventListener('mousedown', e => this.mouseDownEvent(e))
     window.addEventListener('mousemove', e => this.mouseMoveEvent(e))
     window.addEventListener('mouseup', e => this.mouseUpEvent(e))
+    window.addEventListener('touchstart', e => this.mouseDownEvent(e.touches[0]))
+    window.addEventListener('touchmove', e => this.mouseMoveEvent(e.touches[0]))
+    window.addEventListener('touchend', e => this.mouseUpEvent(e))
     window.addEventListener('wheel', e => this.wheelEvent(e))
     setInterval(() => 
       this.renderer.render(this.scene, this.camera), 33)
@@ -137,7 +140,7 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {Event} e
    */
   mouseDownEvent(e) {
-    e.preventDefault()
+    e.preventDefault && e.preventDefault()
     let { mouseInfo } = this
     mouseInfo.lastX = e.clientX
     mouseInfo.lastY = e.clientY
@@ -180,7 +183,7 @@ class Displayer { // eslint-disable-line no-unused-vars
       , { interObject } = mouseInfo
     if (interObject) 
       interObject.mouseUpEvent()
-    
+
     mouseInfo.mouseDown = false
     mouseInfo.interObject = null
   }
