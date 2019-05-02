@@ -4,14 +4,14 @@ import {Displayer} from './displayer.js';
 /**
  * 控制遊戲畫面
  */
-class App { // eslint-disable-line no-unused-vars
+class App {
   /**
    * 初始化App
    */
   constructor() {
     this.displayer = new Displayer(null); // TODO
     this.brickCount = 4; // TODO
-    this.game = new Game();
+    this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
   }
@@ -21,10 +21,10 @@ class App { // eslint-disable-line no-unused-vars
   /**
    * 清除畫面
    */
-  clearPage(){
+  clearPage() {
     var myNode = document.getElementById("game");
     while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
+      myNode.removeChild(myNode.firstChild);
     }
   }
 
@@ -117,6 +117,91 @@ class App { // eslint-disable-line no-unused-vars
     document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
+
+    this.game = new Game(this.brickCount);
+    this.timeInt = setInterval(() => {
+      time_div.innerText = 'Time: ' + this.game.getTimeFormatted();
+    }, 10);
+
+    let brick_table = document.createElement('table');
+
+    let createBrick = (brickId, face) => {
+      let brick = document.createElement('div');
+      brick.id = 'brick' + brickId + face;
+      if (face == 2 || face == 5) {
+        brick.className = 'facetop';
+      } else {
+        brick.className = 'faceside';
+      }
+      return brick;
+    }
+
+    for (let brickId = 0; brickId < this.brickCount; brickId++) {
+      // top
+      let tr_top = document.createElement('tr');
+      let td_top = document.createElement('td');
+      td_top.colSpan = 4;
+      td_top.style = 'text-align: center;';
+      td_top.appendChild(createBrick(brickId, 2));
+      tr_top.appendChild(td_top);
+      brick_table.appendChild(tr_top);
+      // side
+      let tr_side = document.createElement('tr');
+      [0, 1, 3, 4].forEach(face => {
+        let td_side = document.createElement('td');
+        td_side.appendChild(createBrick(brickId, face));
+        tr_side.appendChild(td_side);
+      });
+      brick_table.appendChild(tr_side);
+      // bottom
+      let tr_bottom = document.createElement('tr');
+      let td_bottom = document.createElement('td');
+      td_bottom.colSpan = 4;
+      td_bottom.style = 'text-align: center;';
+      td_bottom.appendChild(createBrick(brickId, 5));
+      tr_bottom.appendChild(td_bottom);
+      brick_table.appendChild(tr_bottom);
+    }
+
+    canvas_div.appendChild(brick_table);
+
+    let draw = () => {
+      for (let bid = 0; bid < this.brickCount; bid++) {
+        for (let face = 0; face < 6; face++) {
+          const el = document.getElementById('brick' + bid + face);
+          el.classList.remove('face1');
+          el.classList.remove('face2');
+          el.classList.remove('face3');
+          el.classList.remove('face4');
+          el.classList.add('face' + this.game.bricks[bid][face]);
+        }
+      }
+      move_div.innerText = 'Move: ' + this.game.getStepFormatted();
+    }
+
+    let button_table = document.createElement('table');
+
+    for (let brickId = 0; brickId < this.brickCount; brickId++) {
+      let tr = document.createElement('tr');
+      let td = document.createElement('td');
+      td.colSpan = 4;
+      ['X', 'Y', 'Z'].forEach(dir => {
+        for (let angle = 1; angle <= 3; angle++) {
+          let btn = document.createElement('button');
+          btn.onclick = () => {
+            this.game['rotate' + dir](brickId, angle);
+            draw();
+          };
+          btn.innerText = dir + angle;
+          btn.style = 'font-size: 16px;';
+          td.appendChild(btn);
+        }
+      });
+      tr.appendChild(td);
+      button_table.appendChild(tr);
+    }
+    canvas_div.appendChild(button_table);
+    draw();
   }
 
   /**
@@ -234,14 +319,21 @@ class App { // eslint-disable-line no-unused-vars
    * 暫停遊戲
    */
   pause() {
-    document.getElementById('pauseBackgroundPage').style.display='block';
+    this.game.pause();
+    document.getElementById('pauseBackgroundPage').style.display = 'block';
   }
 
   /**
    * 檢查是否通關
    */
   submit() {
-    // TODO
+    if (this.game.isResolve()) {
+      alert('mission clear');
+      this.game.pause();
+      clearInterval(this.timeInt);
+    } else {
+      alert('not yet');
+    }
   }
 
   // Game page: pause
@@ -250,14 +342,16 @@ class App { // eslint-disable-line no-unused-vars
    * 繼續遊戲
    */
   continue() {
-    document.getElementById('pauseBackgroundPage').style.display='none';
+    this.game.start();
+    document.getElementById('pauseBackgroundPage').style.display = 'none';
   }
 
   /**
    * 重新開始遊戲
+   * @todo 應該為同一關卡重新開始，尚未完成
    */
   restart() {
-    document.getElementById('pauseBackgroundPage').style.display='none';
+    this.start();
   }
 
   /**
@@ -309,7 +403,7 @@ class App { // eslint-disable-line no-unused-vars
    * TODO
    * @param {number} achievementId - TODO
    */
-  pickupGift(achievementId) { // eslint-disable-line no-unused-vars
+  pickupGift(achievementId) {
     // TODO
   }
 }

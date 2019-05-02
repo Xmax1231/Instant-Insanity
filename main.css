@@ -193,3 +193,46 @@ body{
     height: 50px;
     background: black;
 }
+
+.facetop {
+    width: 20px;
+    height: 8px;
+    margin: 0 auto;
+}
+
+.faceside {
+    width: 20px;
+    height: 20px;
+}
+
+.face1 {
+    background-color: red;
+}
+
+.face2 {
+    background-color: yellow;
+}
+
+.face3 {
+    background-color: green;
+}
+
+.face4 {
+    background-color: blue;
+}
+
+.face5 {
+    background-color: palevioletred;
+}
+
+.face6 {
+    background-color: orangered;
+}
+
+.face7 {
+    background-color: purple;
+}
+
+.face8 {
+    background-color: skyblue;
+}

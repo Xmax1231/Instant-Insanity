@@ -1,7 +1,7 @@
 /**
  * 方塊
  */
-class Brick { // eslint-disable-line no-unused-vars
+class Brick {
   /**
    * 初始化方塊
    * @param {Game} game
@@ -36,7 +36,7 @@ class Brick { // eslint-disable-line no-unused-vars
   }
 
   /**
-   * @todo
+   *
    */
   mouseLeaveEvent() {
     // TODO
