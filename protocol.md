@@ -59,8 +59,10 @@
 #### new Brick(game, materialName, facePattern)
   + Game      game
   + String    materialName
-  + Array     facePattern [faceId: 0-5], len: 2-n
-  + Array     facePatternOriginal [faceId: 0-5], len: 2-n
+  + Array     facePattern
+    + get top,bottom,left,right,front,back [faceId: 0-5]
+  + Array     facePatternOriginal
+    + get top,bottom,left,right,front,back [faceId: 0-5]
   + Object    orientation
     + get x,y,z [0,1,2,3]
   + Object    rotation
