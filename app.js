@@ -169,10 +169,9 @@ class App {
       for (let bid = 0; bid < this.brickCount; bid++) {
         for (let face = 0; face < 6; face++) {
           const el = document.getElementById('brick' + bid + face);
-          el.classList.remove('face1');
-          el.classList.remove('face2');
-          el.classList.remove('face3');
-          el.classList.remove('face4');
+          for (let bid2 = 1; bid2 <= this.brickCount; bid2++) {
+            el.classList.remove('face' + bid2);
+          }
           el.classList.add('face' + this.game.bricks[bid][face]);
         }
       }
