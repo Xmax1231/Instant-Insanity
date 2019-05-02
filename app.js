@@ -11,8 +11,9 @@ class App { // eslint-disable-line no-unused-vars
    */
   constructor() {
     this.displayer = new Displayer(document.getElementById('render'));
-    this.brickCount = 4; // TODO
-    this.game = new Game();
+    this.brickCount = 4;
+    this.materialName = 'test';
+    this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
     this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('test').fileNames.map(n => `img/${n}`))
@@ -35,6 +36,7 @@ class App { // eslint-disable-line no-unused-vars
    */
   gotoHome() {
     this.clearPage();
+    this.displayer.display(Displayer.BACKGROUND)
     var home_div = document.createElement("div");
     var icon_div = document.createElement("div");
     var start_btn = document.createElement("button");
@@ -68,6 +70,8 @@ class App { // eslint-disable-line no-unused-vars
    */
   start() {
     this.clearPage();
+    this.game = new Game(this)
+    this.displayer.display(Displayer.GAMMING)
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
@@ -126,6 +130,7 @@ class App { // eslint-disable-line no-unused-vars
    */
   gotoSetting() {
     this.clearPage();
+    this.displayer.display(Displayer.SELECTING)
     var setting_div = document.createElement("div");
     var brickNumSetting_div = document.createElement("div");
     var brickStyleSetting_div = document.createElement("div");
