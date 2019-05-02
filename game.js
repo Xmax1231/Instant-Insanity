@@ -116,24 +116,19 @@ class Game {
     }
 
     angle = (angle % 4 + 4) % 4;
-    if (angle == 0) {
-      console.log('Nothing to do');
-    } else {
-      for (let i = 0; i < angle; i++) {
+    for (let i = 0; i < angle; i++) {
+      [
+        this.bricks[brickId][1],
+        this.bricks[brickId][5],
+        this.bricks[brickId][4],
+        this.bricks[brickId][2],
+      ] =
         [
+          this.bricks[brickId][2],
           this.bricks[brickId][1],
           this.bricks[brickId][5],
           this.bricks[brickId][4],
-          this.bricks[brickId][2],
-        ] =
-          [
-            this.bricks[brickId][2],
-            this.bricks[brickId][1],
-            this.bricks[brickId][5],
-            this.bricks[brickId][4],
-          ];
-      }
-      console.log(`rotateX ${brickId} ${angle}`);
+        ];
     }
     this.stepCounter++;
   }
@@ -149,24 +144,19 @@ class Game {
     }
 
     angle = (angle % 4 + 4) % 4;
-    if (angle == 0) {
-      console.log('Nothing to do');
-    } else {
-      for (let i = 0; i < angle; i++) {
+    for (let i = 0; i < angle; i++) {
+      [
+        this.bricks[brickId][0],
+        this.bricks[brickId][2],
+        this.bricks[brickId][3],
+        this.bricks[brickId][5],
+      ] =
         [
+          this.bricks[brickId][5],
           this.bricks[brickId][0],
           this.bricks[brickId][2],
           this.bricks[brickId][3],
-          this.bricks[brickId][5],
-        ] =
-          [
-            this.bricks[brickId][5],
-            this.bricks[brickId][0],
-            this.bricks[brickId][2],
-            this.bricks[brickId][3],
-          ];
-      }
-      console.log(`rotateY ${brickId} ${angle}`);
+        ];
     }
     this.stepCounter++;
   }
@@ -182,24 +172,19 @@ class Game {
     }
 
     angle = (angle % 4 + 4) % 4;
-    if (angle == 0) {
-      console.log('Nothing to do');
-    } else {
-      for (let i = 0; i < angle; i++) {
+    for (let i = 0; i < angle; i++) {
+      [
+        this.bricks[brickId][0],
+        this.bricks[brickId][4],
+        this.bricks[brickId][3],
+        this.bricks[brickId][1],
+      ] =
         [
+          this.bricks[brickId][1],
           this.bricks[brickId][0],
           this.bricks[brickId][4],
           this.bricks[brickId][3],
-          this.bricks[brickId][1],
-        ] =
-          [
-            this.bricks[brickId][1],
-            this.bricks[brickId][0],
-            this.bricks[brickId][4],
-            this.bricks[brickId][3],
-          ];
-      }
-      console.log(`rotateZ ${brickId} ${angle}`);
+        ];
     }
     this.stepCounter++;
   }
