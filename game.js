@@ -49,8 +49,61 @@ class Game {
       }
     }
 
-    this.timeCounter = 0; // TODO
+    this.timeCounter = 0;
     this.stepCounter = 0;
+    this.start();
+  }
+
+  start() {
+    this.isPause = false;
+    this.lastStartTime = Date.now() / 1000;
+  }
+
+  pause() {
+    this.isPause = true;
+    this.timeCounter += (Date.now() / 1000 - this.lastStartTime);
+  }
+
+  getTime() {
+    if (this.isPause) {
+      return this.timeCounter;
+    } else {
+      return (Date.now() / 1000 - this.lastStartTime) + this.timeCounter;
+    }
+  }
+
+  timePadding(n) {
+    if (n < 10) {
+      return '0' + n;
+    }
+    return n;
+  }
+
+  getTimeFormatted() {
+    let time = this.getTime();
+    let result = '';
+    if (time > 3600) {
+      result += Math.floor(time / 3600) + ':';
+      time -= Math.floor(time / 3600) * 3600;
+    }
+    if (time > 60) {
+      result += this.timePadding(Math.floor(time / 60)) + ':';
+      time -= Math.floor(time / 60) * 60;
+    }
+    result += this.timePadding(Math.floor(time));
+    time -= Math.floor(time);
+    result += '.';
+    result += this.timePadding(Math.floor(time * 100));
+    result += ' s';
+    return result;
+  }
+
+  getStep() {
+    return this.stepCounter;
+  }
+
+  getStepFormatted() {
+    return this.getStep() + '步';
   }
 
   /**

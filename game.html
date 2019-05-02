@@ -182,12 +182,16 @@
 
 	<button onclick="isResolve()">Check answer</button>
 	Step: <span id="stepCounter"></span>
+	Time: <span id="timeCounter"></span>
 
 	<script>
 		const brickCount = 4;
 		window.onload = function() {
 			window.game = new Game(brickCount);
 			draw();
+			window.timeInt = setInterval(() => {
+				document.getElementById("timeCounter").innerText = game.getTimeFormatted();
+			}, 10);
 		}
 
 		function rotateX(bid, angle) {
@@ -208,6 +212,8 @@
 		function isResolve() {
 			if (game.isResolve()) {
 				alert('mission clear');
+				game.pause();
+				clearInterval(timeInt);
 			} else {
 				alert('not yet');
 			}
@@ -224,7 +230,7 @@
 					el.classList.add("face" + game.bricks[bid][face]);
 				}
 			}
-			document.getElementById("stepCounter").innerText = game.stepCounter;
+			document.getElementById("stepCounter").innerText = game.getStepFormatted();
 		}
 	</script>
 </body>
