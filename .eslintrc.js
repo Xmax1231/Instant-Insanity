@@ -3,6 +3,7 @@ module.exports = {
     'browser': true,
     'es6': true
   },
+  'parser': 'babel-eslint',
   'parserOptions': {
     'sourceType': 'module'
   },
@@ -15,5 +16,6 @@ module.exports = {
     'no-unused-vars': [
       'warn'
     ],
+    'no-console': 'off',
   }
 };
