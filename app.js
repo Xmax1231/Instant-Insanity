@@ -108,6 +108,7 @@ class App { // eslint-disable-line no-unused-vars
     play_div.appendChild(submit_btn);
     // play_div.appendChild(canvas_div);
     play_div.appendChild(timemoveblock_div);
+    play_div.appendChild(pause_btn);
     timemoveblock_div.appendChild(time_div);
     timemoveblock_div.appendChild(move_div);
     pauseBackgroundPage_div.appendChild(pausePage_div);
@@ -117,7 +118,6 @@ class App { // eslint-disable-line no-unused-vars
 
     pauseBackgroundPage_div.style.display = "none";
 
-    document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
   }
