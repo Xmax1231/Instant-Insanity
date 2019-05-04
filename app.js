@@ -1,5 +1,5 @@
-import {Game} from './game.js';
-import {Displayer} from './displayer.js';
+import { Game } from './game.js';
+import { Displayer } from './displayer.js';
 
 /**
  * 控制遊戲畫面
@@ -21,10 +21,10 @@ class App { // eslint-disable-line no-unused-vars
   /**
    * 清除畫面
    */
-  clearPage(){
+  clearPage() {
     var myNode = document.getElementById("game");
     while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
+      myNode.removeChild(myNode.firstChild);
     }
   }
 
@@ -39,9 +39,9 @@ class App { // eslint-disable-line no-unused-vars
     var setting_btn = document.createElement("button");
     var achievement_btn = document.createElement("button");
 
-    start_btn.onclick = () => {app.start();};
-    setting_btn.onclick = () => {app.gotoSetting();};
-    achievement_btn.onclick = () => {app.gotoAchievement();};
+    start_btn.onclick = () => { this.start(); };
+    setting_btn.onclick = () => { this.gotoSetting(); };
+    achievement_btn.onclick = () => { this.gotoAchievement(); };
 
     home_div.id = "home";
     icon_div.id = "icon-area";
@@ -83,16 +83,16 @@ class App { // eslint-disable-line no-unused-vars
     var volume_ipt = document.createElement("input");
     var output_div = document.createElement("div");
 
-    pause_btn.onclick = () => {app.pause();};
-    submit_btn.onclick = () => {app.submit();};
-    continue_btn.onclick = () => {app.continue();};
-    restart_btn.onclick = () => {app.restart();};
-    exit_btn.onclick = () => {app.exit();};
+    pause_btn.onclick = () => { this.pause(); };
+    submit_btn.onclick = () => { this.submit(); };
+    continue_btn.onclick = () => { this.continue(); };
+    restart_btn.onclick = () => { this.restart(); };
+    exit_btn.onclick = () => { this.exit(); };
     volume_ipt.oninput = function() {
       document.getElementById("output").innerHTML = this.value;
-      app.setVolume(this.value);
+      this.setVolume(this.value);
     };
-    
+
     play_div.id = "play";
     pause_btn.id = "pause";
     submit_btn.id = "submit";
@@ -109,7 +109,7 @@ class App { // eslint-disable-line no-unused-vars
     volume_icon.id = "volume_icon";
     volume_ipt.id = "volume";
     output_div.id = "output";
-    
+
     submit_btn.innerText = "submit";
     time_div.innerText = "time:00.00";
     move_div.innerText = "move:0";
@@ -134,7 +134,7 @@ class App { // eslint-disable-line no-unused-vars
     pausePage_div.appendChild(restart_btn);
     pausePage_div.appendChild(exit_btn);
     pausePage_div.appendChild(volumeSetting_div);
-    volumeSetting_div.appendChild(volume_icon);    
+    volumeSetting_div.appendChild(volume_icon);
     volumeSetting_div.appendChild(volume_ipt);
     volumeSetting_div.appendChild(output_div);
 
@@ -159,10 +159,10 @@ class App { // eslint-disable-line no-unused-vars
     var brickStyleTXT_div = document.createElement("div");
     var brickShow_div = document.createElement("div");
     var gohome_btn = document.createElement("button");
-    
-    increaseBrickCount_div.onclick = () => {app.increaseBrickCount();};
-    decreaseBrickCount_div.onclick = () => {app.decreaseBrickCount();};
-    gohome_btn.onclick = () => {app.gotoHome()};
+
+    increaseBrickCount_div.onclick = () => { this.increaseBrickCount(); };
+    decreaseBrickCount_div.onclick = () => { this.decreaseBrickCount(); };
+    gohome_btn.onclick = () => { this.gotoHome() };
 
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
@@ -174,7 +174,7 @@ class App { // eslint-disable-line no-unused-vars
     brickStyleTXT_div.id = "brickStyleTXT";
     brickShow_div.id = "brickShow";
     gohome_btn.id = "gohome";
-    
+
     brickNumTXT_div.innerText = "方塊數：";
     brickStyleTXT_div.innerText = "方塊樣式：";
     increaseBrickCount_div.innerHTML = "+";
@@ -189,7 +189,7 @@ class App { // eslint-disable-line no-unused-vars
     brickStyleSetting_div.appendChild(brickShow_div);
     setting_div.appendChild(brickNumSetting_div);
     setting_div.appendChild(brickStyleSetting_div);
-    
+
     document.getElementById("game").appendChild(gohome_btn);
     document.getElementById("game").appendChild(setting_div);
   }
@@ -205,7 +205,7 @@ class App { // eslint-disable-line no-unused-vars
     var hide_div = document.createElement("div");
     var gohome_btn = document.createElement("button");
 
-    gohome_btn.onclick = () => {app.gotoHome()};
+    gohome_btn.onclick = () => { this.gotoHome() };
 
     achievement_div.id = "achievement";
     normal_div.id = "normal-area";
@@ -259,7 +259,7 @@ class App { // eslint-disable-line no-unused-vars
    * 暫停遊戲
    */
   pause() {
-    document.getElementById('pauseBackgroundPage').style.display='block';
+    document.getElementById('pauseBackgroundPage').style.display = 'block';
   }
 
   /**
@@ -275,14 +275,14 @@ class App { // eslint-disable-line no-unused-vars
    * 繼續遊戲
    */
   continue() {
-    document.getElementById('pauseBackgroundPage').style.display='none';
+    document.getElementById('pauseBackgroundPage').style.display = 'none';
   }
 
   /**
    * 重新開始遊戲
    */
   restart() {
-    document.getElementById('pauseBackgroundPage').style.display='none';
+    document.getElementById('pauseBackgroundPage').style.display = 'none';
   }
 
   /**
