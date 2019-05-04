@@ -78,12 +78,20 @@ class App { // eslint-disable-line no-unused-vars
     var continue_btn = document.createElement("button");
     var restart_btn = document.createElement("button");
     var exit_btn = document.createElement("button");
+    var volumeSetting_div = document.createElement("div");
+    var volume_icon = document.createElement("div");
+    var volume_ipt = document.createElement("input");
+    var output_div = document.createElement("div");
 
     pause_btn.onclick = () => {app.pause();};
     submit_btn.onclick = () => {app.submit();};
     continue_btn.onclick = () => {app.continue();};
     restart_btn.onclick = () => {app.restart();};
     exit_btn.onclick = () => {app.exit();};
+    volume_ipt.oninput = function() {
+      document.getElementById("output").innerHTML = this.value;
+      app.setVolume(this.value);
+    };
     
     play_div.id = "play";
     pause_btn.id = "pause";
@@ -97,6 +105,10 @@ class App { // eslint-disable-line no-unused-vars
     continue_btn.id = "continue";
     restart_btn.id = "restart";
     exit_btn.id = "exit";
+    volumeSetting_div.id = "volumeSetting";
+    volume_icon.id = "volume_icon";
+    volume_ipt.id = "volume";
+    output_div.id = "output";
     
     submit_btn.innerText = "submit";
     time_div.innerText = "time:00.00";
@@ -104,6 +116,12 @@ class App { // eslint-disable-line no-unused-vars
     continue_btn.innerText = "繼續遊戲";
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
+    output_div.innerText = "75";
+
+    volume_ipt.type = "range";
+    volume_ipt.min = "0";
+    volume_ipt.max = "100";
+    volume_ipt.value = "75";
 
     play_div.appendChild(submit_btn);
     // play_div.appendChild(canvas_div);
@@ -115,6 +133,10 @@ class App { // eslint-disable-line no-unused-vars
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);
     pausePage_div.appendChild(exit_btn);
+    pausePage_div.appendChild(volumeSetting_div);
+    volumeSetting_div.appendChild(volume_icon);    
+    volumeSetting_div.appendChild(volume_ipt);
+    volumeSetting_div.appendChild(output_div);
 
     pauseBackgroundPage_div.style.display = "none";
 
@@ -275,7 +297,7 @@ class App { // eslint-disable-line no-unused-vars
    * @param {number} value
    */
   setVolume(value) {
-    // TODO
+    console.log("setVolume: " + value);
   }
 
 
