@@ -160,9 +160,9 @@ class App { // eslint-disable-line no-unused-vars
     BrickCount_div.innerText = this.brickCount.toString();
 
     brickNumSetting_div.appendChild(brickNumTXT_div);
-    brickNumSetting_div.appendChild(increaseBrickCount_div);
-    brickNumSetting_div.appendChild(BrickCount_div);
     brickNumSetting_div.appendChild(decreaseBrickCount_div);
+    brickNumSetting_div.appendChild(BrickCount_div);
+    brickNumSetting_div.appendChild(increaseBrickCount_div);
     brickStyleSetting_div.appendChild(brickStyleTXT_div);
     brickStyleSetting_div.appendChild(brickShow_div);
     setting_div.appendChild(brickNumSetting_div);
