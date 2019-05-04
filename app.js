@@ -69,7 +69,8 @@ class App {
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
-    var canvas_div = document.createElement("div");
+    // var canvas_div = document.createElement("div");
+    var timemoveblock_div = document.createElement("div");
     var time_div = document.createElement("div");
     var move_div = document.createElement("div");
     var pauseBackgroundPage_div = document.createElement("div");
@@ -87,7 +88,8 @@ class App {
     play_div.id = "play";
     pause_btn.id = "pause";
     submit_btn.id = "submit";
-    canvas_div.id = "canvas-area";
+    // canvas_div.id = "canvas-area";
+    timemoveblock_div.id = "timemoveblock";
     time_div.id = "time";
     move_div.id = "move";
     pauseBackgroundPage_div.id = "pauseBackgroundPage";
@@ -104,9 +106,10 @@ class App {
     exit_btn.innerText = "結束遊戲";
 
     play_div.appendChild(submit_btn);
-    play_div.appendChild(canvas_div);
-    play_div.appendChild(time_div);
-    play_div.appendChild(move_div);
+    // play_div.appendChild(canvas_div);
+    play_div.appendChild(timemoveblock_div);
+    timemoveblock_div.appendChild(time_div);
+    timemoveblock_div.appendChild(move_div);
     pauseBackgroundPage_div.appendChild(pausePage_div);
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);
@@ -287,28 +290,28 @@ class App {
     var special_unlocked_div = document.createElement("div");
     var special_locked_div = document.createElement("div");
     var hide_unlocked_div = document.createElement("div");
-    var hide_locked_div = document.createElement("div");
+    // var hide_locked_div = document.createElement("div");
 
     normal_unlocked_div.innerText = "一般成就 已解鎖";
     normal_locked_div.innerText = "一般成就 未解鎖";
     special_unlocked_div.innerText = "特殊成就 已解鎖";
     special_locked_div.innerText = "特殊成就 未解鎖";
     hide_unlocked_div.innerText = "隱藏成就 已解鎖";
-    hide_locked_div.innerText = "隱藏成就 未解鎖";
+    // hide_locked_div.innerText = "隱藏成就 未解鎖";
 
     normal_unlocked_div.classList.add("unlocked");
     normal_locked_div.classList.add("locked");
     special_unlocked_div.classList.add("unlocked");
     special_locked_div.classList.add("locked");
     hide_unlocked_div.classList.add("unlocked");
-    hide_locked_div.classList.add("locked");
+    // hide_locked_div.classList.add("locked");
 
     document.getElementById("normal-area").appendChild(normal_unlocked_div);
     document.getElementById("normal-area").appendChild(normal_locked_div);
     document.getElementById("special-area").appendChild(special_unlocked_div);
     document.getElementById("special-area").appendChild(special_locked_div);
     document.getElementById("hide-area").appendChild(hide_unlocked_div);
-    document.getElementById("hide-area").appendChild(hide_locked_div);
+    // document.getElementById("hide-area").appendChild(hide_locked_div);
   }
 
 
