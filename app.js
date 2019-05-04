@@ -39,9 +39,9 @@ class App {
     var setting_btn = document.createElement("button");
     var achievement_btn = document.createElement("button");
 
-    start_btn.onclick = () => {this.start();};
-    setting_btn.onclick = () => {this.gotoSetting();};
-    achievement_btn.onclick = () => {this.gotoAchievement();};
+    start_btn.onclick = () => { this.start(); };
+    setting_btn.onclick = () => { this.gotoSetting(); };
+    achievement_btn.onclick = () => { this.gotoAchievement(); };
 
     home_div.id = "home";
     icon_div.id = "icon-area";
@@ -79,11 +79,11 @@ class App {
     var restart_btn = document.createElement("button");
     var exit_btn = document.createElement("button");
 
-    pause_btn.onclick = () => {this.pause();};
-    submit_btn.onclick = () => {this.submit();};
-    continue_btn.onclick = () => {this.continue();};
-    restart_btn.onclick = () => {this.restart();};
-    exit_btn.onclick = () => {this.exit();};
+    pause_btn.onclick = () => { this.pause(); };
+    submit_btn.onclick = () => { this.submit(); };
+    continue_btn.onclick = () => { this.continue(); };
+    restart_btn.onclick = () => { this.restart(); };
+    exit_btn.onclick = () => { this.exit(); };
 
     play_div.id = "play";
     pause_btn.id = "pause";
@@ -126,6 +126,9 @@ class App {
       time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
     }, 100);
 
+    let game_div = document.createElement('div');
+    game_div.style = 'position: absolute; top: 5%; left: 25%;';
+
     let brick_table = document.createElement('table');
 
     let createBrick = (brickId, face) => {
@@ -166,7 +169,7 @@ class App {
       brick_table.appendChild(tr_bottom);
     }
 
-    canvas_div.appendChild(brick_table);
+    game_div.appendChild(brick_table);
 
     let draw = () => {
       for (let bid = 0; bid < this.brickCount; bid++) {
@@ -202,7 +205,8 @@ class App {
       tr.appendChild(td);
       button_table.appendChild(tr);
     }
-    canvas_div.appendChild(button_table);
+    game_div.appendChild(button_table);
+    document.getElementById("game").appendChild(game_div);
     draw();
   }
 
@@ -222,9 +226,9 @@ class App {
     var brickShow_div = document.createElement("div");
     var gohome_btn = document.createElement("button");
 
-    increaseBrickCount_div.onclick = () => {this.increaseBrickCount();};
-    decreaseBrickCount_div.onclick = () => {this.decreaseBrickCount();};
-    gohome_btn.onclick = () => {this.gotoHome()};
+    increaseBrickCount_div.onclick = () => { this.increaseBrickCount(); };
+    decreaseBrickCount_div.onclick = () => { this.decreaseBrickCount(); };
+    gohome_btn.onclick = () => { this.gotoHome() };
 
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
@@ -267,7 +271,7 @@ class App {
     var hide_div = document.createElement("div");
     var gohome_btn = document.createElement("button");
 
-    gohome_btn.onclick = () => {this.gotoHome()};
+    gohome_btn.onclick = () => { this.gotoHome() };
 
     achievement_div.id = "achievement";
     normal_div.id = "normal-area";
