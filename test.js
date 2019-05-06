@@ -1,9 +1,19 @@
 const puppeteer = require('puppeteer');
 const merge = require('easy-pdf-merge');
 const fs = require('fs');
+var ArgumentParser = require('argparse').ArgumentParser;
 
-const width = '1200px';
-const height = '900px';
+var parser = new ArgumentParser({ addHelp: true, headless: false });
+
+parser.addArgument('--width', { defaultValue: 1200, type: 'int' });
+parser.addArgument('--height', { defaultValue: 900, type: 'int' });
+parser.addArgument('--withhead', { dest: 'headless', action: 'storeFalse' });
+var args = parser.parseArgs();
+console.log(args);
+
+const width = args.width;
+const height = args.height;
+const headless = args.headless
 var pdfCount = 0;
 const outdir = 'output/';
 
@@ -13,13 +23,13 @@ if (!fs.existsSync(outdir)) {
 
 (async () => {
 
-	const browser = await puppeteer.launch();
+	const browser = await puppeteer.launch({ headless: headless });
 	console.log(await browser.version());
 
 	const page = await browser.newPage();
 
 	await page.goto('http://127.0.0.1:8080', { waitUntil: 'networkidle2' });
-	await printPDF(page, await browser.version() + ' Load home')
+	await printPDF(page, 'browser.version:' + await browser.version() + ' width:' + width + ' height:' + height + ' Load home')
 
 	await page.click('#gotoSetting')
 	await page.waitFor(100)
@@ -72,6 +82,9 @@ if (!fs.existsSync(outdir)) {
 const printPDF = (page, text = '') => {
 	pdfCount += 1
 	console.log('printPDF ' + pdfCount + ' ' + text)
+	if (!headless) {
+		return Promise.resolve();
+	}
 	return page.pdf({
 		path: outdir + pdfCount + '.pdf',
 		width: width,
