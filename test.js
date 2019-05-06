@@ -12,7 +12,7 @@ var pdfCount = 0;
 
 	const page = await browser.newPage();
 
-	await page.goto('http://localhost:8000', { waitUntil: 'networkidle2' });
+	await page.goto('http://127.0.0.1:8080', { waitUntil: 'networkidle2' });
 	await printPDF(page, await browser.version() + ' Load home')
 
 	await page.click('#gotoSetting')
