@@ -36,7 +36,7 @@ var pdfCount = 0;
 	await printPDF(page, 'Wait for 3 seconds')
 
 	await page.$$eval('button', (buttons) => {
-		buttons.forEach((el, i) => {
+		buttons.forEach((el, _) => {
 			console.log(el)
 			console.log(el.textContent)
 			if (el.textContent == 'Z1') el.click();
@@ -80,7 +80,7 @@ const printPDF = (page, text = '') => {
 }
 
 const mergePDF = () => {
-	pdfs = []
+	const pdfs = []
 	for (let i = 1; i <= pdfCount; i++) {
 		pdfs.push('output/' + i + '.pdf')
 	}
