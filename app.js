@@ -75,17 +75,28 @@ class App { // eslint-disable-line no-unused-vars
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
-    var canvas_div = document.createElement("div");
+    // var canvas_div = document.createElement("div");
     var time_div = document.createElement("div");
     var move_div = document.createElement("div");
+    var rotation_x = document.createElement("input");
+    var rotation_y = document.createElement("input");
+    var rotation_z = document.createElement("input");
     var pauseBackgroundPage_div = document.createElement("div");
     var pausePage_div = document.createElement("div");
     var continue_btn = document.createElement("button");
     var restart_btn = document.createElement("button");
     var exit_btn = document.createElement("button");
 
+    var first_cube_rotation = this.displayer.gameBricks[0].rotation;
+    function changeRotation (axis, value) {
+      first_cube_rotation[axis] = value
+    }
+
     pause_btn.onclick = () => { this.pause(); };
     submit_btn.onclick = () => { this.submit(); };
+    rotation_x.oninput = () => { changeRotation('x', +rotation_x.value) }
+    rotation_y.oninput = () => { changeRotation('y', +rotation_y.value) }
+    rotation_z.oninput = () => { changeRotation('z', +rotation_z.value) }
     continue_btn.onclick = () => { this.continue(); };
     restart_btn.onclick = () => { this.restart(); };
     exit_btn.onclick = () => { this.exit(); };
@@ -93,9 +104,16 @@ class App { // eslint-disable-line no-unused-vars
     play_div.id = "play";
     pause_btn.id = "pause";
     submit_btn.id = "submit";
-    canvas_div.id = "canvas-area";
+    // canvas_div.id = "canvas-area";
     time_div.id = "time";
     move_div.id = "move";
+    rotation_x.id = 'rotation_x'
+    rotation_y.id = 'rotation_y'
+    rotation_z.id = 'rotation_z'
+    var rotationControlConfig = { type: 'range', min: 0, max: 2 * Math.PI, step: .01, value: 0 }
+    Object.assign(rotation_x, rotationControlConfig)
+    Object.assign(rotation_y, rotationControlConfig)
+    Object.assign(rotation_z, rotationControlConfig)
     pauseBackgroundPage_div.id = "pauseBackgroundPage";
     pausePage_div.id = "pausePage";
     continue_btn.id = "continue";
@@ -109,9 +127,12 @@ class App { // eslint-disable-line no-unused-vars
     exit_btn.innerText = "結束遊戲";
 
     play_div.appendChild(submit_btn);
-    play_div.appendChild(canvas_div);
+    // play_div.appendChild(canvas_div);
     play_div.appendChild(time_div);
     play_div.appendChild(move_div);
+    play_div.appendChild(rotation_x);
+    play_div.appendChild(rotation_y);
+    play_div.appendChild(rotation_z);
     pauseBackgroundPage_div.appendChild(pausePage_div);
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);

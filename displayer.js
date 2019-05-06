@@ -146,6 +146,10 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {Event} e
    */
   mouseDownEvent(e) {
+    if (e.path[0].id.startsWith('rotation')) {
+      return
+    }
+
     e.preventDefault && e.preventDefault()
     let { mouseInfo } = this
     mouseInfo.lastX = e.clientX

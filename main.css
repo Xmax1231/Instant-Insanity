@@ -80,7 +80,7 @@ body{
     border-radius:10px;
     background: rgb(255, 255, 255);
 }
-#move{
+#move, #rotation_x, #rotation_y, #rotation_z {
     padding: 2px;
     position: absolute;
     top: 12%;
@@ -88,6 +88,15 @@ body{
     border: 2px black solid;
     border-radius:10px;
     background: rgb(255, 255, 255);
+}
+#rotation_x {
+    top: calc(12% + 100px);
+}
+#rotation_y {
+    top: calc(12% + 120px);
+}
+#rotation_z {
+    top: calc(12% + 140px);
 }
 #pauseBackgroundPage{
     z-index: 99;
