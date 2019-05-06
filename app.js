@@ -89,7 +89,6 @@ class App { // eslint-disable-line no-unused-vars
     restart_btn.onclick = () => { this.restart(); };
     exit_btn.onclick = () => { this.exit(); };
     volume_ipt.oninput = () => {
-      document.getElementById("output").innerHTML = this.value;
       this.setVolume(volume_ipt.value);
     };
 
@@ -298,6 +297,7 @@ class App { // eslint-disable-line no-unused-vars
    */
   setVolume(value) {
     console.log("setVolume: " + value);
+    document.getElementById("output").innerHTML = value;
   }
 
 
