@@ -12,7 +12,7 @@ class App { // eslint-disable-line no-unused-vars
   constructor() {
     this.displayer = new Displayer(document.getElementById('render'));
     this.brickCount = 4;
-    this.materialName = 'test';
+    this.materialName = 'octant';
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO

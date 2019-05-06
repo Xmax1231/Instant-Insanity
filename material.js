@@ -24,5 +24,6 @@ function getMaterial (materialName) {
 }
 
 addMaterial('test', [1,2,3,4,5,6].map(i => `dice-w${i}.png`))
+addMaterial('octant', [1,2,3,4,5,6].map(i => `octant-w${i}.png`))
 
 export { getMaterial }
