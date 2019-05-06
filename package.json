@@ -6,9 +6,11 @@
     "lint": "eslint ."
   },
   "devDependencies": {
+    "easy-pdf-merge": "^0.2.1",
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.12.0",
-    "jsdoc": "^3.5.5"
+    "jsdoc": "^3.5.5",
+    "puppeteer": "^1.15.0"
   },
   "repository": {
     "type": "git",
