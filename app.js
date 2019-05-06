@@ -88,9 +88,9 @@ class App { // eslint-disable-line no-unused-vars
     continue_btn.onclick = () => { this.continue(); };
     restart_btn.onclick = () => { this.restart(); };
     exit_btn.onclick = () => { this.exit(); };
-    volume_ipt.oninput = function() {
+    volume_ipt.oninput = () => {
       document.getElementById("output").innerHTML = this.value;
-      this.setVolume(this.value);
+      this.setVolume(volume_ipt.value);
     };
 
     play_div.id = "play";
