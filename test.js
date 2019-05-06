@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const merge = require('easy-pdf-merge');
+const path = require('path');
 
 const width = '1200px';
 const height = '900px';
@@ -67,7 +68,7 @@ const printPDF = (page, text = '') => {
 	pdfCount += 1
 	console.log('printPDF ' + pdfCount + ' ' + text)
 	return page.pdf({
-		path: 'output/' + pdfCount + '.pdf',
+		path: path.join(__dirname, 'output/' + pdfCount + '.pdf'),
 		width: width,
 		height: height,
 		margin: {
