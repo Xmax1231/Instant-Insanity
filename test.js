@@ -1,10 +1,15 @@
 const puppeteer = require('puppeteer');
 const merge = require('easy-pdf-merge');
-const path = require('path');
+const fs = require('fs');
 
 const width = '1200px';
 const height = '900px';
 var pdfCount = 0;
+const outdir = 'output/';
+
+if (!fs.existsSync(outdir)) {
+	fs.mkdirSync(outdir);
+}
 
 (async () => {
 
@@ -68,7 +73,7 @@ const printPDF = (page, text = '') => {
 	pdfCount += 1
 	console.log('printPDF ' + pdfCount + ' ' + text)
 	return page.pdf({
-		path: path.join(__dirname, 'output/' + pdfCount + '.pdf'),
+		path: outdir + pdfCount + '.pdf',
 		width: width,
 		height: height,
 		margin: {
@@ -83,7 +88,7 @@ const printPDF = (page, text = '') => {
 const mergePDF = () => {
 	const pdfs = []
 	for (let i = 1; i <= pdfCount; i++) {
-		pdfs.push('output/' + i + '.pdf')
+		pdfs.push(outdir + i + '.pdf')
 	}
 	return new Promise((resolve, reject) => {
 		merge(pdfs, 'output.pdf', function(err) {
