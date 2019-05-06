@@ -6,6 +6,7 @@
     "lint": "eslint ."
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "easy-pdf-merge": "^0.2.1",
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.12.0",
