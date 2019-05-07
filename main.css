@@ -181,6 +181,14 @@ body{
     color: white;
     background: black;
 }
+#render {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 #gohome{
     position: absolute;
     top: 3%;
@@ -201,34 +209,34 @@ body{
     height: 20px;
 }
 
-.face1 {
+.face0 {
     background-color: red;
 }
 
-.face2 {
+.face1 {
     background-color: yellow;
 }
 
-.face3 {
+.face2 {
     background-color: green;
 }
 
-.face4 {
+.face3 {
     background-color: blue;
 }
 
-.face5 {
+.face4 {
     background-color: palevioletred;
 }
 
-.face6 {
+.face5 {
     background-color: orangered;
 }
 
-.face7 {
+.face6 {
     background-color: purple;
 }
 
-.face8 {
+.face7 {
     background-color: skyblue;
 }

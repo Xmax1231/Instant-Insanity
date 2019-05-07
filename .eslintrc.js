@@ -3,11 +3,13 @@ module.exports = {
     'browser': true,
     'es6': true
   },
+  'parser': 'babel-eslint',
   'parserOptions': {
     'sourceType': 'module'
   },
   'globals': {
-    'Game': true
+    'THREE': true,
+    'App': true,
   },
   'extends': 'eslint:recommended',
   'rules': {

@@ -1,5 +1,6 @@
 import { Game } from './game.js';
 import { Displayer } from './displayer.js';
+import { getMaterial } from './material.js';
 
 /**
  * 控制遊戲畫面
@@ -9,11 +10,13 @@ class App {
    * 初始化App
    */
   constructor() {
-    this.displayer = new Displayer(null); // TODO
-    this.brickCount = 4; // TODO
+    this.displayer = new Displayer(document.getElementById('render'));
+    this.brickCount = 4;
+    this.materialName = 'test';
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
+    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('test').fileNames.map(n => `img/${n}`))
   }
 
   // Home page
@@ -33,6 +36,7 @@ class App {
    */
   gotoHome() {
     this.clearPage();
+    this.displayer.display(Displayer.BACKGROUND)
     var home_div = document.createElement("div");
     var icon_div = document.createElement("div");
     var start_btn = document.createElement("button");
@@ -66,6 +70,8 @@ class App {
    */
   start() {
     this.clearPage();
+    this.game = new Game(this)
+    this.displayer.display(Displayer.GAMMING)
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
@@ -97,7 +103,6 @@ class App {
     continue_btn.id = "continue";
     restart_btn.id = "restart";
     exit_btn.id = "exit";
-
     submit_btn.innerText = "submit";
     time_div.innerText = "time:00.00";
     move_div.innerText = "move:0";
@@ -121,7 +126,6 @@ class App {
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
 
-    this.game = new Game(this.brickCount);
     this.timeInt = setInterval(() => {
       time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
     }, 100);
@@ -215,6 +219,7 @@ class App {
    */
   gotoSetting() {
     this.clearPage();
+    this.displayer.display(Displayer.SELECTING)
     var setting_div = document.createElement("div");
     var brickNumSetting_div = document.createElement("div");
     var brickStyleSetting_div = document.createElement("div");

@@ -1,3 +1,6 @@
+import { getMaterial } from './material.js';
+
+const BRICKFACEKEYS = ["left", "right", "top", "bottom", "front", "back"]
 /**
  * 方塊
  */
@@ -9,9 +12,30 @@ class Brick {
    * @param {{x:number, y:number, z:number}} facePattern
    */
   constructor(game, materialName, facePattern) {
-    this.materialName = materialName;
-    this.facePattern = facePattern;
-    this.rotation = null; // TODO
+    let textures = getMaterial(materialName).fileNames
+      , geometry = new THREE.BoxGeometry(2, 2, 2)
+      , material = BRICKFACEKEYS.map(k =>
+        new THREE.MeshPhongMaterial({
+          map: new THREE
+            .TextureLoader()
+            .load('img/' + textures[facePattern[k]]),
+        }))
+    this.materialName = materialName
+    this.facePattern = facePattern
+    this.facePatternOriginal = { ...facePattern }
+    this.orientation = { x: 0, y: 0, z: 0 }
+    this.renderObject = new THREE.Mesh(geometry, material)
+  }
+
+  get rotation() {
+    return this.renderObject.rotation
+  }
+
+  /**
+   * 從 orientation 更新 facePattern
+   */
+  updateFacePattern() {
+    // TODO
   }
 
   /**
@@ -38,7 +62,7 @@ class Brick {
   /**
    *
    */
-  mouseLeaveEvent() {
+  mouseUpEvent() {
     // TODO
   }
 }

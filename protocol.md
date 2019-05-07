@@ -26,6 +26,17 @@
   + Object    camera
   + Object    pointLight
   + Object    cameraInfo
+  + Object    mouseInfo
+  + Number    displayType
+  + Object    rayCaster
+  + Array     gameBricks[Brick]
+  + Array     selectorBricks[Brick]
+  + Object    gameGroup
+  + Object    selectorGroup
+  + Object    mouseVector
+  + Number    appWidth
+  + Number    appHeight
+  + Object    appElem
   + Function  display(displayType)
     0. just Background
     1. gaming bricks
@@ -41,27 +52,33 @@
   + Function  mouseDownEvent(e)
   + Function  mouseMoveEvent(e)
   + Function  mouseUpEvent(e)
-  + Function  mouseLeaveEvent(e)
   + Function  wheelEvent(e)
+  + Function  calcMouseRay(e)
 
 ### Brick
 #### new Brick(game, materialName, facePattern)
   + Game      game
   + String    materialName
-  + Array     facePattern [faceId: 0-5], len: 2-n
+  + Array     facePattern
+    + get top,bottom,left,right,front,back [faceId: 0-5]
+  + Array     facePatternOriginal
+    + get top,bottom,left,right,front,back [faceId: 0-5]
+  + Object    orientation
+    + get x,y,z [0,1,2,3]
   + Object    rotation
     + get set x
     + get set y
     + get set z
+  + Function  updateFacePattern()
 
   <!-- mouse events  -->
   + Function  mouseDownEvent(x, y, faceX, faceY, faceZ)
   + Function  mouseMoveEvent(x, y)
-  + Function  mouseLeaveEvent()
+  + Function  mouseUpEvent()
 
 ### Game
-#### new Game(displayer, brickCount)
-  + Displayer displayer
+#### new Game(app)
+  + App       app
   + Array     gameBricks [Brick]
   + Number    timeCounter
   + Number    stepCounter
@@ -71,6 +88,7 @@
 #### new App()
   + Displayer displayer
   + Number    brickCount
+  + String    materialName
   + Game      game
   + Number    volume
   + Audio     bgm
