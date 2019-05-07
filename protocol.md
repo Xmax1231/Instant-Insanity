@@ -76,6 +76,14 @@
   + Function  mouseMoveEvent(x, y)
   + Function  mouseUpEvent()
 
+### GameBrick
+#### new GameBrick(app, facePattern)
+  + ...Brick
+
+### SelectorBrick
+#### new SelectorBrick(app, facePattern)
+  + ...Brick
+
 ### Game
 #### new Game(app)
   + App       app
