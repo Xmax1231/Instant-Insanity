@@ -7,12 +7,12 @@ const BRICKFACEKEYS = [ "front", "back", "top", "bottom", "left", "right" ]
 class Brick { // eslint-disable-line no-unused-vars
   /**
    * 初始化方塊
-   * @param {Game} game
+   * @param {App} app
    * @param {!string} materialName - 材質名稱
-   * @param {{x:number, y:number, z:number}} facePattern
+   * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor(game, materialName, facePattern) {
-    let textures = getMaterial(materialName).fileNames
+  constructor(app, facePattern) {
+    let textures = getMaterial(app.materialName).fileNames
       , geometry = new THREE.BoxGeometry( 2, 2, 2 )
       , material = BRICKFACEKEYS.map(k => 
         new THREE.MeshPhongMaterial({
@@ -20,7 +20,8 @@ class Brick { // eslint-disable-line no-unused-vars
             .TextureLoader()
             .load('img/' + textures[facePattern[k]]),
         }))
-    this.materialName = materialName
+    this.app = app
+    this.materialName = app.materialName
     this.facePattern = facePattern
     this.facePatternOriginal = { ...facePattern }
     this.orientation = { x: 0, y: 0, z: 0 }
