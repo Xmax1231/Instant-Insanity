@@ -56,8 +56,8 @@
   + Function  calcMouseRay(e)
 
 ### Brick
-#### new Brick(game, materialName, facePattern)
-  + Game      game
+#### new Brick(app, facePattern)
+  + App       app
   + String    materialName
   + Array     facePattern
     + get top,bottom,left,right,front,back [faceId: 0-5]
