@@ -1,4 +1,5 @@
 *{
+    overscroll-behavior: none;
     font-family: Consolas;
     font-size: 1.12em;
     -webkit-box-sizing: border-box;
@@ -36,7 +37,7 @@ body{
 }
 #play{
     margin: 0px auto;
-    width: 60%;
+    width: 100%;
     height: 100%;
     position: relative;
 }
@@ -71,23 +72,19 @@ body{
     border-radius:10px;
     background: rgb(255, 255, 255);
 }
-#time{
-    padding: 2px;
+#timemoveblock{
     position: absolute;
-    top: 5%;
+    top: 10%;
     left: 80%;
-    border: 2px black solid;
-    border-radius:10px;
-    background: rgb(255, 255, 255);
 }
-#move{
-    padding: 2px;
-    position: absolute;
-    top: 12%;
-    left: 80%;
+#timemoveblock > div{
+    padding: 5px;
+    margin-top: 5px;
     border: 2px black solid;
     border-radius:10px;
     background: rgb(255, 255, 255);
+    white-space:nowrap;
+    width: max-content;
 }
 #pauseBackgroundPage{
     z-index: 99;
@@ -200,4 +197,48 @@ body{
     width: 50px;
     height: 50px;
     background: black;
+}
+#volumeSetting{
+    margin: 0 auto;
+    width: fit-content;
+}
+#volume_icon{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: black;
+}
+#volume{
+    position: relative;
+    top: -15px;
+    margin-left: 30px;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    outline: none;
+    border: none;
+    padding: 0;
+    background-color: #d7dbdd;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    opacity: 0.7;
+}
+#volume:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    border-radius: 100%;
+    background-color: #606670;
+    height: 28px;
+    width: 28px;
+    margin-top: -0px;
+}
+#output{
+    display: inline-block;
+    position: relative;
+    top: -15px;
+    margin-left: 8px;
+    white-space:nowrap;
+    width: 50px;
 }
