@@ -68,4 +68,28 @@ class Brick { // eslint-disable-line no-unused-vars
   }
 }
 
-export { Brick }
+class GameBrick extends Brick {
+  /**
+   * 初始化遊戲方塊
+   * @param {App} app
+   * @param {!string} materialName - 材質名稱
+   * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
+   */
+  constructor (app, materialName, facePattern) {
+    super(app, materialName, facePattern)
+  }
+}
+
+class SelectorBrick extends Brick {
+  /**
+   * 初始化樣式選擇方塊
+   * @param {App} app
+   * @param {!string} materialName - 材質名稱
+   * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
+   */
+  constructor (app, materialName, facePattern) {
+    super(app, materialName, facePattern)
+  }
+}
+
+export { GameBrick, SelectorBrick }
