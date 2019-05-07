@@ -88,8 +88,8 @@ class App { // eslint-disable-line no-unused-vars
     var exit_btn = document.createElement("button");
 
     var first_cube_rotation = this.displayer.gameBricks[0].rotation;
-    function changeRotation (axis, value) {
-      first_cube_rotation[axis] = value
+    function changeRotation(axis, value) {
+      first_cube_rotation[axis] = value * Math.PI
     }
 
     pause_btn.onclick = () => { this.pause(); };
@@ -110,7 +110,7 @@ class App { // eslint-disable-line no-unused-vars
     rotation_x.id = 'rotation_x'
     rotation_y.id = 'rotation_y'
     rotation_z.id = 'rotation_z'
-    var rotationControlConfig = { type: 'range', min: 0, max: 2 * Math.PI, step: .01, value: 0 }
+    var rotationControlConfig = { type: 'range', min: 0, max: 2, step: 0.125, value: 0 }
     Object.assign(rotation_x, rotationControlConfig)
     Object.assign(rotation_y, rotationControlConfig)
     Object.assign(rotation_z, rotationControlConfig)

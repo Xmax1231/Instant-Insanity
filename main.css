@@ -93,10 +93,10 @@ body{
     top: calc(12% + 100px);
 }
 #rotation_y {
-    top: calc(12% + 120px);
+    top: calc(12% + 130px);
 }
 #rotation_z {
-    top: calc(12% + 140px);
+    top: calc(12% + 160px);
 }
 #pauseBackgroundPage{
     z-index: 99;
