@@ -1,4 +1,4 @@
-import { Brick } from './brick.js';
+import { GameBrick } from './brick.js';
 /**
  * 操控方塊遊戲本身
  */
@@ -11,7 +11,7 @@ class Game { // eslint-disable-line no-unused-vars
   constructor(app) {
     let bricks = Array
     .from({ length: app.brickCount }, () => 
-      new Brick(this, app.materialName, {
+      new GameBrick(app, {
         top: 1,
         bottom: 4,
         front: 0,
