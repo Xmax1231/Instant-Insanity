@@ -1,6 +1,6 @@
 import { getMaterial } from './material.js';
 
-const BRICKFACEKEYS = ["left", "right", "top", "bottom", "front", "back"]
+const BRICKFACEKEYS = ["right", "left", "top", "bottom", "front", "back"]
 /**
  * 方塊
  */
