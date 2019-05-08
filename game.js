@@ -10,7 +10,7 @@ class Game { // eslint-disable-line no-unused-vars
    */
   constructor(app) {
     let bricks = Array
-    .from({ length: app.brickCount }, () => 
+    .from({ length: app.brickCount }, () =>
       new Brick(this, app.materialName, {
         top: 1,
         bottom: 4,
@@ -20,6 +20,7 @@ class Game { // eslint-disable-line no-unused-vars
         left: 2,
       }))
     app.displayer.setGameBricks(bricks)
+    this.app = app
   }
 
   /**

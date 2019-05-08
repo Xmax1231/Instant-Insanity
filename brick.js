@@ -1,6 +1,6 @@
 import { getMaterial } from './material.js';
 
-const BRICKFACEKEYS = [ "front", "back", "top", "bottom", "left", "right" ]
+const BRICKFACEKEYS = ["front", "back", "top", "bottom", "left", "right"]
 /**
  * 方塊
  */
@@ -13,7 +13,7 @@ class Brick { // eslint-disable-line no-unused-vars
    */
   constructor(game, materialName, facePattern) {
     let textures = getMaterial(materialName).fileNames
-      , geometry = new THREE.BoxGeometry( 2, 2, 2 )
+      , geometry = new THREE.BoxGeometry(2, 2, 2)
       , material = BRICKFACEKEYS.map(k =>
         new THREE.MeshPhongMaterial({
           map: new THREE
@@ -25,6 +25,10 @@ class Brick { // eslint-disable-line no-unused-vars
     this.facePatternOriginal = { ...facePattern }
     this.orientation = { x: 0, y: 0, z: 0 }
     this.renderObject = new THREE.Mesh(geometry, material)
+    this.mouseLastX = 0
+    this.mouseLastY = 0
+    this.mouseDown = false
+    this.game = game
   }
 
   get rotation() {
@@ -34,7 +38,7 @@ class Brick { // eslint-disable-line no-unused-vars
   /**
    * 從 orientation 更新 facePattern
    */
-  updateFacePattern () {
+  updateFacePattern() {
     // TODO
   }
 
@@ -47,8 +51,13 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {number} faceZ
    */
   mouseDownEvent(x, y, faceX, faceY, faceZ) {
-    console.log(x, y, faceX, faceY, faceZ);
-    // TODO
+    this.mouseLastX = x
+    this.mouseLastY = y
+    this.faceX = faceX
+    this.faceY = faceY
+    this.faceZ = faceZ
+    this.mouseDown = true
+    this.game.app.info2_div.innerHTML = 'x:' + this.mouseLastX + ' y:' + this.mouseLastY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1;
   }
 
   /**
@@ -57,15 +66,20 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {number} y
    */
   mouseMoveEvent(x, y) {
-    console.log(x, y);
-    // TODO
+    if (!this.mouseDown)
+      return
+
+    let dx = x - this.mouseLastX
+    let dy = y - this.mouseLastY
+    this.game.app.info2_div.innerHTML = 'x:' + this.mouseLastX + ' y:' + this.mouseLastY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1 + '<br>'
+      + 'dx:' + dx + ' dy:' + dy;
   }
 
   /**
    *
    */
   mouseUpEvent() {
-    // TODO
+    this.mouseDown = false
   }
 }
 
