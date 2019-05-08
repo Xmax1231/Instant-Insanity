@@ -199,38 +199,40 @@ body{
 }
 
 .facetop {
-    width: 20px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     margin: 0 auto;
+    background-size: cover;
 }
 
 .faceside {
     width: 20px;
     height: 20px;
+    background-size: cover;
 }
 
 .face0 {
-    background-color: red;
+    background-image: url(img/dice-w1.png);
 }
 
 .face1 {
-    background-color: yellow;
+    background-image: url(img/dice-w2.png);
 }
 
 .face2 {
-    background-color: green;
+    background-image: url(img/dice-w3.png);
 }
 
 .face3 {
-    background-color: blue;
+    background-image: url(img/dice-w4.png);
 }
 
 .face4 {
-    background-color: palevioletred;
+    background-image: url(img/dice-w5.png);
 }
 
 .face5 {
-    background-color: orangered;
+    background-image: url(img/dice-w6.png);
 }
 
 .face6 {
