@@ -131,7 +131,7 @@ class App {
     }, 100);
 
     let game_div = document.createElement('div');
-    game_div.style = 'position: absolute; top: 5%; left: 25%;';
+    game_div.style = 'position: absolute; top: 5%; left: 10%; background: rgba(128, 128, 128, 0.5);';
 
     let brick_table = document.createElement('table');
 
