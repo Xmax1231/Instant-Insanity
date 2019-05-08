@@ -91,9 +91,9 @@ class App { // eslint-disable-line no-unused-vars
     var first_cube = this.displayer.gameBricks[0].renderObject;
     function changeRotation(axis, value) {
       first_cube.rotation[axis] = value * Math.PI
-      info_div.innerHTML = 'rotation.x = ' + first_cube.rotation._x.toFixed(2) + '<br>'
-        + 'rotation.y = ' + first_cube.rotation._y.toFixed(2) + '<br>'
-        + 'rotation.z = ' + first_cube.rotation._z.toFixed(2) + '<br>'
+      info_div.innerHTML = 'rotation.x = ' + (first_cube.rotation._x / Math.PI * 180).toFixed(0) + '<br>'
+        + 'rotation.y = ' + (first_cube.rotation._y / Math.PI * 180).toFixed(0) + '<br>'
+        + 'rotation.z = ' + (first_cube.rotation._z / Math.PI * 180).toFixed(0) + '<br>'
         + 'quaternion.x = ' + first_cube.quaternion._x.toFixed(2) + '<br>'
         + 'quaternion.y = ' + first_cube.quaternion._y.toFixed(2) + '<br>'
         + 'quaternion.z = ' + first_cube.quaternion._z.toFixed(2) + '<br>'
