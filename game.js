@@ -256,7 +256,7 @@ class Game {
         temp[this.bricks[bid].facePattern[face]] = 1;
       }
       let sum = 0;
-      for (let bid = 1; bid <= this.app.brickCount; bid++) {
+      for (let bid = 0; bid < this.app.brickCount; bid++) {
         sum += temp[bid];
       }
       if (sum != this.app.brickCount) {
