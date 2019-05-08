@@ -140,12 +140,12 @@ class Game {
     if (slow) {
       var cnt = 8 * angle;
       var int = setInterval(() => {
-        this.bricks[brickId].renderObject.rotateZ(Math.PI / 2 / 8);
+        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2 / 8);
         cnt -= 1;
         if (cnt <= 0) clearInterval(int);
       }, 50);
     } else {
-      this.bricks[brickId].renderObject.rotateZ(Math.PI / 2 * angle);
+      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2 * angle);
     }
 
     for (let i = 0; i < angle; i++) {
@@ -180,12 +180,12 @@ class Game {
     if (slow) {
       var cnt = 8 * angle;
       var int = setInterval(() => {
-        this.bricks[brickId].renderObject.rotateX(Math.PI / 2 / 8);
+        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2 / 8);
         cnt -= 1;
         if (cnt <= 0) clearInterval(int);
       }, 50);
     } else {
-      this.bricks[brickId].renderObject.rotateX(Math.PI / 2 * angle);
+      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2 * angle);
     }
 
     for (let i = 0; i < angle; i++) {
@@ -220,12 +220,12 @@ class Game {
     if (slow) {
       var cnt = 8 * angle;
       var int = setInterval(() => {
-        this.bricks[brickId].renderObject.rotateY(Math.PI / 2 / 8);
+        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 / 8);
         cnt -= 1;
         if (cnt <= 0) clearInterval(int);
       }, 50);
     } else {
-      this.bricks[brickId].renderObject.rotateY(Math.PI / 2 * angle);
+      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * angle);
     }
 
     for (let i = 0; i < angle; i++) {
