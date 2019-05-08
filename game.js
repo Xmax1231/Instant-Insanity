@@ -72,6 +72,7 @@ class Game {
     this.timeCounter = 0;
     this.stepCounter = 0;
     this.start();
+    this.rotating = false;
   }
 
   start() {
@@ -135,18 +136,12 @@ class Game {
       throw Error('angle is not a integer');
     }
 
-    angle = (angle % 4 + 4) % 4;
-
-    if (slow) {
-      var cnt = 8 * angle;
-      var int = setInterval(() => {
-        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2 / 8);
-        cnt -= 1;
-        if (cnt <= 0) clearInterval(int);
-      }, 50);
-    } else {
-      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2 * angle);
+    if (this.rotating) {
+      return;
     }
+    this.rotating = true;
+
+    angle = (angle % 4 + 4) % 4;
 
     for (let i = 0; i < angle; i++) {
       [
@@ -163,6 +158,21 @@ class Game {
         ];
     }
     this.stepCounter++;
+
+    if (slow) {
+      var cnt = 8 * angle;
+      var int = setInterval(() => {
+        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2 / 8);
+        cnt -= 1;
+        if (cnt <= 0) {
+          clearInterval(int);
+          this.rotating = false;
+        }
+      }, 50);
+    } else {
+      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2 * angle);
+      this.rotating = false;
+    }
   }
 
   /**
@@ -175,18 +185,12 @@ class Game {
       throw Error('angle is not a integer');
     }
 
-    angle = (angle % 4 + 4) % 4;
-
-    if (slow) {
-      var cnt = 8 * angle;
-      var int = setInterval(() => {
-        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2 / 8);
-        cnt -= 1;
-        if (cnt <= 0) clearInterval(int);
-      }, 50);
-    } else {
-      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2 * angle);
+    if (this.rotating) {
+      return;
     }
+    this.rotating = true;
+
+    angle = (angle % 4 + 4) % 4;
 
     for (let i = 0; i < angle; i++) {
       [
@@ -203,6 +207,21 @@ class Game {
         ];
     }
     this.stepCounter++;
+
+    if (slow) {
+      var cnt = 8 * angle;
+      var int = setInterval(() => {
+        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2 / 8);
+        cnt -= 1;
+        if (cnt <= 0) {
+          clearInterval(int);
+          this.rotating = false;
+        }
+      }, 50);
+    } else {
+      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2 * angle);
+      this.rotating = false;
+    }
   }
 
   /**
@@ -215,18 +234,12 @@ class Game {
       throw Error('angle is not a integer');
     }
 
-    angle = (angle % 4 + 4) % 4;
-
-    if (slow) {
-      var cnt = 8 * angle;
-      var int = setInterval(() => {
-        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 / 8);
-        cnt -= 1;
-        if (cnt <= 0) clearInterval(int);
-      }, 50);
-    } else {
-      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * angle);
+    if (this.rotating) {
+      return;
     }
+    this.rotating = true;
+
+    angle = (angle % 4 + 4) % 4;
 
     for (let i = 0; i < angle; i++) {
       [
@@ -242,7 +255,23 @@ class Game {
           this.bricks[brickId].facePattern.back,
         ];
     }
+
     this.stepCounter++;
+
+    if (slow) {
+      var cnt = 8 * angle;
+      var int = setInterval(() => {
+        this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 / 8);
+        cnt -= 1;
+        if (cnt <= 0) {
+          clearInterval(int);
+          this.rotating = false;
+        }
+      }, 50);
+    } else {
+      this.bricks[brickId].renderObject.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * angle);
+      this.rotating = false;
+    }
   }
 
   /**
