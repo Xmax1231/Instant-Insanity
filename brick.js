@@ -14,7 +14,7 @@ class Brick { // eslint-disable-line no-unused-vars
   constructor(game, materialName, facePattern) {
     let textures = getMaterial(materialName).fileNames
       , geometry = new THREE.BoxGeometry( 2, 2, 2 )
-      , material = BRICKFACEKEYS.map(k => 
+      , material = BRICKFACEKEYS.map(k =>
         new THREE.MeshPhongMaterial({
           map: new THREE
             .TextureLoader()
@@ -32,7 +32,7 @@ class Brick { // eslint-disable-line no-unused-vars
   }
 
   /**
-   * 從 orientation 更新 facePattern 
+   * 從 orientation 更新 facePattern
    */
   updateFacePattern () {
     // TODO
@@ -47,6 +47,7 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {number} faceZ
    */
   mouseDownEvent(x, y, faceX, faceY, faceZ) {
+    console.log(x, y, faceX, faceY, faceZ);
     // TODO
   }
 
@@ -56,6 +57,7 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {number} y
    */
   mouseMoveEvent(x, y) {
+    console.log(x, y);
     // TODO
   }
 
