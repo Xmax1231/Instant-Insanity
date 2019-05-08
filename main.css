@@ -210,3 +210,13 @@ body{
     height: 50px;
     background: black;
 }
+
+#info {
+    top: 20%;
+    left: 5%;
+    padding: 2px;
+    position: absolute;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}

@@ -86,10 +86,18 @@ class App { // eslint-disable-line no-unused-vars
     var continue_btn = document.createElement("button");
     var restart_btn = document.createElement("button");
     var exit_btn = document.createElement("button");
+    var info_div = document.createElement("div");
 
-    var first_cube_rotation = this.displayer.gameBricks[0].rotation;
+    var first_cube = this.displayer.gameBricks[0].renderObject;
     function changeRotation(axis, value) {
-      first_cube_rotation[axis] = value * Math.PI
+      first_cube.rotation[axis] = value * Math.PI
+      info_div.innerHTML = 'rotation.x = ' + first_cube.rotation._x.toFixed(2) + '<br>'
+        + 'rotation.y = ' + first_cube.rotation._y.toFixed(2) + '<br>'
+        + 'rotation.z = ' + first_cube.rotation._z.toFixed(2) + '<br>'
+        + 'quaternion.x = ' + first_cube.quaternion._x.toFixed(2) + '<br>'
+        + 'quaternion.y = ' + first_cube.quaternion._y.toFixed(2) + '<br>'
+        + 'quaternion.z = ' + first_cube.quaternion._z.toFixed(2) + '<br>'
+        + 'quaternion.w = ' + first_cube.quaternion._w.toFixed(2) + '<br>';
     }
 
     pause_btn.onclick = () => { this.pause(); };
@@ -110,6 +118,7 @@ class App { // eslint-disable-line no-unused-vars
     rotation_x.id = 'rotation_x'
     rotation_y.id = 'rotation_y'
     rotation_z.id = 'rotation_z'
+    info_div.id = 'info'
     var rotationControlConfig = { type: 'range', min: 0, max: 2, step: 0.125, value: 0 }
     Object.assign(rotation_x, rotationControlConfig)
     Object.assign(rotation_y, rotationControlConfig)
@@ -143,6 +152,7 @@ class App { // eslint-disable-line no-unused-vars
     document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
+    document.getElementById("game").appendChild(info_div);
   }
 
   /**
