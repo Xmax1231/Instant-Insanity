@@ -11,10 +11,10 @@ class Displayer { // eslint-disable-line no-unused-vars
   constructor(appElem) {
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera( 75, 0, 0.1, 1000 )
+    this.camera = new THREE.PerspectiveCamera( 50, 0, 0.1, 1000 )
     this.pointLight = new THREE.PointLight(0xffffff, 1.2)
     this.cameraInfo = {
-      r: 6,
+      r: 18,
       theta: 1/4,
       phi: 1/4,
       displayer: this,
