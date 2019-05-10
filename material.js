@@ -24,5 +24,6 @@ function getMaterial (materialName) {
 }
 
 addMaterial('test', [1,2,3,4,5,6].map(i => `dice-w${i}.png`))
+addMaterial('bg-sky', [ "left", "right", "top", "bottom", "front", "back" ].map(i => `bg-sky-${i}.png`))
 
 export { getMaterial }

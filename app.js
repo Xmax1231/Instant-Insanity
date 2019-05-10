@@ -16,7 +16,7 @@ class App { // eslint-disable-line no-unused-vars
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
-    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('test').fileNames.map(n => `img/${n}`))
+    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('bg-sky').fileNames.map(n => `img/${n}`))
   }
 
   // Home page
