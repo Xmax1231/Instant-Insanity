@@ -62,12 +62,14 @@ class Brick { // eslint-disable-line no-unused-vars
     this.faceY = faceY
     this.faceZ = faceZ
     this.face = new THREE.Vector3(faceX, faceY, faceZ)
+    this.faceNormalVector = new THREE.Vector3(faceX, faceY, faceZ).applyQuaternion(this.renderObject.quaternion).round()
+    console.log(this.faceNormalVector)
     this.mouseDown = true
     this.lockOnX = false
     this.lockOnY = false
     this.game.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1;
-    this.axisX = new THREE.Vector3(0, 1, 0).applyQuaternion(this.renderObject.quaternion)
-    this.axisY = new THREE.Vector3(0, 1, 0).applyQuaternion(this.renderObject.quaternion).cross(new THREE.Vector3(this.faceX, this.faceY, this.faceZ))
+    this.axisX = new THREE.Vector3(0, 1, 0)
+    this.axisY = new THREE.Vector3(0, 1, 0).cross(this.faceNormalVector)
     console.log(this.axisX)
     console.log(this.axisY)
   }
@@ -81,12 +83,14 @@ class Brick { // eslint-disable-line no-unused-vars
     if (!this.mouseDown || this.disableMouse)
       return
 
-    // 暫時停用拖曳上下面
-    if (this.face.equals(this.axisX) || this.face.equals(this.axisY))
-      return
-
     this.game.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1 + '<br>'
       + 'dx:' + (x - this.mouseStartX) + ' dy:' + (y - this.mouseStartY);
+
+    // 暫時停用拖曳上下面
+    if (this.faceNormalVector.equals(this.axisX)) {
+      this.game.app.info2_div.innerHTML += ' disabled';
+      return
+    }
 
     if (!this.lockOnX && !this.lockOnY) {
       if (Math.abs(x - this.mouseStartX) > 10) {
@@ -98,9 +102,9 @@ class Brick { // eslint-disable-line no-unused-vars
     let dx = x - this.mouseLastX
     let dy = y - this.mouseLastY
     if (this.lockOnX)
-      this.renderObject.rotateOnAxis(this.axisX, Math.PI * dx / 150)
+      this.renderObject.rotateOnWorldAxis(this.axisX, Math.PI * dx / 150)
     if (this.lockOnY)
-      this.renderObject.rotateOnAxis(this.axisY, Math.PI * dy / 150)
+      this.renderObject.rotateOnWorldAxis(this.axisY, Math.PI * dy / 150)
     this.mouseLastX = x
     this.mouseLastY = y
   }
@@ -112,10 +116,11 @@ class Brick { // eslint-disable-line no-unused-vars
     this.mouseDown = false
     this.lockOnX = false
     this.lockOnY = false
-    this.disableMouse = true
+    // this.disableMouse = true
 
     let disableCnt = 3
 
+    /*
     let rotationX = this.renderObject.rotation.x / Math.PI * 180
     let targetRotationX = Math.round(rotationX / 90 % 1) * 90
     var deltaX;
@@ -180,6 +185,7 @@ class Brick { // eslint-disable-line no-unused-vars
       this.renderObject.rotation.z += deltaZ
       cntZ -= 1
     }, 50);
+  */
   }
 }
 
