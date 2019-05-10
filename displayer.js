@@ -1,3 +1,5 @@
+const SKIP_ELEM_IDS = new Set([ 'volume' ])
+
 /**
  * 顯示方塊
  */
@@ -147,7 +149,12 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {Event} e
    */
   mouseDownEvent(e) {
-    e.preventDefault && e.preventDefault()
+    if (SKIP_ELEM_IDS.has(e.path[0].id)) 
+      return
+
+    if (e.preventDefault != null) 
+      e.preventDefault()
+
     let { mouseInfo } = this
     mouseInfo.lastX = e.clientX
     mouseInfo.lastY = e.clientY
