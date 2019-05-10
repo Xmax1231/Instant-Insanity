@@ -1,6 +1,27 @@
 import { getMaterial } from './material.js';
 
 const BRICKFACEKEYS = ["front", "back", "top", "bottom", "left", "right"]
+
+const POSSIBLEQUATERNION = [];
+for (let y = 0; y < 4; y++) {
+  for (let z = 0; z < 4; z++) {
+    POSSIBLEQUATERNION.push(
+      new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(0, y * Math.PI / 2, z * Math.PI / 2, 'YZX')
+      )
+    );
+  }
+}
+[1, -1].forEach(x => {
+  for (let z = 0; z < 4; z++) {
+    POSSIBLEQUATERNION.push(
+      new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(x * Math.PI / 2, 0, z * Math.PI / 2, 'XZY')
+      )
+    );
+  }
+});
+
 /**
  * 方塊
  */
@@ -63,15 +84,15 @@ class Brick { // eslint-disable-line no-unused-vars
     this.faceZ = faceZ
     this.face = new THREE.Vector3(faceX, faceY, faceZ)
     this.faceNormalVector = new THREE.Vector3(faceX, faceY, faceZ).applyQuaternion(this.renderObject.quaternion).round()
-    console.log(this.faceNormalVector)
+    console.log('faceNormalVector', this.faceNormalVector)
     this.mouseDown = true
     this.lockOnX = false
     this.lockOnY = false
     this.game.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1;
     this.axisX = new THREE.Vector3(0, 1, 0)
     this.axisY = new THREE.Vector3(0, 1, 0).cross(this.faceNormalVector)
-    console.log(this.axisX)
-    console.log(this.axisY)
+    console.log('axisX', this.axisX)
+    console.log('axisY', this.axisY)
   }
 
   /**
@@ -80,15 +101,21 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {number} y
    */
   mouseMoveEvent(x, y) {
-    if (!this.mouseDown || this.disableMouse)
+    if (!this.mouseDown) {
       return
+    }
 
     this.game.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1 + '<br>'
       + 'dx:' + (x - this.mouseStartX) + ' dy:' + (y - this.mouseStartY);
 
+    if (this.disableMouse) {
+      this.game.app.info2_div.innerHTML += ' mouse disabled';
+      return
+    }
+
     // 暫時停用拖曳上下面
     if (this.faceNormalVector.equals(this.axisX)) {
-      this.game.app.info2_div.innerHTML += ' disabled';
+      this.game.app.info2_div.innerHTML += ' face disabled';
       return
     }
 
@@ -116,76 +143,28 @@ class Brick { // eslint-disable-line no-unused-vars
     this.mouseDown = false
     this.lockOnX = false
     this.lockOnY = false
-    // this.disableMouse = true
+    this.disableMouse = true
 
-    let disableCnt = 3
+    let closestQuaternion = null;
+    let minAngle = 999;
 
-    /*
-    let rotationX = this.renderObject.rotation.x / Math.PI * 180
-    let targetRotationX = Math.round(rotationX / 90 % 1) * 90
-    var deltaX;
-    if (targetRotationX > rotationX) deltaX = Math.PI / 180
-    else deltaX = -Math.PI / 180;
-    var cntX = Math.floor(Math.abs(rotationX - targetRotationX));
-    if (cntX == 0) {
-      this.renderObject.rotation.x = targetRotationX / 180 * Math.PI
-    }
+    POSSIBLEQUATERNION.forEach(quaternion => {
+      let angle = this.renderObject.quaternion.angleTo(quaternion);
+      if (angle < minAngle) {
+        minAngle = angle;
+        closestQuaternion = quaternion;
+      }
+    });
+    console.log('closest angle', minAngle, closestQuaternion);
+
     var intX = setInterval(() => {
-      if (cntX <= 0) {
+      let prevQuaternion = this.renderObject.quaternion.clone();
+      this.renderObject.quaternion.rotateTowards(closestQuaternion, Math.PI / 50);
+      if (this.renderObject.quaternion.equals(prevQuaternion)) {
         clearInterval(intX)
-        this.renderObject.rotation.x = targetRotationX / 180 * Math.PI
-        disableCnt -= 1
-        if (disableCnt == 0)
-          this.disableMouse = false
+        this.disableMouse = false
       }
-      this.renderObject.rotation.x += deltaX
-      cntX -= 1
-    }, 50);
-
-    let rotationY = this.renderObject.rotation.y / Math.PI * 180
-    let targetRotationY = Math.round(rotationY / 90 % 1) * 90
-    // console.log(rotationY, targetRotationY)
-    var deltaY;
-    if (targetRotationY > rotationY) deltaY = Math.PI / 180
-    else deltaY = -Math.PI / 180;
-    var cntY = Math.floor(Math.abs(rotationY - targetRotationY));
-    if (cntY == 0) {
-      this.renderObject.rotation.y = targetRotationY / 180 * Math.PI
-    }
-    var intY = setInterval(() => {
-      if (cntY <= 0) {
-        clearInterval(intY)
-        this.renderObject.rotation.y = targetRotationX / 180 * Math.PI
-        disableCnt -= 1
-        if (disableCnt == 0)
-          this.disableMouse = false
-      }
-      this.renderObject.rotation.y += deltaY
-      cntY -= 1
-    }, 50);
-
-    let rotationZ = this.renderObject.rotation.z / Math.PI * 180
-    let targetRotationZ = Math.round(rotationZ / 90 % 1) * 90
-    // console.log(rotationZ, targetRotationZ)
-    var deltaZ;
-    if (targetRotationZ > rotationZ) deltaZ = Math.PI / 180
-    else deltaZ = -Math.PI / 180;
-    var cntZ = Math.floor(Math.abs(rotationZ - targetRotationZ));
-    if (cntZ == 0) {
-      this.renderObject.rotation.z = targetRotationZ / 180 * Math.PI
-    }
-    var intZ = setInterval(() => {
-      if (cntZ <= 0) {
-        clearInterval(intZ)
-        this.renderObject.rotation.z = targetRotationZ / 180 * Math.PI
-        disableCnt -= 1
-        if (disableCnt == 0)
-          this.disableMouse = false
-      }
-      this.renderObject.rotation.z += deltaZ
-      cntZ -= 1
-    }, 50);
-  */
+    }, 100);
   }
 }
 
