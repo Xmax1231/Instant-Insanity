@@ -50,9 +50,11 @@ body{
     position: absolute;
     top: 3%;
     left: 3%;
-    width: 50px;
-    height: 50px;
-    background: black;
+    width: 70px;
+    height: 70px;
+    background: url(./icons/1556866831772.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
 #submit{
     position: absolute;
