@@ -12,6 +12,12 @@ body{
     width: 100%;
     background-color: rgb(255, 255, 255);
 }
+button{
+    outline:none;
+}
+button:focus{
+    border: none;
+}
 #home > button{
     margin: 15px auto;
     width: 30%;
