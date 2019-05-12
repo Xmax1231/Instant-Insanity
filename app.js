@@ -176,8 +176,8 @@ class App { // eslint-disable-line no-unused-vars
 
     brickNumTXT_div.innerText = "方塊數：";
     brickStyleTXT_div.innerText = "方塊樣式：";
-    increaseBrickCount_div.innerHTML = "+";
-    decreaseBrickCount_div.innerHTML = "-";
+    // increaseBrickCount_div.innerHTML = "+";
+    // decreaseBrickCount_div.innerHTML = "-";
     BrickCount_div.innerText = this.brickCount.toString();
 
     brickNumSetting_div.appendChild(brickNumTXT_div);
