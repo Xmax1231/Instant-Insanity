@@ -12,7 +12,7 @@ class App { // eslint-disable-line no-unused-vars
     this.displayer = new Displayer(null); // TODO
     this.brickCount = 4; // TODO
     this.game = new Game();
-    this.volume = 1;
+    this.volume = 75;
     this.bgm = null; // TODO
   }
 
@@ -115,12 +115,12 @@ class App { // eslint-disable-line no-unused-vars
     continue_btn.innerText = "繼續遊戲";
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
-    output_div.innerText = "75";
+    output_div.innerText = this.volume.toString();
 
     volume_ipt.type = "range";
     volume_ipt.min = "0";
     volume_ipt.max = "100";
-    volume_ipt.value = "75";
+    volume_ipt.value = this.volume.toString();
 
     play_div.appendChild(submit_btn);
     // play_div.appendChild(canvas_div);
@@ -141,6 +141,8 @@ class App { // eslint-disable-line no-unused-vars
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
+    player.setVolume(this.volume);
+    player.playVideo()
   }
 
   /**
@@ -298,6 +300,7 @@ class App { // eslint-disable-line no-unused-vars
   setVolume(value) {
     console.log("setVolume: " + value);
     document.getElementById("output").innerHTML = value;
+    player.setVolume(value);
   }
 
 
