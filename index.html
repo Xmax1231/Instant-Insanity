@@ -10,34 +10,23 @@
 	<div id="game"></div>
 	<script>
 		window.onload = function () {
-			window.app = new App();
+			window.app = new App(player);
 			app.gotoHome();
 		}
 	</script>
 
 	<!-- https://developers.google.com/youtube/iframe_api_reference -->
-	<div id="player"></div>
+	<div id="bgm_player"></div>
+	<script src="https://www.youtube.com/iframe_api"></script>
 	<script>
-		var tag = document.createElement('script');
-		tag.src = "https://www.youtube.com/iframe_api";
-		var firstScriptTag = document.getElementsByTagName('script');
-		firstScriptTag = firstScriptTag[firstScriptTag.length - 1]
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 		var player;
 		function onYouTubeIframeAPIReady() {
-			player = new YT.Player('player', {
+			player = new YT.Player('bgm_player', {
 				height: '0',
 				width: '0',
-				videoId: '0ewGL1NpD84',
-				events: {
-					// 'onReady': onPlayerReady,
-					// 'onStateChange': onPlayerStateChange
-				}
+				videoId: '0ewGL1NpD84'
 			});
 		}
-		// function onPlayerReady(event) {
-		// 	event.target.playVideo();
-		// }
 	</script>
 </body>
 

@@ -8,12 +8,12 @@ class App { // eslint-disable-line no-unused-vars
   /**
    * 初始化App
    */
-  constructor() {
+  constructor(bgm_player) {
     this.displayer = new Displayer(null); // TODO
     this.brickCount = 4; // TODO
     this.game = new Game();
     this.volume = 75;
-    this.bgm = null; // TODO
+    this.bgm_player = bgm_player;
   }
 
   // Home page
@@ -141,8 +141,8 @@ class App { // eslint-disable-line no-unused-vars
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
-    player.setVolume(this.volume);
-    player.playVideo()
+    this.bgm_player.setVolume(this.volume);
+    this.bgm_player.playVideo()
   }
 
   /**
@@ -300,7 +300,7 @@ class App { // eslint-disable-line no-unused-vars
   setVolume(value) {
     console.log("setVolume: " + value);
     document.getElementById("output").innerHTML = value;
-    player.setVolume(value);
+    this.bgm_player.setVolume(value);
   }
 
 
