@@ -140,6 +140,10 @@ class Brick { // eslint-disable-line no-unused-vars
    *
    */
   mouseUpEvent() {
+    if (this.disableMouse) {
+      return
+    }
+
     this.mouseDown = false
     this.lockOnX = false
     this.lockOnY = false
