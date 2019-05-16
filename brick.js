@@ -84,6 +84,7 @@ class Brick { // eslint-disable-line no-unused-vars
     this.faceZ = faceZ
     this.face = new THREE.Vector3(faceX, faceY, faceZ)
     this.faceNormalVector = new THREE.Vector3(faceX, faceY, faceZ).applyQuaternion(this.renderObject.quaternion).round()
+    this.startQuaternion = this.renderObject.quaternion.clone()
     console.log('faceNormalVector', this.faceNormalVector)
     this.mouseDown = true
     this.lockOnX = false
@@ -122,16 +123,21 @@ class Brick { // eslint-disable-line no-unused-vars
     if (!this.lockOnX && !this.lockOnY) {
       if (Math.abs(x - this.mouseStartX) > 10) {
         this.lockOnX = true;
+        this.rotaryAxis = this.axisX;
       } else if (Math.abs(y - this.mouseStartY) > 10) {
         this.lockOnY = true;
+        this.rotaryAxis = this.axisY;
       }
     }
+
     let dx = x - this.mouseLastX
     let dy = y - this.mouseLastY
-    if (this.lockOnX)
+    if (this.lockOnX) {
       this.renderObject.rotateOnWorldAxis(this.axisX, Math.PI * dx / 150)
-    if (this.lockOnY)
+    }
+    if (this.lockOnY) {
       this.renderObject.rotateOnWorldAxis(this.axisY, Math.PI * dy / 150)
+    }
     this.mouseLastX = x
     this.mouseLastY = y
   }
@@ -169,6 +175,44 @@ class Brick { // eslint-disable-line no-unused-vars
         this.disableMouse = false
       }
     }, 100);
+
+    let angle = Math.round(closestQuaternion.angleTo(this.startQuaternion) / Math.PI * 180 / 90);
+
+    if (angle == 0) {
+      console.log('nothing to do');
+      return;
+    }
+
+    let newFaceNormalVector = new THREE.Vector3(this.faceX, this.faceY, this.faceZ).applyQuaternion(this.renderObject.quaternion).round();
+    let rotaryAxis = this.faceNormalVector.clone().cross(newFaceNormalVector);
+    console.log('rotaryAxis', rotaryAxis, rotaryAxis.clone().negate());
+
+    let rotateXVector = new THREE.Vector3(0, 0, 1);
+    if (this.rotaryAxis.equals(rotateXVector) || this.rotaryAxis.clone().negate().equals(rotateXVector)) {
+      if (this.rotaryAxis.equals(rotateXVector)) {
+        angle = 4 - angle;
+      }
+      console.log('rotateX', angle);
+      return;
+    }
+
+    let rotateYVector = new THREE.Vector3(1, 0, 0);
+    if (this.rotaryAxis.equals(rotateYVector) || this.rotaryAxis.clone().negate().equals(rotateYVector)) {
+      if (this.rotaryAxis.clone().negate().equals(rotateYVector)) {
+        angle = 4 - angle;
+      }
+      console.log('rotateY', angle);
+      return;
+    }
+
+    let rotateZVector = new THREE.Vector3(0, 1, 0);
+    if (this.rotaryAxis.equals(rotateZVector) || this.rotaryAxis.clone().negate().equals(rotateZVector)) {
+      if (this.rotaryAxis.clone().negate().equals(rotateZVector)) {
+        angle = 4 - angle;
+      }
+      console.log('rotateZ', angle);
+      return;
+    }
   }
 }
 
