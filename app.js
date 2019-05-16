@@ -5,14 +5,14 @@ import { getMaterial } from './material.js';
 /**
  * 控制遊戲畫面
  */
-class App { // eslint-disable-line no-unused-vars
+class App {
   /**
    * 初始化App
    */
   constructor() {
     this.displayer = new Displayer(document.getElementById('render'));
     this.brickCount = 4;
-    this.materialName = 'octant';
+    this.materialName = 'test';
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
@@ -76,37 +76,19 @@ class App { // eslint-disable-line no-unused-vars
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
     // var canvas_div = document.createElement("div");
+    var timemoveblock_div = document.createElement("div");
     var time_div = document.createElement("div");
     var move_div = document.createElement("div");
-    var rotation_x = document.createElement("input");
-    var rotation_y = document.createElement("input");
-    var rotation_z = document.createElement("input");
     var pauseBackgroundPage_div = document.createElement("div");
     var pausePage_div = document.createElement("div");
     var continue_btn = document.createElement("button");
     var restart_btn = document.createElement("button");
     var exit_btn = document.createElement("button");
-    var info_div = document.createElement("div");
     var info2_div = document.createElement("div");
     this.info2_div = info2_div;
 
-    var first_cube = this.displayer.gameBricks[0].renderObject;
-    function changeRotation(axis, value) {
-      first_cube.rotation[axis] = value * Math.PI
-      info_div.innerHTML = 'rotation.x = ' + (first_cube.rotation._x / Math.PI * 180).toFixed(0) + '<br>'
-        + 'rotation.y = ' + (first_cube.rotation._y / Math.PI * 180).toFixed(0) + '<br>'
-        + 'rotation.z = ' + (first_cube.rotation._z / Math.PI * 180).toFixed(0) + '<br>'
-        + 'quaternion.x = ' + first_cube.quaternion._x.toFixed(2) + '<br>'
-        + 'quaternion.y = ' + first_cube.quaternion._y.toFixed(2) + '<br>'
-        + 'quaternion.z = ' + first_cube.quaternion._z.toFixed(2) + '<br>'
-        + 'quaternion.w = ' + first_cube.quaternion._w.toFixed(2) + '<br>';
-    }
-
     pause_btn.onclick = () => { this.pause(); };
     submit_btn.onclick = () => { this.submit(); };
-    rotation_x.oninput = () => { changeRotation('x', +rotation_x.value) }
-    rotation_y.oninput = () => { changeRotation('y', +rotation_y.value) }
-    rotation_z.oninput = () => { changeRotation('z', +rotation_z.value) }
     continue_btn.onclick = () => { this.continue(); };
     restart_btn.onclick = () => { this.restart(); };
     exit_btn.onclick = () => { this.exit(); };
@@ -115,17 +97,10 @@ class App { // eslint-disable-line no-unused-vars
     pause_btn.id = "pause";
     submit_btn.id = "submit";
     // canvas_div.id = "canvas-area";
+    timemoveblock_div.id = "timemoveblock";
     time_div.id = "time";
     move_div.id = "move";
-    rotation_x.id = 'rotation_x'
-    rotation_y.id = 'rotation_y'
-    rotation_z.id = 'rotation_z'
-    info_div.id = 'info'
-    info2_div.id = 'info2'
-    var rotationControlConfig = { type: 'range', min: 0, max: 2, step: 0.125, value: 0 }
-    Object.assign(rotation_x, rotationControlConfig)
-    Object.assign(rotation_y, rotationControlConfig)
-    Object.assign(rotation_z, rotationControlConfig)
+    info2_div.id = 'info2';
     pauseBackgroundPage_div.id = "pauseBackgroundPage";
     pausePage_div.id = "pausePage";
     continue_btn.id = "continue";
@@ -140,11 +115,9 @@ class App { // eslint-disable-line no-unused-vars
 
     play_div.appendChild(submit_btn);
     // play_div.appendChild(canvas_div);
-    play_div.appendChild(time_div);
-    play_div.appendChild(move_div);
-    play_div.appendChild(rotation_x);
-    play_div.appendChild(rotation_y);
-    play_div.appendChild(rotation_z);
+    play_div.appendChild(timemoveblock_div);
+    timemoveblock_div.appendChild(time_div);
+    timemoveblock_div.appendChild(move_div);
     pauseBackgroundPage_div.appendChild(pausePage_div);
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);
@@ -155,8 +128,72 @@ class App { // eslint-disable-line no-unused-vars
     document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
-    document.getElementById("game").appendChild(info_div);
     document.getElementById("game").appendChild(info2_div);
+
+    this.timeInt = setInterval(() => {
+      time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
+    }, 100);
+
+    let game_div = document.createElement('div');
+    game_div.style = 'position: absolute; top: 5%; left: 10%; background: rgba(128, 128, 128, 0.5);';
+
+    let brick_table = document.createElement('table');
+
+    let createBrick = (brickId, face) => {
+      let brick = document.createElement('div');
+      brick.id = 'brick' + brickId + face;
+      if (face == 'top' || face == 'bottom') {
+        brick.className = 'facetop';
+      } else {
+        brick.className = 'faceside';
+      }
+      return brick;
+    }
+
+    for (let brickId = 0; brickId < this.brickCount; brickId++) {
+      // top
+      let tr_top = document.createElement('tr');
+      let td_top = document.createElement('td');
+      td_top.colSpan = 4;
+      td_top.style = 'text-align: center;';
+      td_top.appendChild(createBrick(brickId, 'top'));
+      tr_top.appendChild(td_top);
+      brick_table.appendChild(tr_top);
+      // side
+      let tr_side = document.createElement('tr');
+      ['left', 'front', 'right', 'back'].forEach(face => {
+        let td_side = document.createElement('td');
+        td_side.appendChild(createBrick(brickId, face));
+        tr_side.appendChild(td_side);
+      });
+      brick_table.appendChild(tr_side);
+      // bottom
+      let tr_bottom = document.createElement('tr');
+      let td_bottom = document.createElement('td');
+      td_bottom.colSpan = 4;
+      td_bottom.style = 'text-align: center;';
+      td_bottom.appendChild(createBrick(brickId, 'bottom'));
+      tr_bottom.appendChild(td_bottom);
+      brick_table.appendChild(tr_bottom);
+    }
+
+    game_div.appendChild(brick_table);
+
+    this.draw = () => {
+      for (let bid = 0; bid < this.brickCount; bid++) {
+        ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
+          const el = document.getElementById('brick' + bid + face);
+          for (let bid2 = 1; bid2 <= this.brickCount; bid2++) {
+            el.classList.remove('face' + bid2);
+          }
+          el.classList.add('face' + this.game.bricks[bid].facePattern[face]);
+        });
+      }
+      move_div.innerText = 'Move: ' + this.game.getStepFormatted();
+    }
+
+    document.getElementById("game").appendChild(game_div);
+    this.draw();
   }
 
   /**
@@ -275,6 +312,7 @@ class App { // eslint-disable-line no-unused-vars
    * 暫停遊戲
    */
   pause() {
+    this.game.pause();
     document.getElementById('pauseBackgroundPage').style.display = 'block';
   }
 
@@ -282,7 +320,13 @@ class App { // eslint-disable-line no-unused-vars
    * 檢查是否通關
    */
   submit() {
-    // TODO
+    if (this.game.isResolve()) {
+      alert('mission clear');
+      this.game.pause();
+      clearInterval(this.timeInt);
+    } else {
+      alert('not yet');
+    }
   }
 
   // Game page: pause
@@ -291,14 +335,16 @@ class App { // eslint-disable-line no-unused-vars
    * 繼續遊戲
    */
   continue() {
+    this.game.start();
     document.getElementById('pauseBackgroundPage').style.display = 'none';
   }
 
   /**
    * 重新開始遊戲
+   * @todo 應該為同一關卡重新開始，尚未完成
    */
   restart() {
-    document.getElementById('pauseBackgroundPage').style.display = 'none';
+    this.start();
   }
 
   /**
@@ -350,7 +396,7 @@ class App { // eslint-disable-line no-unused-vars
    * TODO
    * @param {number} achievementId - TODO
    */
-  pickupGift(achievementId) { // eslint-disable-line no-unused-vars
+  pickupGift(achievementId) {
     // TODO
   }
 }

@@ -3,7 +3,7 @@ const MATERIAL_LIST = {}
 /**
  * 材料
  */
-class MaterialEntry { // eslint-disable-line no-unused-vars
+class MaterialEntry {
   /**
    * 初始化
    * @param {string} materialName

@@ -1,6 +1,6 @@
 import { getMaterial } from './material.js';
 
-const BRICKFACEKEYS = ["front", "back", "top", "bottom", "left", "right"]
+const BRICKFACEKEYS = ["right", "left", "top", "bottom", "front", "back"]
 
 const POSSIBLEQUATERNION = [];
 for (let y = 0; y < 4; y++) {
@@ -25,14 +25,16 @@ for (let y = 0; y < 4; y++) {
 /**
  * 方塊
  */
-class Brick { // eslint-disable-line no-unused-vars
+class Brick {
   /**
    * 初始化方塊
    * @param {Game} game
    * @param {!string} materialName - 材質名稱
+   * @param {number} brickId - 第幾個方塊，從0開始
    * @param {{x:number, y:number, z:number}} facePattern
    */
-  constructor(game, materialName, facePattern) {
+  constructor(game, materialName, brickId, facePattern) {
+    this.brickId = brickId
     let textures = getMaterial(materialName).fileNames
       , geometry = new THREE.BoxGeometry(2, 2, 2)
       , material = BRICKFACEKEYS.map(k =>
@@ -184,33 +186,40 @@ class Brick { // eslint-disable-line no-unused-vars
     }
 
     let newFaceNormalVector = new THREE.Vector3(this.faceX, this.faceY, this.faceZ).applyQuaternion(this.renderObject.quaternion).round();
-    let rotaryAxis = this.faceNormalVector.clone().cross(newFaceNormalVector);
-    console.log('rotaryAxis', rotaryAxis, rotaryAxis.clone().negate());
+    console.log('this.rotaryAxis', this.rotaryAxis)
+    let rotaryAxisCross = this.faceNormalVector.clone().cross(newFaceNormalVector);
+    console.log('rotaryAxis', rotaryAxisCross, rotaryAxisCross.clone().negate());
 
-    let rotateXVector = new THREE.Vector3(0, 0, 1);
-    if (this.rotaryAxis.equals(rotateXVector) || this.rotaryAxis.clone().negate().equals(rotateXVector)) {
-      if (this.rotaryAxis.equals(rotateXVector)) {
+    if (this.rotaryAxis.equals(new THREE.Vector3(0, 0, -1))) {
+      console.log(this.rotaryAxis);
+      if (this.rotaryAxis.equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
       console.log('rotateX', angle);
+      this.game.rotateX(this.brickId, angle);
+      this.game.app.draw(); // Temp
       return;
     }
 
-    let rotateYVector = new THREE.Vector3(1, 0, 0);
-    if (this.rotaryAxis.equals(rotateYVector) || this.rotaryAxis.clone().negate().equals(rotateYVector)) {
-      if (this.rotaryAxis.clone().negate().equals(rotateYVector)) {
+    if (this.rotaryAxis.equals(new THREE.Vector3(1, 0, 0))) {
+      console.log(this.rotaryAxis);
+      if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
       console.log('rotateY', angle);
+      this.game.rotateY(this.brickId, angle);
+      this.game.app.draw(); // Temp
       return;
     }
 
-    let rotateZVector = new THREE.Vector3(0, 1, 0);
-    if (this.rotaryAxis.equals(rotateZVector) || this.rotaryAxis.clone().negate().equals(rotateZVector)) {
-      if (this.rotaryAxis.clone().negate().equals(rotateZVector)) {
+    if (this.rotaryAxis.equals(new THREE.Vector3(0, 1, 0))) {
+      console.log(this.rotaryAxis);
+      if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
       console.log('rotateZ', angle);
+      this.game.rotateZ(this.brickId, angle);
+      this.game.app.draw(); // Temp
       return;
     }
   }

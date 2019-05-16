@@ -1,7 +1,7 @@
 /**
  * 顯示方塊
  */
-class Displayer { // eslint-disable-line no-unused-vars
+class Displayer {
   /**
    * 初始化
    * @param {*} appElem
@@ -20,13 +20,13 @@ class Displayer { // eslint-disable-line no-unused-vars
         let { displayer: { displayType } } = this
         this.theta += (dy / 500) * (displayType == Displayer.GAMMING ? 1 : -1)
         this.phi += (dx / 500) * (displayType == Displayer.GAMMING ? 1 : -1)
-        if (this.theta > .4) 
+        if (this.theta > .4)
           this.theta = .4
-        else if (this.theta < -.4) 
+        else if (this.theta < -.4)
           this.theta = -.4
-        if (this.phi > 2) 
+        if (this.phi > 2)
           this.phi -= 2
-        else if (this.phi < -2) 
+        else if (this.phi < -2)
           this.phi += 2
       }
     }
@@ -63,7 +63,7 @@ class Displayer { // eslint-disable-line no-unused-vars
     window.addEventListener('touchmove', e => this.mouseMoveEvent(e.touches[0]))
     window.addEventListener('touchend', e => this.mouseUpEvent(e))
     window.addEventListener('wheel', e => this.wheelEvent(e))
-    setInterval(() => 
+    setInterval(() =>
       this.renderer.render(this.scene, this.camera), 33)
   }
 
@@ -137,7 +137,7 @@ class Displayer { // eslint-disable-line no-unused-vars
   setBrickSelectors(bricks) {
     let selectorBricks = Array.from(bricks)
     this.selectorBricks = selectorBricks
-    this.selectorGroup.children = selectorBricks.map(b => 
+    this.selectorGroup.children = selectorBricks.map(b =>
       b.renderObject)
   }
 
@@ -169,7 +169,7 @@ class Displayer { // eslint-disable-line no-unused-vars
    */
   mouseMoveEvent(e) {
     let { mouseInfo, cameraInfo } = this
-    if (! mouseInfo.mouseDown) 
+    if (! mouseInfo.mouseDown)
       return
 
     let dx = e.clientX - mouseInfo.lastX
@@ -191,7 +191,7 @@ class Displayer { // eslint-disable-line no-unused-vars
   mouseUpEvent(e) {
     let { mouseInfo } = this
       , { interObject } = mouseInfo
-    if (interObject) 
+    if (interObject)
       interObject.mouseUpEvent()
 
     mouseInfo.mouseDown = false
@@ -205,9 +205,9 @@ class Displayer { // eslint-disable-line no-unused-vars
   wheelEvent(e) {
     let { cameraInfo } = this
     cameraInfo.r -= e.wheelDeltaY / 150
-    if (cameraInfo.r < 2) 
+    if (cameraInfo.r < 2)
       cameraInfo.r = 2
-    else if (cameraInfo.r > 100) 
+    else if (cameraInfo.r > 100)
       cameraInfo.r = 100
     this.calcCamera()
   }
@@ -223,28 +223,28 @@ class Displayer { // eslint-disable-line no-unused-vars
     mouseVector.y = - ( e.clientY / appHeight ) * 2 + 1
     rayCaster.setFromCamera(mouseVector, camera)
     switch (displayType) {
-      case Displayer.BACKGROUND: 
+      case Displayer.BACKGROUND:
         return []
-      case Displayer.GAMMING: 
+      case Displayer.GAMMING:
         bricks = gameBricks
         break
-      case Displayer.SELECTING: 
+      case Displayer.SELECTING:
         bricks = selectorBricks
         break
     }
 
-    bricks.forEach(b => 
+    bricks.forEach(b =>
       id2obj[b.renderObject.uuid] = b)
-    intersects = rayCaster.intersectObjects(bricks.map(b => 
+    intersects = rayCaster.intersectObjects(bricks.map(b =>
       b.renderObject))
-    if (intersects.length == 0) 
+    if (intersects.length == 0)
       return []
 
     brick = id2obj[intersects[0].object.uuid]
     faceNorm = intersects[0].face.normal
 
     // highlight intersected face?
-    // for (let m of brick.renderObject.material) 
+    // for (let m of brick.renderObject.material)
     //   m.color.set(true ? 0xff0000 : 0xffffff)
 
     return [ brick, faceNorm ]
