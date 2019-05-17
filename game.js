@@ -1,5 +1,4 @@
-import { Brick } from './brick.js';
-
+import { GameBrick } from './brick.js';
 /**
  * 操控方塊遊戲本身
  */
@@ -38,7 +37,7 @@ class Game {
      */
     this.bricks = [];
     bricksNumber.forEach((brick, brickId) => {
-      this.bricks.push(new Brick(this, this.app.materialName, brickId, {
+      this.bricks.push(new GameBrick(this.app, brickId, {
         top: brick['top'] - 1,
         bottom: brick['bottom'] - 1,
         front: brick['front'] - 1,

@@ -28,14 +28,13 @@ for (let y = 0; y < 4; y++) {
 class Brick {
   /**
    * 初始化方塊
-   * @param {Game} game
-   * @param {!string} materialName - 材質名稱
+   * @param {App} app
    * @param {number} brickId - 第幾個方塊，從0開始
-   * @param {{x:number, y:number, z:number}} facePattern
+   * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor(game, materialName, brickId, facePattern) {
+  constructor(app, brickId, facePattern) {
     this.brickId = brickId
-    let textures = getMaterial(materialName).fileNames
+    let textures = getMaterial(app.materialName).fileNames
       , geometry = new THREE.BoxGeometry(2, 2, 2)
       , material = BRICKFACEKEYS.map(k =>
         new THREE.MeshPhongMaterial({
@@ -43,7 +42,8 @@ class Brick {
             .TextureLoader()
             .load('img/' + textures[facePattern[k]]),
         }))
-    this.materialName = materialName
+    this.app = app
+    this.materialName = app.materialName
     this.facePattern = facePattern
     this.facePatternOriginal = { ...facePattern }
     this.orientation = { x: 0, y: 0, z: 0 }
@@ -54,7 +54,6 @@ class Brick {
     this.mouseLastY = 0
     this.mouseDown = false
     this.disableMouse = false;
-    this.game = game
   }
 
   get rotation() {
@@ -91,7 +90,7 @@ class Brick {
     this.mouseDown = true
     this.lockOnX = false
     this.lockOnY = false
-    this.game.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1;
+    this.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1;
     this.axisX = new THREE.Vector3(0, 1, 0)
     this.axisY = new THREE.Vector3(0, 1, 0).cross(this.faceNormalVector)
     console.log('axisX', this.axisX)
@@ -108,17 +107,17 @@ class Brick {
       return
     }
 
-    this.game.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1 + '<br>'
+    this.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1 + '<br>'
       + 'dx:' + (x - this.mouseStartX) + ' dy:' + (y - this.mouseStartY);
 
     if (this.disableMouse) {
-      this.game.app.info2_div.innerHTML += ' mouse disabled';
+      this.app.info2_div.innerHTML += ' mouse disabled';
       return
     }
 
     // 暫時停用拖曳上下面
     if (this.faceNormalVector.equals(this.axisX)) {
-      this.game.app.info2_div.innerHTML += ' face disabled';
+      this.app.info2_div.innerHTML += ' face disabled';
       return
     }
 
@@ -196,8 +195,8 @@ class Brick {
         angle = 4 - angle;
       }
       console.log('rotateX', angle);
-      this.game.rotateX(this.brickId, angle);
-      this.game.app.draw(); // Temp
+      this.app.game.rotateX(this.brickId, angle);
+      this.app.draw(); // Temp
       return;
     }
 
@@ -207,8 +206,8 @@ class Brick {
         angle = 4 - angle;
       }
       console.log('rotateY', angle);
-      this.game.rotateY(this.brickId, angle);
-      this.game.app.draw(); // Temp
+      this.app.game.rotateY(this.brickId, angle);
+      this.app.draw(); // Temp
       return;
     }
 
@@ -218,11 +217,35 @@ class Brick {
         angle = 4 - angle;
       }
       console.log('rotateZ', angle);
-      this.game.rotateZ(this.brickId, angle);
-      this.game.app.draw(); // Temp
+      this.app.game.rotateZ(this.brickId, angle);
+      this.app.draw(); // Temp
       return;
     }
   }
 }
 
-export { Brick }
+class GameBrick extends Brick {
+  /**
+   * 初始化遊戲方塊
+   * @param {App} app
+   * @param {!string} materialName - 材質名稱
+   * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
+   */
+  constructor(app, materialName, facePattern) {
+    super(app, materialName, facePattern)
+  }
+}
+
+class SelectorBrick extends Brick {
+  /**
+   * 初始化樣式選擇方塊
+   * @param {App} app
+   * @param {!string} materialName - 材質名稱
+   * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
+   */
+  constructor(app, materialName, facePattern) {
+    super(app, materialName, facePattern)
+  }
+}
+
+export { GameBrick, SelectorBrick }

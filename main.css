@@ -1,4 +1,5 @@
 *{
+    overscroll-behavior: none;
     font-family: Consolas;
     font-size: 1.12em;
     -webkit-box-sizing: border-box;
@@ -212,6 +213,53 @@ body{
     height: 50px;
     background: black;
 }
+
+#volumeSetting{
+    margin: 0 auto;
+    width: fit-content;
+}
+#volume_icon{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: black;
+}
+#volume{
+    position: relative;
+    top: -15px;
+    margin-left: 30px;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    outline: none;
+    border: none;
+    padding: 0;
+    background-color: #d7dbdd;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    opacity: 0.7;
+}
+#volume:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    border-radius: 100%;
+    background-color: #606670;
+    height: 28px;
+    width: 28px;
+    margin-top: -0px;
+}
+#output{
+    display: inline-block;
+    position: relative;
+    top: -15px;
+    margin-left: 8px;
+    white-space:nowrap;
+    width: 50px;
+}
+
+/* Temp */
 
 #info2 {
     top: calc(20% + 220px);

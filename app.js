@@ -16,7 +16,7 @@ class App {
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
-    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('test').fileNames.map(n => `img/${n}`))
+    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('bg-sky').fileNames.map(n => `img/${n}`))
   }
 
   // Home page
@@ -84,6 +84,10 @@ class App {
     var continue_btn = document.createElement("button");
     var restart_btn = document.createElement("button");
     var exit_btn = document.createElement("button");
+    var volumeSetting_div = document.createElement("div");
+    var volume_icon = document.createElement("div");
+    var volume_ipt = document.createElement("input");
+    var output_div = document.createElement("div");
     var info2_div = document.createElement("div");
     this.info2_div = info2_div;
 
@@ -92,6 +96,9 @@ class App {
     continue_btn.onclick = () => { this.continue(); };
     restart_btn.onclick = () => { this.restart(); };
     exit_btn.onclick = () => { this.exit(); };
+    volume_ipt.oninput = () => {
+      this.setVolume(volume_ipt.value);
+    };
 
     play_div.id = "play";
     pause_btn.id = "pause";
@@ -106,26 +113,41 @@ class App {
     continue_btn.id = "continue";
     restart_btn.id = "restart";
     exit_btn.id = "exit";
+    volumeSetting_div.id = "volumeSetting";
+    volume_icon.id = "volume_icon";
+    volume_ipt.id = "volume";
+    output_div.id = "output";
+
     submit_btn.innerText = "submit";
     time_div.innerText = "time:00.00";
     move_div.innerText = "move:0";
     continue_btn.innerText = "繼續遊戲";
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
+    output_div.innerText = "75";
+
+    volume_ipt.type = "range";
+    volume_ipt.min = "0";
+    volume_ipt.max = "100";
+    volume_ipt.value = "75";
 
     play_div.appendChild(submit_btn);
     // play_div.appendChild(canvas_div);
     play_div.appendChild(timemoveblock_div);
+    play_div.appendChild(pause_btn);
     timemoveblock_div.appendChild(time_div);
     timemoveblock_div.appendChild(move_div);
     pauseBackgroundPage_div.appendChild(pausePage_div);
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);
     pausePage_div.appendChild(exit_btn);
+    pausePage_div.appendChild(volumeSetting_div);
+    volumeSetting_div.appendChild(volume_icon);
+    volumeSetting_div.appendChild(volume_ipt);
+    volumeSetting_div.appendChild(output_div);
 
     pauseBackgroundPage_div.style.display = "none";
 
-    document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
     document.getElementById("game").appendChild(info2_div);
@@ -235,9 +257,9 @@ class App {
     BrickCount_div.innerText = this.brickCount.toString();
 
     brickNumSetting_div.appendChild(brickNumTXT_div);
-    brickNumSetting_div.appendChild(increaseBrickCount_div);
-    brickNumSetting_div.appendChild(BrickCount_div);
     brickNumSetting_div.appendChild(decreaseBrickCount_div);
+    brickNumSetting_div.appendChild(BrickCount_div);
+    brickNumSetting_div.appendChild(increaseBrickCount_div);
     brickStyleSetting_div.appendChild(brickStyleTXT_div);
     brickStyleSetting_div.appendChild(brickShow_div);
     setting_div.appendChild(brickNumSetting_div);
@@ -359,7 +381,8 @@ class App {
    * @param {number} value
    */
   setVolume(value) {
-    // TODO
+    console.log("setVolume: " + value);
+    document.getElementById("output").innerHTML = value;
   }
 
 

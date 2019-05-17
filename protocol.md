@@ -56,8 +56,8 @@
   + Function  calcMouseRay(e)
 
 ### Brick
-#### new Brick(game, materialName, facePattern)
-  + Game      game
+#### new Brick(app, facePattern)
+  + App       app
   + String    materialName
   + Array     facePattern
     + get top,bottom,left,right,front,back [faceId: 0-5]
@@ -75,6 +75,14 @@
   + Function  mouseDownEvent(x, y, faceX, faceY, faceZ)
   + Function  mouseMoveEvent(x, y)
   + Function  mouseUpEvent()
+
+### GameBrick
+#### new GameBrick(app, facePattern)
+  + ...Brick
+
+### SelectorBrick
+#### new SelectorBrick(app, facePattern)
+  + ...Brick
 
 ### Game
 #### new Game(app)

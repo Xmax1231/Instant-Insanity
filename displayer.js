@@ -1,3 +1,5 @@
+const SKIP_ELEM_IDS = new Set([ 'volume' ])
+
 /**
  * 顯示方塊
  */
@@ -9,10 +11,10 @@ class Displayer {
   constructor(appElem) {
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera( 75, 0, 0.1, 1000 )
+    this.camera = new THREE.PerspectiveCamera( 50, 0, 0.1, 1000 )
     this.pointLight = new THREE.PointLight(0xffffff, 1.2)
     this.cameraInfo = {
-      r: 6,
+      r: 18,
       theta: 1/4,
       phi: 1/4,
       displayer: this,
@@ -122,6 +124,7 @@ class Displayer {
       , { gameGroup } = this
       , startY = bricks.length / 2 * 3 - 1.5
     this.gameBricks = gameBricks
+    gameGroup.children.length = 0
     for (let { renderObject } of bricks) {
       gameGroup.add(renderObject)
       renderObject.position.y = startY
@@ -146,11 +149,12 @@ class Displayer {
    * @param {Event} e
    */
   mouseDownEvent(e) {
-    if (e.path[0].id.startsWith('rotation')) {
+    if (SKIP_ELEM_IDS.has(e.path[0].id))
       return
-    }
 
-    e.preventDefault && e.preventDefault()
+    if (e.preventDefault != null)
+      e.preventDefault()
+
     let { mouseInfo } = this
     mouseInfo.lastX = e.clientX
     mouseInfo.lastY = e.clientY
