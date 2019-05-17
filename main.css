@@ -12,6 +12,12 @@ body{
     width: 100%;
     background-color: rgb(255, 255, 255);
 }
+button{
+    outline:none;
+}
+button:focus{
+    border: none;
+}
 #home > button{
     margin: 15px auto;
     width: 30%;
@@ -50,9 +56,11 @@ body{
     position: absolute;
     top: 3%;
     left: 3%;
-    width: 50px;
-    height: 50px;
-    background: black;
+    width: 70px;
+    height: 70px;
+    background: url(./icons/1556866831772.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
 #submit{
     position: absolute;
@@ -138,7 +146,30 @@ body{
 #brickNumSetting > div, button{
     display: inline-block;
 }
+#decreaseBrickCount{
+    position: relative;
+    top: 10px;
+    margin-bottom: -15px;
+    height: 50px;
+    width: 50px;
+    background: url(./icons/1556873803523.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
+#increaseBrickCount{
+    position: relative;
+    top: 10px;
+    margin-bottom: -15px;
+    width: 50px;
+    height: 50px;
+    background: url(./icons/1556873791942.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
 #BrickCount{
+    text-align: center;
+    width: 50px;
+    height: 50px;
     padding: 3px;
     border: 2px black solid;
 }
@@ -209,9 +240,11 @@ body{
     position: absolute;
     top: 3%;
     left: 3%;
-    width: 50px;
-    height: 50px;
-    background: black;
+    width: 70px;
+    height: 70px;
+    background: url(./icons/1556869699566.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
 
 #volumeSetting{
@@ -222,7 +255,9 @@ body{
     display: inline-block;
     width: 50px;
     height: 50px;
-    background: black;
+    background: url(./icons/1556872401455.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
 #volume{
     position: relative;
