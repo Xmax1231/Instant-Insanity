@@ -149,12 +149,13 @@ class Displayer { // eslint-disable-line no-unused-vars
    * @param {Event} e
    */
   mouseDownEvent(e) {
-    e.preventDefault()
     if (SKIP_ELEM_IDS.has(e.path[0].id)) 
       return
 
     if (e.type == 'touchstart') 
       e = e.touches[0]
+    else
+      e.preventDefault()
 
     let { mouseInfo } = this
     mouseInfo.lastX = e.clientX
