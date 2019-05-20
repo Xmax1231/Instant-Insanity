@@ -31,6 +31,60 @@ class Game {
       }
     });
 
+    // 打亂單個 brick
+    for (let brickId = 0; brickId < this.app.brickCount; brickId++) {
+      for (let i = 0; i < 10; i++) {
+        const dir = Math.floor(Math.random() * 3);
+        const angle = Math.floor(Math.random() * 3 + 1);
+        for (let j = 0; j < angle; j++) {
+          switch (dir) {
+            case 0:
+              [
+                bricksNumber[brickId].top,
+                bricksNumber[brickId].left,
+                bricksNumber[brickId].bottom,
+                bricksNumber[brickId].right,
+              ] =
+                [
+                  bricksNumber[brickId].right,
+                  bricksNumber[brickId].top,
+                  bricksNumber[brickId].left,
+                  bricksNumber[brickId].bottom,
+                ];
+              break;
+            case 1:
+              [
+                bricksNumber[brickId].top,
+                bricksNumber[brickId].front,
+                bricksNumber[brickId].bottom,
+                bricksNumber[brickId].back,
+              ] =
+                [
+                  bricksNumber[brickId].back,
+                  bricksNumber[brickId].top,
+                  bricksNumber[brickId].front,
+                  bricksNumber[brickId].bottom,
+                ];
+              break;
+            case 2:
+              [
+                bricksNumber[brickId].front,
+                bricksNumber[brickId].right,
+                bricksNumber[brickId].back,
+                bricksNumber[brickId].left,
+              ] =
+                [
+                  bricksNumber[brickId].left,
+                  bricksNumber[brickId].front,
+                  bricksNumber[brickId].right,
+                  bricksNumber[brickId].back,
+                ];
+              break;
+          }
+        }
+      }
+    }
+
     /**
      * 初始化 Brick class
      * @todo 編號應該要統一
@@ -46,25 +100,6 @@ class Game {
         left: brick['left'] - 1,
       }));
     });
-
-    // 打亂單個 brick
-    // for (let bid = 0; bid < this.app.brickCount; bid++) {
-    //   for (let i = 0; i < 10; i++) {
-    //     const dir = Math.floor(Math.random() * 3);
-    //     const angle = Math.floor(Math.random() * 3 + 1);
-    //     switch (dir) {
-    //       case 0:
-    //         this.rotateX(bid, angle, false);
-    //         break;
-    //       case 1:
-    //         this.rotateY(bid, angle, false);
-    //         break;
-    //       case 2:
-    //         this.rotateZ(bid, angle, false);
-    //         break;
-    //     }
-    //   }
-    // }
 
     this.app.displayer.setGameBricks(this.bricks);
 
