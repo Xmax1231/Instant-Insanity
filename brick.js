@@ -1,20 +1,42 @@
 import { getMaterial } from './material.js';
 
-const BRICKFACEKEYS = [ "front", "back", "top", "bottom", "left", "right" ]
+const BRICKFACEKEYS = ["right", "left", "top", "bottom", "front", "back"]
+
+const POSSIBLEQUATERNION = [];
+for (let y = 0; y < 4; y++) {
+  for (let z = 0; z < 4; z++) {
+    POSSIBLEQUATERNION.push(
+      new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(0, y * Math.PI / 2, z * Math.PI / 2, 'YZX')
+      )
+    );
+  }
+}
+[1, -1].forEach(x => {
+  for (let z = 0; z < 4; z++) {
+    POSSIBLEQUATERNION.push(
+      new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(x * Math.PI / 2, 0, z * Math.PI / 2, 'XZY')
+      )
+    );
+  }
+});
+
 /**
  * 方塊
  */
-class Brick { // eslint-disable-line no-unused-vars
+class Brick {
   /**
    * 初始化方塊
    * @param {App} app
-   * @param {!string} materialName - 材質名稱
+   * @param {number} brickId - 第幾個方塊，從0開始
    * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor(app, facePattern) {
+  constructor(app, brickId, facePattern) {
+    this.brickId = brickId
     let textures = getMaterial(app.materialName).fileNames
-      , geometry = new THREE.BoxGeometry( 2, 2, 2 )
-      , material = BRICKFACEKEYS.map(k => 
+      , geometry = new THREE.BoxGeometry(2, 2, 2)
+      , material = BRICKFACEKEYS.map(k =>
         new THREE.MeshPhongMaterial({
           map: new THREE
             .TextureLoader()
@@ -26,6 +48,12 @@ class Brick { // eslint-disable-line no-unused-vars
     this.facePatternOriginal = { ...facePattern }
     this.orientation = { x: 0, y: 0, z: 0 }
     this.renderObject = new THREE.Mesh(geometry, material)
+    this.mouseStartX = 0
+    this.mouseStartY = 0
+    this.mouseLastX = 0
+    this.mouseLastY = 0
+    this.mouseDown = false
+    this.disableMouse = false;
   }
 
   get rotation() {
@@ -33,9 +61,9 @@ class Brick { // eslint-disable-line no-unused-vars
   }
 
   /**
-   * 從 orientation 更新 facePattern 
+   * 從 orientation 更新 facePattern
    */
-  updateFacePattern () {
+  updateFacePattern() {
     // TODO
   }
 
@@ -48,7 +76,21 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {number} faceZ
    */
   mouseDownEvent(x, y, faceX, faceY, faceZ) {
-    // TODO
+    this.mouseStartX = x
+    this.mouseStartY = y
+    this.mouseLastX = x
+    this.mouseLastY = y
+    this.faceX = faceX
+    this.faceY = faceY
+    this.faceZ = faceZ
+    this.face = new THREE.Vector3(faceX, faceY, faceZ)
+    this.faceNormalVector = new THREE.Vector3(faceX, faceY, faceZ).applyQuaternion(this.renderObject.quaternion).round()
+    this.startQuaternion = this.renderObject.quaternion.clone()
+    this.mouseDown = true
+    this.lockOnX = false
+    this.lockOnY = false
+    this.axisX = new THREE.Vector3(0, 1, 0)
+    this.axisY = new THREE.Vector3(0, 1, 0).cross(this.faceNormalVector)
   }
 
   /**
@@ -57,14 +99,109 @@ class Brick { // eslint-disable-line no-unused-vars
    * @param {number} y
    */
   mouseMoveEvent(x, y) {
-    // TODO
+    if (!this.mouseDown) {
+      return
+    }
+
+    if (this.disableMouse) {
+      return
+    }
+
+    // 暫時停用拖曳上下面
+    if (this.faceNormalVector.equals(this.axisX)) {
+      return
+    }
+
+    if (!this.lockOnX && !this.lockOnY) {
+      if (Math.abs(x - this.mouseStartX) > 10) {
+        this.lockOnX = true;
+        this.rotaryAxis = this.axisX;
+      } else if (Math.abs(y - this.mouseStartY) > 10) {
+        this.lockOnY = true;
+        this.rotaryAxis = this.axisY;
+      }
+    }
+
+    let dx = x - this.mouseLastX
+    let dy = y - this.mouseLastY
+    if (this.lockOnX) {
+      this.renderObject.rotateOnWorldAxis(this.axisX, Math.PI * dx / 150)
+    }
+    if (this.lockOnY) {
+      this.renderObject.rotateOnWorldAxis(this.axisY, Math.PI * dy / 150)
+    }
+    this.mouseLastX = x
+    this.mouseLastY = y
   }
 
   /**
    *
    */
   mouseUpEvent() {
-    // TODO
+    if (this.disableMouse) {
+      return
+    }
+
+    this.mouseDown = false
+    this.lockOnX = false
+    this.lockOnY = false
+    this.disableMouse = true
+
+    let closestQuaternion = null;
+    let minAngle = 999;
+
+    POSSIBLEQUATERNION.forEach(quaternion => {
+      let angle = this.renderObject.quaternion.angleTo(quaternion);
+      if (angle < minAngle) {
+        minAngle = angle;
+        closestQuaternion = quaternion;
+      }
+    });
+
+    var intX = setInterval(() => {
+      let prevQuaternion = this.renderObject.quaternion.clone();
+      this.renderObject.quaternion.rotateTowards(closestQuaternion, Math.PI / 50);
+      if (this.renderObject.quaternion.equals(prevQuaternion)) {
+        clearInterval(intX)
+        this.disableMouse = false
+      }
+    }, 100);
+
+    let angle = Math.round(closestQuaternion.angleTo(this.startQuaternion) / Math.PI * 180 / 90);
+
+    if (angle == 0) {
+      return;
+    }
+
+    let newFaceNormalVector = new THREE.Vector3(this.faceX, this.faceY, this.faceZ).applyQuaternion(this.renderObject.quaternion).round();
+    let rotaryAxisCross = this.faceNormalVector.clone().cross(newFaceNormalVector);
+
+    if (this.rotaryAxis.equals(new THREE.Vector3(0, 0, -1))) {
+      if (this.rotaryAxis.equals(rotaryAxisCross)) {
+        angle = 4 - angle;
+      }
+      this.app.game.rotateX(this.brickId, angle);
+      this.app.draw(); // Temp
+      return;
+    }
+
+    if (this.rotaryAxis.equals(new THREE.Vector3(1, 0, 0))) {
+      if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
+        angle = 4 - angle;
+      }
+      this.app.game.rotateY(this.brickId, angle);
+      this.app.draw(); // Temp
+      return;
+    }
+
+    if (this.rotaryAxis.equals(new THREE.Vector3(0, 1, 0))) {
+      if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
+        angle = 4 - angle;
+      }
+      this.app.game.rotateZ(this.brickId, angle);
+      this.app.draw(); // Temp
+      return;
+    }
   }
 }
 
@@ -75,7 +212,7 @@ class GameBrick extends Brick {
    * @param {!string} materialName - 材質名稱
    * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor (app, materialName, facePattern) {
+  constructor(app, materialName, facePattern) {
     super(app, materialName, facePattern)
   }
 }
@@ -87,7 +224,7 @@ class SelectorBrick extends Brick {
    * @param {!string} materialName - 材質名稱
    * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor (app, materialName, facePattern) {
+  constructor(app, materialName, facePattern) {
     super(app, materialName, facePattern)
   }
 }

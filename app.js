@@ -5,7 +5,7 @@ import { getMaterial } from './material.js';
 /**
  * 控制遊戲畫面
  */
-class App { // eslint-disable-line no-unused-vars
+class App {
   /**
    * 初始化App
    */
@@ -52,6 +52,7 @@ class App { // eslint-disable-line no-unused-vars
     start_btn.id = "start";
     setting_btn.id = "gotoSetting";
     achievement_btn.id = "gotoAchievement";
+    achievement_btn.style = "display: none"; // Temporary
 
     start_btn.innerText = "開始";
     setting_btn.innerText = "設定";
@@ -111,6 +112,7 @@ class App { // eslint-disable-line no-unused-vars
     restart_btn.id = "restart";
     exit_btn.id = "exit";
     volumeSetting_div.id = "volumeSetting";
+    volumeSetting_div.style = "display: none;"; // Temporary
     volume_icon.id = "volume_icon";
     volume_ipt.id = "volume";
     output_div.id = "output";
@@ -147,6 +149,71 @@ class App { // eslint-disable-line no-unused-vars
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
+
+    this.timeInt = setInterval(() => {
+      time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
+    }, 100);
+
+    let game_div = document.createElement('div');
+    game_div.style = 'position: absolute; top: 5%; left: 10%; background: rgba(128, 128, 128, 0.5); display: none;';
+
+    let brick_table = document.createElement('table');
+
+    let createBrick = (brickId, face) => {
+      let brick = document.createElement('div');
+      brick.id = 'brick' + brickId + face;
+      if (face == 'top' || face == 'bottom') {
+        brick.className = 'facetop';
+      } else {
+        brick.className = 'faceside';
+      }
+      return brick;
+    }
+
+    for (let brickId = 0; brickId < this.brickCount; brickId++) {
+      // top
+      let tr_top = document.createElement('tr');
+      let td_top = document.createElement('td');
+      td_top.colSpan = 4;
+      td_top.style = 'text-align: center;';
+      td_top.appendChild(createBrick(brickId, 'top'));
+      tr_top.appendChild(td_top);
+      brick_table.appendChild(tr_top);
+      // side
+      let tr_side = document.createElement('tr');
+      ['left', 'front', 'right', 'back'].forEach(face => {
+        let td_side = document.createElement('td');
+        td_side.appendChild(createBrick(brickId, face));
+        tr_side.appendChild(td_side);
+      });
+      brick_table.appendChild(tr_side);
+      // bottom
+      let tr_bottom = document.createElement('tr');
+      let td_bottom = document.createElement('td');
+      td_bottom.colSpan = 4;
+      td_bottom.style = 'text-align: center;';
+      td_bottom.appendChild(createBrick(brickId, 'bottom'));
+      tr_bottom.appendChild(td_bottom);
+      brick_table.appendChild(tr_bottom);
+    }
+
+    game_div.appendChild(brick_table);
+
+    this.draw = () => {
+      for (let bid = 0; bid < this.brickCount; bid++) {
+        ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
+          const el = document.getElementById('brick' + bid + face);
+          for (let bid2 = 1; bid2 <= this.brickCount; bid2++) {
+            el.classList.remove('face' + bid2);
+          }
+          el.classList.add('face' + this.game.bricks[bid].facePattern[face]);
+        });
+      }
+      move_div.innerText = 'Move: ' + this.game.getStepFormatted();
+    }
+
+    document.getElementById("game").appendChild(game_div);
+    this.draw();
   }
 
   /**
@@ -173,6 +240,7 @@ class App { // eslint-disable-line no-unused-vars
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
     brickStyleSetting_div.id = "brickStyleSetting";
+    brickStyleSetting_div.style = "display: none"; // Temporary
     brickNumTXT_div.id = "brickNumTXT";
     increaseBrickCount_div.id = "increaseBrickCount";
     BrickCount_div.id = "BrickCount";
@@ -183,8 +251,8 @@ class App { // eslint-disable-line no-unused-vars
 
     brickNumTXT_div.innerText = "方塊數：";
     brickStyleTXT_div.innerText = "方塊樣式：";
-    increaseBrickCount_div.innerHTML = "+";
-    decreaseBrickCount_div.innerHTML = "-";
+    // increaseBrickCount_div.innerHTML = "+";
+    // decreaseBrickCount_div.innerHTML = "-";
     BrickCount_div.innerText = this.brickCount.toString();
 
     brickNumSetting_div.appendChild(brickNumTXT_div);
@@ -265,14 +333,22 @@ class App { // eslint-disable-line no-unused-vars
    * 暫停遊戲
    */
   pause() {
+    this.game.pause();
     document.getElementById('pauseBackgroundPage').style.display = 'block';
   }
 
   /**
    * 檢查是否通關
+   * @todo 應該要顯示結算畫面，尚未完成，暫時直接開始新遊戲
    */
   submit() {
-    // TODO
+    if (this.game.isResolve()) {
+      clearInterval(this.timeInt);
+      alert('Mission clear! Starting a new game.');
+      this.start(); // Temporary
+    } else {
+      alert('Not yet');
+    }
   }
 
   // Game page: pause
@@ -281,14 +357,16 @@ class App { // eslint-disable-line no-unused-vars
    * 繼續遊戲
    */
   continue() {
+    this.game.start();
     document.getElementById('pauseBackgroundPage').style.display = 'none';
   }
 
   /**
    * 重新開始遊戲
+   * @todo 應該為同一關卡重新開始，尚未完成
    */
   restart() {
-    document.getElementById('pauseBackgroundPage').style.display = 'none';
+    this.start();
   }
 
   /**
@@ -303,7 +381,6 @@ class App { // eslint-disable-line no-unused-vars
    * @param {number} value
    */
   setVolume(value) {
-    console.log("setVolume: " + value);
     document.getElementById("output").innerHTML = value;
   }
 
@@ -341,7 +418,7 @@ class App { // eslint-disable-line no-unused-vars
    * TODO
    * @param {number} achievementId - TODO
    */
-  pickupGift(achievementId) { // eslint-disable-line no-unused-vars
+  pickupGift(achievementId) {
     // TODO
   }
 }
