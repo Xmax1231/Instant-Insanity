@@ -61,8 +61,8 @@ class Displayer {
     window.addEventListener('mousedown', e => this.mouseDownEvent(e))
     window.addEventListener('mousemove', e => this.mouseMoveEvent(e))
     window.addEventListener('mouseup', e => this.mouseUpEvent(e))
-    window.addEventListener('touchstart', e => this.mouseDownEvent(e.touches[0]))
-    window.addEventListener('touchmove', e => this.mouseMoveEvent(e.touches[0]))
+    window.addEventListener('touchstart', e => this.mouseDownEvent(e))
+    window.addEventListener('touchmove', e => this.mouseMoveEvent(e))
     window.addEventListener('touchend', e => this.mouseUpEvent(e))
     window.addEventListener('wheel', e => this.wheelEvent(e))
     setInterval(() =>
@@ -149,11 +149,12 @@ class Displayer {
    * @param {Event} e
    */
   mouseDownEvent(e) {
+    e.preventDefault()
     if (SKIP_ELEM_IDS.has(e.path[0].id))
       return
 
-    if (e.preventDefault != null)
-      e.preventDefault()
+    if (e.type == 'touchstart')
+      e = e.touches[0]
 
     let { mouseInfo } = this
     mouseInfo.lastX = e.clientX
@@ -175,6 +176,9 @@ class Displayer {
     let { mouseInfo, cameraInfo } = this
     if (! mouseInfo.mouseDown)
       return
+
+    if (e.type == 'touchmove')
+      e = e.touches[0]
 
     let dx = e.clientX - mouseInfo.lastX
     let dy = e.clientY - mouseInfo.lastY
