@@ -137,7 +137,6 @@ class Game {
     angle = (angle % 4 + 4) % 4;
 
     for (let i = 0; i < angle; i++) {
-      console.log('game.rotateX', brickId);
       [
         this.bricks[brickId].facePattern.top,
         this.bricks[brickId].facePattern.left,
@@ -167,7 +166,6 @@ class Game {
     angle = (angle % 4 + 4) % 4;
 
     for (let i = 0; i < angle; i++) {
-      console.log('game.rotateY', brickId);
       [
         this.bricks[brickId].facePattern.top,
         this.bricks[brickId].facePattern.front,
@@ -197,7 +195,6 @@ class Game {
     angle = (angle % 4 + 4) % 4;
 
     for (let i = 0; i < angle; i++) {
-      console.log('game.rotateZ', brickId);
       [
         this.bricks[brickId].facePattern.front,
         this.bricks[brickId].facePattern.right,

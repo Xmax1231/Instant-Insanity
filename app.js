@@ -88,8 +88,6 @@ class App {
     var volume_icon = document.createElement("div");
     var volume_ipt = document.createElement("input");
     var output_div = document.createElement("div");
-    var info2_div = document.createElement("div");
-    this.info2_div = info2_div;
 
     pause_btn.onclick = () => { this.pause(); };
     submit_btn.onclick = () => { this.submit(); };
@@ -107,7 +105,6 @@ class App {
     timemoveblock_div.id = "timemoveblock";
     time_div.id = "time";
     move_div.id = "move";
-    info2_div.id = 'info2';
     pauseBackgroundPage_div.id = "pauseBackgroundPage";
     pausePage_div.id = "pausePage";
     continue_btn.id = "continue";
@@ -150,14 +147,13 @@ class App {
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
-    document.getElementById("game").appendChild(info2_div);
 
     this.timeInt = setInterval(() => {
       time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
     }, 100);
 
     let game_div = document.createElement('div');
-    game_div.style = 'position: absolute; top: 5%; left: 10%; background: rgba(128, 128, 128, 0.5);';
+    game_div.style = 'position: absolute; top: 5%; left: 10%; background: rgba(128, 128, 128, 0.5); display: none;';
 
     let brick_table = document.createElement('table');
 
@@ -381,7 +377,6 @@ class App {
    * @param {number} value
    */
   setVolume(value) {
-    console.log("setVolume: " + value);
     document.getElementById("output").innerHTML = value;
   }
 

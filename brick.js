@@ -86,15 +86,11 @@ class Brick {
     this.face = new THREE.Vector3(faceX, faceY, faceZ)
     this.faceNormalVector = new THREE.Vector3(faceX, faceY, faceZ).applyQuaternion(this.renderObject.quaternion).round()
     this.startQuaternion = this.renderObject.quaternion.clone()
-    console.log('faceNormalVector', this.faceNormalVector)
     this.mouseDown = true
     this.lockOnX = false
     this.lockOnY = false
-    this.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1;
     this.axisX = new THREE.Vector3(0, 1, 0)
     this.axisY = new THREE.Vector3(0, 1, 0).cross(this.faceNormalVector)
-    console.log('axisX', this.axisX)
-    console.log('axisY', this.axisY)
   }
 
   /**
@@ -107,17 +103,12 @@ class Brick {
       return
     }
 
-    this.app.info2_div.innerHTML = 'x:' + this.mouseStartX + ' y:' + this.mouseStartY + ' face:' + this.faceX * 1 + ' ' + this.faceY * 1 + ' ' + this.faceZ * 1 + '<br>'
-      + 'dx:' + (x - this.mouseStartX) + ' dy:' + (y - this.mouseStartY);
-
     if (this.disableMouse) {
-      this.app.info2_div.innerHTML += ' mouse disabled';
       return
     }
 
     // 暫時停用拖曳上下面
     if (this.faceNormalVector.equals(this.axisX)) {
-      this.app.info2_div.innerHTML += ' face disabled';
       return
     }
 
@@ -166,7 +157,6 @@ class Brick {
         closestQuaternion = quaternion;
       }
     });
-    console.log('closest angle', minAngle, closestQuaternion);
 
     var intX = setInterval(() => {
       let prevQuaternion = this.renderObject.quaternion.clone();
@@ -180,43 +170,34 @@ class Brick {
     let angle = Math.round(closestQuaternion.angleTo(this.startQuaternion) / Math.PI * 180 / 90);
 
     if (angle == 0) {
-      console.log('nothing to do');
       return;
     }
 
     let newFaceNormalVector = new THREE.Vector3(this.faceX, this.faceY, this.faceZ).applyQuaternion(this.renderObject.quaternion).round();
-    console.log('this.rotaryAxis', this.rotaryAxis)
     let rotaryAxisCross = this.faceNormalVector.clone().cross(newFaceNormalVector);
-    console.log('rotaryAxis', rotaryAxisCross, rotaryAxisCross.clone().negate());
 
     if (this.rotaryAxis.equals(new THREE.Vector3(0, 0, -1))) {
-      console.log(this.rotaryAxis);
       if (this.rotaryAxis.equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
-      console.log('rotateX', angle);
       this.app.game.rotateX(this.brickId, angle);
       this.app.draw(); // Temp
       return;
     }
 
     if (this.rotaryAxis.equals(new THREE.Vector3(1, 0, 0))) {
-      console.log(this.rotaryAxis);
       if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
-      console.log('rotateY', angle);
       this.app.game.rotateY(this.brickId, angle);
       this.app.draw(); // Temp
       return;
     }
 
     if (this.rotaryAxis.equals(new THREE.Vector3(0, 1, 0))) {
-      console.log(this.rotaryAxis);
       if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
-      console.log('rotateZ', angle);
       this.app.game.rotateZ(this.brickId, angle);
       this.app.draw(); // Temp
       return;
