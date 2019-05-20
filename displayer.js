@@ -36,6 +36,7 @@ class Displayer {
       lastX: 0,
       lastY: 0,
       mouseDown: false,
+      touchId: -1,
       interObject: null,
     }
     this.displayType = Displayer.BACKGROUND
@@ -149,15 +150,17 @@ class Displayer {
    * @param {Event} e
    */
   mouseDownEvent(e) {
-    if (SKIP_ELEM_IDS.has(e.path[0].id)) 
+    let { mouseInfo } = this
+    if (SKIP_ELEM_IDS.has(e.path[0].id) || mouseInfo.mouseDown) 
       return
 
-    if (e.type == 'touchstart')
-      e = e.touches[0]
-    else
+    if (e.type == 'touchstart') {
+      e = e.changedTouches[0]
+      mouseInfo.touchId = e.identifier
+    } else {
       e.preventDefault()
+    }
 
-    let { mouseInfo } = this
     mouseInfo.lastX = e.clientX
     mouseInfo.lastY = e.clientY
     mouseInfo.mouseDown = true
@@ -178,8 +181,11 @@ class Displayer {
     if (! mouseInfo.mouseDown)
       return
 
-    if (e.type == 'touchmove')
+    if (e.type == 'touchmove') {
       e = e.touches[0]
+      if (e.identifier != mouseInfo.touchId) 
+        return
+    }
 
     let dx = e.clientX - mouseInfo.lastX
     let dy = e.clientY - mouseInfo.lastY
@@ -200,6 +206,12 @@ class Displayer {
   mouseUpEvent(e) {
     let { mouseInfo } = this
       , { interObject } = mouseInfo
+    if (e.type == 'touchend') {
+      e = e.changedTouches[0]
+      if (e.identifier != mouseInfo.touchId) 
+        return
+    }
+
     if (interObject)
       interObject.mouseUpEvent()
 
