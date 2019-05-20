@@ -339,14 +339,15 @@ class App {
 
   /**
    * 檢查是否通關
+   * @todo 應該要顯示結算畫面，尚未完成，暫時直接開始新遊戲
    */
   submit() {
     if (this.game.isResolve()) {
-      alert('mission clear');
-      this.game.pause();
       clearInterval(this.timeInt);
+      alert('Mission clear! Starting a new game.');
+      this.start(); // Temporary
     } else {
-      alert('not yet');
+      alert('Not yet');
     }
   }
 
