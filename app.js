@@ -52,6 +52,7 @@ class App {
     start_btn.id = "start";
     setting_btn.id = "gotoSetting";
     achievement_btn.id = "gotoAchievement";
+    achievement_btn.style = "display: none"; // Temporary
 
     start_btn.innerText = "開始";
     setting_btn.innerText = "設定";
@@ -111,6 +112,7 @@ class App {
     restart_btn.id = "restart";
     exit_btn.id = "exit";
     volumeSetting_div.id = "volumeSetting";
+    volumeSetting_div.style = "display: none;"; // Temporary
     volume_icon.id = "volume_icon";
     volume_ipt.id = "volume";
     output_div.id = "output";
@@ -238,6 +240,7 @@ class App {
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
     brickStyleSetting_div.id = "brickStyleSetting";
+    brickStyleSetting_div.style = "display: none"; // Temporary
     brickNumTXT_div.id = "brickNumTXT";
     increaseBrickCount_div.id = "increaseBrickCount";
     BrickCount_div.id = "BrickCount";
