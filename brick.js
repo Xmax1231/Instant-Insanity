@@ -160,12 +160,12 @@ class Brick {
 
     var intX = setInterval(() => {
       let prevQuaternion = this.renderObject.quaternion.clone();
-      this.renderObject.quaternion.rotateTowards(closestQuaternion, Math.PI / 50);
+      this.renderObject.quaternion.rotateTowards(closestQuaternion, Math.PI / 10);
       if (this.renderObject.quaternion.equals(prevQuaternion)) {
         clearInterval(intX)
         this.disableMouse = false
       }
-    }, 100);
+    }, 25);
 
     let angle = Math.round(closestQuaternion.angleTo(this.startQuaternion) / Math.PI * 180 / 90);
 
