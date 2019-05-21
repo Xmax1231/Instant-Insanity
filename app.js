@@ -1,5 +1,6 @@
 import { Game } from './game.js';
 import { Displayer } from './displayer.js';
+import { getMaterial } from './material.js';
 
 /**
  * 控制遊戲畫面
@@ -9,11 +10,13 @@ class App {
    * 初始化App
    */
   constructor() {
-    this.displayer = new Displayer(null); // TODO
-    this.brickCount = 4; // TODO
+    this.displayer = new Displayer(document.getElementById('render'));
+    this.brickCount = 4;
+    this.materialName = 'test';
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
+    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('bg-sky').fileNames.map(n => `img/${n}`))
   }
 
   // Home page
@@ -33,6 +36,7 @@ class App {
    */
   gotoHome() {
     this.clearPage();
+    this.displayer.display(Displayer.BACKGROUND)
     var home_div = document.createElement("div");
     var icon_div = document.createElement("div");
     var start_btn = document.createElement("button");
@@ -48,6 +52,7 @@ class App {
     start_btn.id = "start";
     setting_btn.id = "gotoSetting";
     achievement_btn.id = "gotoAchievement";
+    achievement_btn.style = "display: none"; // Temporary
 
     start_btn.innerText = "開始";
     setting_btn.innerText = "設定";
@@ -66,6 +71,8 @@ class App {
    */
   start() {
     this.clearPage();
+    this.game = new Game(this)
+    this.displayer.display(Displayer.GAMMING)
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
@@ -78,12 +85,19 @@ class App {
     var continue_btn = document.createElement("button");
     var restart_btn = document.createElement("button");
     var exit_btn = document.createElement("button");
+    var volumeSetting_div = document.createElement("div");
+    var volume_icon = document.createElement("div");
+    var volume_ipt = document.createElement("input");
+    var output_div = document.createElement("div");
 
     pause_btn.onclick = () => { this.pause(); };
     submit_btn.onclick = () => { this.submit(); };
     continue_btn.onclick = () => { this.continue(); };
     restart_btn.onclick = () => { this.restart(); };
     exit_btn.onclick = () => { this.exit(); };
+    volume_ipt.oninput = () => {
+      this.setVolume(volume_ipt.value);
+    };
 
     play_div.id = "play";
     pause_btn.id = "pause";
@@ -97,6 +111,11 @@ class App {
     continue_btn.id = "continue";
     restart_btn.id = "restart";
     exit_btn.id = "exit";
+    volumeSetting_div.id = "volumeSetting";
+    volumeSetting_div.style = "display: none;"; // Temporary
+    volume_icon.id = "volume_icon";
+    volume_ipt.id = "volume";
+    output_div.id = "output";
 
     submit_btn.innerText = "submit";
     time_div.innerText = "time:00.00";
@@ -104,30 +123,39 @@ class App {
     continue_btn.innerText = "繼續遊戲";
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
+    output_div.innerText = "75";
+
+    volume_ipt.type = "range";
+    volume_ipt.min = "0";
+    volume_ipt.max = "100";
+    volume_ipt.value = "75";
 
     play_div.appendChild(submit_btn);
     // play_div.appendChild(canvas_div);
     play_div.appendChild(timemoveblock_div);
+    play_div.appendChild(pause_btn);
     timemoveblock_div.appendChild(time_div);
     timemoveblock_div.appendChild(move_div);
     pauseBackgroundPage_div.appendChild(pausePage_div);
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);
     pausePage_div.appendChild(exit_btn);
+    pausePage_div.appendChild(volumeSetting_div);
+    volumeSetting_div.appendChild(volume_icon);
+    volumeSetting_div.appendChild(volume_ipt);
+    volumeSetting_div.appendChild(output_div);
 
     pauseBackgroundPage_div.style.display = "none";
 
-    document.getElementById("game").appendChild(pause_btn);
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
 
-    this.game = new Game(this.brickCount);
     this.timeInt = setInterval(() => {
       time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
     }, 100);
 
     let game_div = document.createElement('div');
-    game_div.style = 'position: absolute; top: 5%; left: 25%;';
+    game_div.style = 'position: absolute; top: 5%; left: 10%; background: rgba(128, 128, 128, 0.5); display: none;';
 
     let brick_table = document.createElement('table');
 
@@ -171,7 +199,7 @@ class App {
 
     game_div.appendChild(brick_table);
 
-    let draw = () => {
+    this.draw = () => {
       for (let bid = 0; bid < this.brickCount; bid++) {
         ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
           const el = document.getElementById('brick' + bid + face);
@@ -184,30 +212,8 @@ class App {
       move_div.innerText = 'Move: ' + this.game.getStepFormatted();
     }
 
-    let button_table = document.createElement('table');
-
-    for (let brickId = 0; brickId < this.brickCount; brickId++) {
-      let tr = document.createElement('tr');
-      let td = document.createElement('td');
-      td.colSpan = 4;
-      ['X', 'Y', 'Z'].forEach(dir => {
-        for (let angle = 1; angle <= 3; angle++) {
-          let btn = document.createElement('button');
-          btn.onclick = () => {
-            this.game['rotate' + dir](brickId, angle);
-            draw();
-          };
-          btn.innerText = dir + angle;
-          btn.style = 'font-size: 16px;';
-          td.appendChild(btn);
-        }
-      });
-      tr.appendChild(td);
-      button_table.appendChild(tr);
-    }
-    game_div.appendChild(button_table);
     document.getElementById("game").appendChild(game_div);
-    draw();
+    this.draw();
   }
 
   /**
@@ -215,6 +221,7 @@ class App {
    */
   gotoSetting() {
     this.clearPage();
+    this.displayer.display(Displayer.SELECTING)
     var setting_div = document.createElement("div");
     var brickNumSetting_div = document.createElement("div");
     var brickStyleSetting_div = document.createElement("div");
@@ -233,6 +240,7 @@ class App {
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
     brickStyleSetting_div.id = "brickStyleSetting";
+    brickStyleSetting_div.style = "display: none"; // Temporary
     brickNumTXT_div.id = "brickNumTXT";
     increaseBrickCount_div.id = "increaseBrickCount";
     BrickCount_div.id = "BrickCount";
@@ -243,14 +251,14 @@ class App {
 
     brickNumTXT_div.innerText = "方塊數：";
     brickStyleTXT_div.innerText = "方塊樣式：";
-    increaseBrickCount_div.innerHTML = "+";
-    decreaseBrickCount_div.innerHTML = "-";
+    // increaseBrickCount_div.innerHTML = "+";
+    // decreaseBrickCount_div.innerHTML = "-";
     BrickCount_div.innerText = this.brickCount.toString();
 
     brickNumSetting_div.appendChild(brickNumTXT_div);
-    brickNumSetting_div.appendChild(increaseBrickCount_div);
-    brickNumSetting_div.appendChild(BrickCount_div);
     brickNumSetting_div.appendChild(decreaseBrickCount_div);
+    brickNumSetting_div.appendChild(BrickCount_div);
+    brickNumSetting_div.appendChild(increaseBrickCount_div);
     brickStyleSetting_div.appendChild(brickStyleTXT_div);
     brickStyleSetting_div.appendChild(brickShow_div);
     setting_div.appendChild(brickNumSetting_div);
@@ -331,14 +339,15 @@ class App {
 
   /**
    * 檢查是否通關
+   * @todo 應該要顯示結算畫面，尚未完成，暫時直接開始新遊戲
    */
   submit() {
     if (this.game.isResolve()) {
-      alert('mission clear');
-      this.game.pause();
       clearInterval(this.timeInt);
+      alert('Mission clear! Starting a new game.');
+      this.start(); // Temporary
     } else {
-      alert('not yet');
+      alert('Not yet');
     }
   }
 
@@ -372,7 +381,7 @@ class App {
    * @param {number} value
    */
   setVolume(value) {
-    // TODO
+    document.getElementById("output").innerHTML = value;
   }
 
 

@@ -1,4 +1,5 @@
 *{
+    overscroll-behavior: none;
     font-family: Consolas;
     font-size: 1.12em;
     -webkit-box-sizing: border-box;
@@ -10,6 +11,12 @@ body{
     padding: 0px;
     width: 100%;
     background-color: rgb(255, 255, 255);
+}
+button{
+    outline:none;
+}
+button:focus{
+    border: none;
 }
 #home > button{
     margin: 15px auto;
@@ -49,9 +56,11 @@ body{
     position: absolute;
     top: 3%;
     left: 3%;
-    width: 50px;
-    height: 50px;
-    background: black;
+    width: 70px;
+    height: 70px;
+    background: url(./icons/1556866831772.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
 #submit{
     position: absolute;
@@ -84,6 +93,21 @@ body{
     background: rgb(255, 255, 255);
     white-space:nowrap;
     width: max-content;
+}
+#rotation_x, #rotation_y, #rotation_z {
+    padding: 2px;
+    position: absolute;
+    top: 12%;
+    left: 80%;
+}
+#rotation_x {
+    top: calc(12% + 100px);
+}
+#rotation_y {
+    top: calc(12% + 130px);
+}
+#rotation_z {
+    top: calc(12% + 160px);
 }
 #pauseBackgroundPage{
     z-index: 99;
@@ -122,7 +146,30 @@ body{
 #brickNumSetting > div, button{
     display: inline-block;
 }
+#decreaseBrickCount{
+    position: relative;
+    top: 10px;
+    margin-bottom: -15px;
+    height: 50px;
+    width: 50px;
+    background: url(./icons/1556873803523.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
+#increaseBrickCount{
+    position: relative;
+    top: 10px;
+    margin-bottom: -15px;
+    width: 50px;
+    height: 50px;
+    background: url(./icons/1556873791942.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
 #BrickCount{
+    text-align: center;
+    width: 50px;
+    height: 50px;
     padding: 3px;
     border: 2px black solid;
 }
@@ -181,54 +228,125 @@ body{
     color: white;
     background: black;
 }
+#render {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 #gohome{
     position: absolute;
     top: 3%;
     left: 3%;
+    width: 70px;
+    height: 70px;
+    background: url(./icons/1556869699566.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
+
+#volumeSetting{
+    margin: 0 auto;
+    width: fit-content;
+}
+#volume_icon{
+    display: inline-block;
     width: 50px;
     height: 50px;
-    background: black;
+    background: url(./icons/1556872401455.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
+#volume{
+    position: relative;
+    top: -15px;
+    margin-left: 30px;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    outline: none;
+    border: none;
+    padding: 0;
+    background-color: #d7dbdd;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    opacity: 0.7;
+}
+#volume:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    border-radius: 100%;
+    background-color: #606670;
+    height: 28px;
+    width: 28px;
+    margin-top: -0px;
+}
+#output{
+    display: inline-block;
+    position: relative;
+    top: -15px;
+    margin-left: 8px;
+    white-space:nowrap;
+    width: 50px;
+}
+
+/* Temp */
+
+#info2 {
+    top: calc(20% + 220px);
+    left: 5%;
+    padding: 2px;
+    position: absolute;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
 }
 
 .facetop {
-    width: 20px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     margin: 0 auto;
+    background-size: cover;
 }
 
 .faceside {
     width: 20px;
     height: 20px;
+    background-size: cover;
+}
+
+.face0 {
+    background-image: url(img/dice-w1.png);
 }
 
 .face1 {
-    background-color: red;
+    background-image: url(img/dice-w2.png);
 }
 
 .face2 {
-    background-color: yellow;
+    background-image: url(img/dice-w3.png);
 }
 
 .face3 {
-    background-color: green;
+    background-image: url(img/dice-w4.png);
 }
 
 .face4 {
-    background-color: blue;
+    background-image: url(img/dice-w5.png);
 }
 
 .face5 {
-    background-color: palevioletred;
+    background-image: url(img/dice-w6.png);
 }
 
 .face6 {
-    background-color: orangered;
-}
-
-.face7 {
     background-color: purple;
 }
 
-.face8 {
+.face7 {
     background-color: skyblue;
 }

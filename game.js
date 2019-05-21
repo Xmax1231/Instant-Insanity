@@ -1,5 +1,4 @@
-import { Brick } from './brick.js';
-
+import { GameBrick } from './brick.js';
 /**
  * 操控方塊遊戲本身
  */
@@ -8,54 +7,101 @@ class Game {
    * 初始化遊戲
    * @param {number} brickCount - 方塊數量
    */
-  constructor(brickCount) {
-    this.brickCount = brickCount;
+  constructor(app) {
+    this.app = app;
 
     let bricksNumber = [];
-    for (let i = 1; i <= this.brickCount; i++) {
+    for (let i = 1; i <= this.app.brickCount; i++) {
       const brick = {
         front: i,
         back: i,
         left: i,
         right: i,
-        top: Math.floor(Math.random() * this.brickCount + 1),
-        bottom: Math.floor(Math.random() * this.brickCount + 1),
+        top: Math.floor(Math.random() * this.app.brickCount + 1),
+        bottom: Math.floor(Math.random() * this.app.brickCount + 1),
       };
       bricksNumber.push(brick);
     }
     // 打亂同一側面
     ['front', 'back', 'left', 'right'].forEach((face) => {
-      for (let bid = 0; bid < this.brickCount - 1; bid++) {
-        const bid2 = Math.floor(Math.random() * (this.brickCount - bid) + bid);
+      for (let bid = 0; bid < this.app.brickCount - 1; bid++) {
+        const bid2 = Math.floor(Math.random() * (this.app.brickCount - bid) + bid);
         [bricksNumber[bid][face], bricksNumber[bid2][face]] =
           [bricksNumber[bid2][face], bricksNumber[bid][face]];
       }
     });
 
-    // 初始化 Brick class
-    this.bricks = [];
-    bricksNumber.forEach(brick => {
-      this.bricks.push(new Brick(this, '', brick));
-    });
-
     // 打亂單個 brick
-    for (let bid = 0; bid < this.brickCount; bid++) {
+    for (let brickId = 0; brickId < this.app.brickCount; brickId++) {
       for (let i = 0; i < 10; i++) {
         const dir = Math.floor(Math.random() * 3);
         const angle = Math.floor(Math.random() * 3 + 1);
-        switch (dir) {
-          case 0:
-            this.rotateX(bid, angle);
-            break;
-          case 1:
-            this.rotateY(bid, angle);
-            break;
-          case 2:
-            this.rotateZ(bid, angle);
-            break;
+        for (let j = 0; j < angle; j++) {
+          switch (dir) {
+            case 0:
+              [
+                bricksNumber[brickId].top,
+                bricksNumber[brickId].left,
+                bricksNumber[brickId].bottom,
+                bricksNumber[brickId].right,
+              ] =
+                [
+                  bricksNumber[brickId].right,
+                  bricksNumber[brickId].top,
+                  bricksNumber[brickId].left,
+                  bricksNumber[brickId].bottom,
+                ];
+              break;
+            case 1:
+              [
+                bricksNumber[brickId].top,
+                bricksNumber[brickId].front,
+                bricksNumber[brickId].bottom,
+                bricksNumber[brickId].back,
+              ] =
+                [
+                  bricksNumber[brickId].back,
+                  bricksNumber[brickId].top,
+                  bricksNumber[brickId].front,
+                  bricksNumber[brickId].bottom,
+                ];
+              break;
+            case 2:
+              [
+                bricksNumber[brickId].front,
+                bricksNumber[brickId].right,
+                bricksNumber[brickId].back,
+                bricksNumber[brickId].left,
+              ] =
+                [
+                  bricksNumber[brickId].left,
+                  bricksNumber[brickId].front,
+                  bricksNumber[brickId].right,
+                  bricksNumber[brickId].back,
+                ];
+              break;
+          }
         }
       }
     }
+
+    /**
+     * 初始化 Brick class
+     * @todo 編號應該要統一
+     */
+    this.bricks = [];
+    bricksNumber.forEach((brick, brickId) => {
+      this.bricks.push(new GameBrick(this.app, brickId, {
+        top: brick['top'] - 1,
+        bottom: brick['bottom'] - 1,
+        front: brick['front'] - 1,
+        back: brick['back'] - 1,
+        right: brick['right'] - 1,
+        left: brick['left'] - 1,
+      }));
+    });
+
+    this.app.displayer.setGameBricks(this.bricks);
 
     this.timeCounter = 0;
     this.stepCounter = 0;
@@ -124,6 +170,7 @@ class Game {
     }
 
     angle = (angle % 4 + 4) % 4;
+
     for (let i = 0; i < angle; i++) {
       [
         this.bricks[brickId].facePattern.top,
@@ -152,6 +199,7 @@ class Game {
     }
 
     angle = (angle % 4 + 4) % 4;
+
     for (let i = 0; i < angle; i++) {
       [
         this.bricks[brickId].facePattern.top,
@@ -180,6 +228,7 @@ class Game {
     }
 
     angle = (angle % 4 + 4) % 4;
+
     for (let i = 0; i < angle; i++) {
       [
         this.bricks[brickId].facePattern.front,
@@ -194,6 +243,7 @@ class Game {
           this.bricks[brickId].facePattern.back,
         ];
     }
+
     this.stepCounter++;
   }
 
@@ -204,14 +254,14 @@ class Game {
     let result = true;
     ['front', 'back', 'left', 'right'].forEach((face) => {
       const temp = [];
-      for (let bid = 0; bid < this.brickCount; bid++) {
+      for (let bid = 0; bid < this.app.brickCount; bid++) {
         temp[this.bricks[bid].facePattern[face]] = 1;
       }
       let sum = 0;
-      for (let bid = 1; bid <= this.brickCount; bid++) {
+      for (let bid = 0; bid < this.app.brickCount; bid++) {
         sum += temp[bid];
       }
-      if (sum != this.brickCount) {
+      if (sum != this.app.brickCount) {
         result = false;
       }
     });

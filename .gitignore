@@ -1,4 +1,7 @@
 docs/
+localtest/*
 node_modules/
 *.pdf
+SAS-InstantInsanity.sublime-*
 package-lock.json
+three.js
