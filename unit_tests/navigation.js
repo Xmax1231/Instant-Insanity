@@ -14,20 +14,9 @@ console.log(args);
 
 const width = args.width;
 const height = args.height;
-const headless = args.headless
+const headless = args.headless;
 const outdir = __dirname + '/output/navigation/';
-const printer = new Printer(outdir)
-const htmlfiel = outdir + 'result.html';
-
-if (!fs.existsSync(outdir)) {
-	fs.mkdirSync(outdir, { recursive: true });
-}
-
-if (fs.existsSync(htmlfiel)) {
-	fs.unlink(htmlfiel, function(err) {
-		if (err) throw err;
-	});
-}
+const printer = new Printer(outdir);
 
 (async () => {
 
