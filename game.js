@@ -91,7 +91,7 @@ class Game {
      */
     this.bricks = [];
     bricksNumber.forEach((brick, brickId) => {
-      this.bricks.push(new GameBrick(this.app, brickId, {
+      this.bricks.push(new GameBrick(this.app, {
         top: brick['top'] - 1,
         bottom: brick['bottom'] - 1,
         front: brick['front'] - 1,
@@ -157,94 +157,6 @@ class Game {
 
   getStepFormatted() {
     return this.getStep();
-  }
-
-  /**
-   * 以 x 為軸，朝向 x- 順時針旋轉
-   * @param {number} brickId - 第幾個 Brick
-   * @param {number} angle - 旋轉了幾個90度，應為1~3
-   */
-  rotateX(brickId, angle) {
-    if (!Number.isInteger(angle)) {
-      throw Error('angle is not a integer');
-    }
-
-    angle = (angle % 4 + 4) % 4;
-
-    for (let i = 0; i < angle; i++) {
-      [
-        this.bricks[brickId].facePattern.top,
-        this.bricks[brickId].facePattern.left,
-        this.bricks[brickId].facePattern.bottom,
-        this.bricks[brickId].facePattern.right,
-      ] =
-        [
-          this.bricks[brickId].facePattern.right,
-          this.bricks[brickId].facePattern.top,
-          this.bricks[brickId].facePattern.left,
-          this.bricks[brickId].facePattern.bottom,
-        ];
-    }
-    this.stepCounter++;
-  }
-
-  /**
-   * 以 y 為軸，朝向 y- 順時針旋轉
-   * @param {number} brickId - 第幾個 Brick
-   * @param {number} angle - 旋轉了幾個90度，應為1~3
-   */
-  rotateY(brickId, angle) {
-    if (!Number.isInteger(angle)) {
-      throw Error('angle is not a integer');
-    }
-
-    angle = (angle % 4 + 4) % 4;
-
-    for (let i = 0; i < angle; i++) {
-      [
-        this.bricks[brickId].facePattern.top,
-        this.bricks[brickId].facePattern.front,
-        this.bricks[brickId].facePattern.bottom,
-        this.bricks[brickId].facePattern.back,
-      ] =
-        [
-          this.bricks[brickId].facePattern.back,
-          this.bricks[brickId].facePattern.top,
-          this.bricks[brickId].facePattern.front,
-          this.bricks[brickId].facePattern.bottom,
-        ];
-    }
-    this.stepCounter++;
-  }
-
-  /**
-   * 以 z 為軸，朝向 z- 順時針旋轉
-   * @param {number} brickId - 第幾個 Brick
-   * @param {number} angle - 旋轉了幾個90度，應為1~3
-   */
-  rotateZ(brickId, angle) {
-    if (!Number.isInteger(angle)) {
-      throw Error('angle is not a integer');
-    }
-
-    angle = (angle % 4 + 4) % 4;
-
-    for (let i = 0; i < angle; i++) {
-      [
-        this.bricks[brickId].facePattern.front,
-        this.bricks[brickId].facePattern.right,
-        this.bricks[brickId].facePattern.back,
-        this.bricks[brickId].facePattern.left,
-      ] =
-        [
-          this.bricks[brickId].facePattern.left,
-          this.bricks[brickId].facePattern.front,
-          this.bricks[brickId].facePattern.right,
-          this.bricks[brickId].facePattern.back,
-        ];
-    }
-
-    this.stepCounter++;
   }
 
   /**

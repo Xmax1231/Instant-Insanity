@@ -32,8 +32,7 @@ class Brick {
    * @param {number} brickId - 第幾個方塊，從0開始
    * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor(app, brickId, facePattern) {
-    this.brickId = brickId
+  constructor(app, facePattern) {
     let textures = getMaterial(app.materialName).fileNames
       , geometry = new THREE.BoxGeometry(2, 2, 2)
       , material = BRICKFACEKEYS.map(k =>
@@ -45,8 +44,6 @@ class Brick {
     this.app = app
     this.materialName = app.materialName
     this.facePattern = facePattern
-    this.facePatternOriginal = { ...facePattern }
-    this.orientation = { x: 0, y: 0, z: 0 }
     this.renderObject = new THREE.Mesh(geometry, material)
     this.mouseStartX = 0
     this.mouseStartY = 0
@@ -56,15 +53,88 @@ class Brick {
     this.disableMouse = false;
   }
 
-  get rotation() {
-    return this.renderObject.rotation
+  /**
+   * 以 x 為軸，朝向 x- 順時針旋轉
+   * @param {number} brickId - 第幾個 Brick
+   * @param {number} angle - 旋轉了幾個90度，應為1~3
+   */
+  rotateX(angle) {
+    if (!Number.isInteger(angle)) {
+      throw Error('angle is not a integer');
+    }
+
+    angle = (angle % 4 + 4) % 4;
+
+    for (let i = 0; i < angle; i++) {
+      [
+        this.facePattern.top,
+        this.facePattern.left,
+        this.facePattern.bottom,
+        this.facePattern.right,
+      ] =
+        [
+          this.facePattern.right,
+          this.facePattern.top,
+          this.facePattern.left,
+          this.facePattern.bottom,
+        ];
+    }
   }
 
   /**
-   * 從 orientation 更新 facePattern
+   * 以 y 為軸，朝向 y- 順時針旋轉
+   * @param {number} brickId - 第幾個 Brick
+   * @param {number} angle - 旋轉了幾個90度，應為1~3
    */
-  updateFacePattern() {
-    // TODO
+  rotateY(angle) {
+    if (!Number.isInteger(angle)) {
+      throw Error('angle is not a integer');
+    }
+
+    angle = (angle % 4 + 4) % 4;
+
+    for (let i = 0; i < angle; i++) {
+      [
+        this.facePattern.top,
+        this.facePattern.front,
+        this.facePattern.bottom,
+        this.facePattern.back,
+      ] =
+        [
+          this.facePattern.back,
+          this.facePattern.top,
+          this.facePattern.front,
+          this.facePattern.bottom,
+        ];
+    }
+  }
+
+  /**
+   * 以 z 為軸，朝向 z- 順時針旋轉
+   * @param {number} brickId - 第幾個 Brick
+   * @param {number} angle - 旋轉了幾個90度，應為1~3
+   */
+  rotateZ(angle) {
+    if (!Number.isInteger(angle)) {
+      throw Error('angle is not a integer');
+    }
+
+    angle = (angle % 4 + 4) % 4;
+
+    for (let i = 0; i < angle; i++) {
+      [
+        this.facePattern.front,
+        this.facePattern.right,
+        this.facePattern.back,
+        this.facePattern.left,
+      ] =
+        [
+          this.facePattern.left,
+          this.facePattern.front,
+          this.facePattern.right,
+          this.facePattern.back,
+        ];
+    }
   }
 
   /**
@@ -180,7 +250,7 @@ class Brick {
       if (this.rotaryAxis.equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
-      this.app.game.rotateX(this.brickId, angle);
+      this.rotateX(angle);
       this.app.draw(); // Temp
       return;
     }
@@ -189,7 +259,7 @@ class Brick {
       if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
-      this.app.game.rotateY(this.brickId, angle);
+      this.rotateY(angle);
       this.app.draw(); // Temp
       return;
     }
@@ -198,7 +268,7 @@ class Brick {
       if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
-      this.app.game.rotateZ(this.brickId, angle);
+      this.rotateZ(angle);
       this.app.draw(); // Temp
       return;
     }
@@ -214,6 +284,21 @@ class GameBrick extends Brick {
    */
   constructor(app, materialName, facePattern) {
     super(app, materialName, facePattern)
+  }
+
+  rotateX(angle) {
+    super.rotateX(angle)
+    this.app.game.stepCounter++;
+  }
+
+  rotateY(angle) {
+    super.rotateY(angle)
+    this.app.game.stepCounter++;
+  }
+
+  rotateZ(angle) {
+    super.rotateZ(angle)
+    this.app.game.stepCounter++;
   }
 }
 
