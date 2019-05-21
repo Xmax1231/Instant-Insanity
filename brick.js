@@ -176,7 +176,10 @@ class Brick {
     let newFaceNormalVector = new THREE.Vector3(this.faceX, this.faceY, this.faceZ).applyQuaternion(this.renderObject.quaternion).round();
     let rotaryAxisCross = this.faceNormalVector.clone().cross(newFaceNormalVector);
 
-    if (this.rotaryAxis.equals(new THREE.Vector3(0, 0, -1))) {
+    if (this.rotaryAxis.equals(new THREE.Vector3(0, 0, -1)) || this.rotaryAxis.equals(new THREE.Vector3(0, 0, 1))) {
+      if (this.rotaryAxis.equals(new THREE.Vector3(0, 0, 1))) {
+        angle = 4 - angle;
+      }
       if (this.rotaryAxis.equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
@@ -185,7 +188,10 @@ class Brick {
       return;
     }
 
-    if (this.rotaryAxis.equals(new THREE.Vector3(1, 0, 0))) {
+    if (this.rotaryAxis.equals(new THREE.Vector3(1, 0, 0)) || this.rotaryAxis.equals(new THREE.Vector3(-1, 0, 0))) {
+      if (this.rotaryAxis.equals(new THREE.Vector3(-1, 0, 0))) {
+        angle = 4 - angle;
+      }
       if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
@@ -194,7 +200,10 @@ class Brick {
       return;
     }
 
-    if (this.rotaryAxis.equals(new THREE.Vector3(0, 1, 0))) {
+    if (this.rotaryAxis.equals(new THREE.Vector3(0, 1, 0)) || this.rotaryAxis.equals(new THREE.Vector3(0, -1, 0))) {
+      if (this.rotaryAxis.equals(new THREE.Vector3(0, -1, 0))) {
+        angle = 4 - angle;
+      }
       if (this.rotaryAxis.clone().negate().equals(rotaryAxisCross)) {
         angle = 4 - angle;
       }
