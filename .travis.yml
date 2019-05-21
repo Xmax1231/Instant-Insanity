@@ -9,4 +9,4 @@ cache:
 script:
   - npm run lint
   - http-server -a 127.0.0.1 -p 8080 &
-  - node test.js
+  - node unit_tests/navigation.js
