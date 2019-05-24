@@ -388,17 +388,25 @@ class App {
   // Setting page
 
   /**
-   * 增加遊戲方塊數
+   * 增加遊戲方塊數，上限為8個
    */
   increaseBrickCount() {
+    if (this.brickCount >= 8) {
+      alert('上限為8個方塊');
+      return;
+    }
     this.brickCount++;
     document.getElementById("BrickCount").innerText = this.brickCount.toString();
   }
 
   /**
-   * 減少遊戲方塊數
+   * 減少遊戲方塊數，下限為2個
    */
   decreaseBrickCount() {
+    if (this.brickCount <= 2) {
+      alert('下限為2個方塊');
+      return;
+    }
     this.brickCount--;
     document.getElementById("BrickCount").innerText = this.brickCount.toString();
   }
