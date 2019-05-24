@@ -12,7 +12,7 @@ class App {
   constructor() {
     this.displayer = new Displayer(document.getElementById('render'));
     this.brickCount = 4;
-    this.materialName = 'test';
+    this.materialName = 'octangle-full';
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
