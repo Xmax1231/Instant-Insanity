@@ -1,31 +1,66 @@
-const MATERIAL_LIST = {}
+const BRICKFACEKEYS = [ 'right', 'left', 'top', 'bottom', 'front', 'back' ]
+const BACKGROUNDFACEKEYS = [ 'left', 'right', 'top', 'bottom', 'front', 'back' ]
+const WALLKEYS = new Set([ 'left', 'right', 'front', 'back' ])
+class MaterialManager {
+  constructor (arr) {
+    this.list = {}
+    if (arr) 
+      arr.forEach(d => {
+        switch (d.type) {
+          case MaterialManager.BACKGROUND:
+            this.addBackground(d)
+            break
+          case MaterialManager.BRICKSTYLE:
+            this.addBrickStyle(d)
+            break
+        }
+      })
+  }
 
-/**
- * 材料
- */
-class MaterialEntry {
-  /**
-   * 初始化
-   * @param {string} materialName
-   * @param {string[]} fileNames
-   */
-  constructor(materialName, fileNames) {
-    this.materialName = materialName
-    this.fileNames = fileNames
+  get (label) {
+    let m = this.list[label]
+    return m ? m.textures : null
+  }
+
+  getList (type) {
+    let list = []
+    for (let [ k, v ] of Object.entries(this.list)) 
+      if (v.type == type) 
+        list.push(k)
+    return list
+  }
+
+  get brickStyles () {
+    return this.getList(MaterialManager.BRICKSTYLE)
+  }
+
+  get backgrounds () {
+    return this.getList(MaterialManager.BACKGROUND)
+  }
+
+  addBackground ({ label, sameWall = false } = {}) {
+    this.list[label] = {
+      type: MaterialManager.BACKGROUND,
+      textures: 
+        new THREE.CubeTextureLoader()
+          .load(BACKGROUNDFACEKEYS.map(i =>
+            `img/${label}-${sameWall && WALLKEYS.has(i) ? 'wall' : i}.png`))
+    }
+  }
+
+  addBrickStyle ({ label, length } = {}) {
+    this.list[label] = {
+      type: MaterialManager.BRICKSTYLE,
+      textures: 
+        Array.from({ length }, (_, i) =>
+          new THREE
+            .TextureLoader()
+            .load(`img/${label}-${i + 1}.png`))
+    }
   }
 }
 
-function addMaterial(materialName, fileNames) {
-  MATERIAL_LIST[materialName] = new MaterialEntry(materialName, fileNames)
-}
+MaterialManager.BACKGROUND = 0
+MaterialManager.BRICKSTYLE = 1
 
-function getMaterial(materialName) {
-  return MATERIAL_LIST[materialName]
-}
-
-addMaterial('test', [1, 2, 3, 4, 5, 6].map(i => `dice-w${i}.png`))
-addMaterial('octant', [1, 2, 3, 4, 5, 6].map(i => `octant-w${i}.png`))
-addMaterial('bg-sky', ["left", "right", "top", "bottom", "front", "back"].map(i => `bg-sky-${i}.png`))
-addMaterial('octangle-full', [1, 2, 3, 4, 5, 6, 7, 8].map(i => `octangle-full-${i}.png`))
-
-export { getMaterial }
+export { MaterialManager, BRICKFACEKEYS, BACKGROUNDFACEKEYS }
