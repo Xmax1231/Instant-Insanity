@@ -317,20 +317,8 @@ class SelectorBrick extends Brick {
    */
   constructor(app, facePattern, materialName) {
     [ app.materialName, materialName ] = [ materialName, app.materialName ]
-    super(app, facePattern, materialName);
+    super(app, facePattern);
     [ app.materialName, materialName ] = [ materialName, app.materialName ]
-  }
-
-  rotateX(angle) {
-    super.rotateX(angle)
-  }
-
-  rotateY(angle) {
-    super.rotateY(angle)
-  }
-
-  rotateZ(angle) {
-    super.rotateZ(angle)
   }
 
   mouseUpEvent() {
