@@ -170,7 +170,7 @@ class App {
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
 
     this.timeInt = setInterval(() => {
-      time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
+      time_num.innerText = Math.floor(this.game.getTime());
     }, 100);
 
     let game_div = document.createElement('div');
@@ -228,7 +228,7 @@ class App {
           el.classList.add('face' + this.game.bricks[bid].facePattern[face]);
         });
       }
-      move_div.innerText = 'Move: ' + this.game.getStepFormatted();
+      move_num.innerText = this.game.getStepFormatted();
     }
 
     document.getElementById("game").appendChild(game_div);
