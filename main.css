@@ -57,7 +57,7 @@ body{
 #submit{
     position: absolute;
     bottom: 3%;
-    left: 80%;
+    right: 5px;
     width: 130px;
     height: 65px;
     border: 2px black solid;
@@ -75,7 +75,7 @@ body{
 #timemoveblock{
     position: absolute;
     top: 10%;
-    left: 80%;
+    right: 5px;
 }
 #timemoveblock > div{
     padding: 5px;
@@ -84,7 +84,10 @@ body{
     border-radius:10px;
     background: rgb(255, 255, 255);
     white-space:nowrap;
-    width: max-content;
+    width: 215px;
+}
+#timemoveblock > div > span.num{
+    float: right;
 }
 #pauseBackgroundPage{
     z-index: 99;
