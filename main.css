@@ -2,6 +2,7 @@
     overscroll-behavior: none;
     font-family: Consolas;
     font-size: 1.12em;
+    user-select: none;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -11,6 +12,12 @@ body{
     padding: 0px;
     width: 100%;
     background-color: rgb(255, 255, 255);
+}
+button{
+    outline:none;
+}
+button:focus{
+    border: none;
 }
 #home > button{
     margin: 15px auto;
@@ -50,9 +57,11 @@ body{
     position: absolute;
     top: 3%;
     left: 3%;
-    width: 50px;
-    height: 50px;
-    background: black;
+    width: 70px;
+    height: 70px;
+    background: url(./icons/1556866831772.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
 #submit{
     position: absolute;
@@ -88,6 +97,21 @@ body{
 }
 #timemoveblock > div > span.num{
     float: right;
+}
+#rotation_x, #rotation_y, #rotation_z {
+    padding: 2px;
+    position: absolute;
+    top: 12%;
+    left: 80%;
+}
+#rotation_x {
+    top: calc(12% + 100px);
+}
+#rotation_y {
+    top: calc(12% + 130px);
+}
+#rotation_z {
+    top: calc(12% + 160px);
 }
 #pauseBackgroundPage{
     z-index: 99;
@@ -126,7 +150,30 @@ body{
 #brickNumSetting > div, button{
     display: inline-block;
 }
+#decreaseBrickCount{
+    position: relative;
+    top: 10px;
+    margin-bottom: -15px;
+    height: 50px;
+    width: 50px;
+    background: url(./icons/1556873803523.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
+#increaseBrickCount{
+    position: relative;
+    top: 10px;
+    margin-bottom: -15px;
+    width: 50px;
+    height: 50px;
+    background: url(./icons/1556873791942.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
 #BrickCount{
+    text-align: center;
+    width: 50px;
+    height: 50px;
     padding: 3px;
     border: 2px black solid;
 }
@@ -185,14 +232,25 @@ body{
     color: white;
     background: black;
 }
+#render {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 #gohome{
     position: absolute;
     top: 3%;
     left: 3%;
-    width: 50px;
-    height: 50px;
-    background: black;
+    width: 70px;
+    height: 70px;
+    background: url(./icons/1556869699566.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
+
 #volumeSetting{
     margin: 0 auto;
     width: fit-content;
@@ -201,7 +259,9 @@ body{
     display: inline-block;
     width: 50px;
     height: 50px;
-    background: black;
+    background: url(./icons/1556872401455.png) no-repeat;
+    background-size: 100% 100%;
+    border: none;
 }
 #volume{
     position: relative;
@@ -236,4 +296,61 @@ body{
     margin-left: 8px;
     white-space:nowrap;
     width: 50px;
+}
+
+/* Temp */
+
+#info2 {
+    top: calc(20% + 220px);
+    left: 5%;
+    padding: 2px;
+    position: absolute;
+    border: 2px black solid;
+    border-radius:10px;
+    background: rgb(255, 255, 255);
+}
+
+.facetop {
+    width: 10px;
+    height: 10px;
+    margin: 0 auto;
+    background-size: cover;
+}
+
+.faceside {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+.face0 {
+    background-image: url(img/dice-w1.png);
+}
+
+.face1 {
+    background-image: url(img/dice-w2.png);
+}
+
+.face2 {
+    background-image: url(img/dice-w3.png);
+}
+
+.face3 {
+    background-image: url(img/dice-w4.png);
+}
+
+.face4 {
+    background-image: url(img/dice-w5.png);
+}
+
+.face5 {
+    background-image: url(img/dice-w6.png);
+}
+
+.face6 {
+    background-color: purple;
+}
+
+.face7 {
+    background-color: skyblue;
 }
