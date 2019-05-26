@@ -402,7 +402,7 @@ class App {
     brickNumSetting_div.appendChild(increaseBrickCount_div);
     brickStyleSetting_div.appendChild(brickStyleTXT_div);
     brickStyleSetting_div.appendChild(brickShow_div);
-    setting_div.appendChild(document.createElement('div')).innerHTML = `<div style="font-size: 16px">Backgrounds: ` + this.materialManager.backgrounds.map(l => `<a onclick="app.changeBackground('${l}')" href="javascript:">[${l}]</a>`).join(':') + `</div>`
+    // setting_div.appendChild(document.createElement('div')).innerHTML = `<div style="font-size: 16px">Backgrounds: ` + this.materialManager.backgrounds.map(l => `<a onclick="app.changeBackground('${l}')" href="javascript:">[${l}]</a>`).join(':') + `</div>`
     setting_div.appendChild(brickNumSetting_div);
     setting_div.appendChild(brickStyleSetting_div);
 
