@@ -178,7 +178,7 @@ class Brick {
     }
 
     // 暫時停用拖曳上下面
-    if (this.faceNormalVector.equals(this.axisX)) {
+    if (this.faceNormalVector.equals(this.axisX) || this.faceNormalVector.clone().negate().equals(this.axisX)) {
       return
     }
 
