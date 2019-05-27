@@ -247,6 +247,22 @@ button:focus{
     background-size: 100% 100%;
     border: none;
 }
+#loading{
+    width: 100%;
+    height: 100%;
+    background: white;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#loadingContent{
+    text-align: center;
+    height: 30px;
+    width: 360px;
+    position: relative;
+    top: calc(50% - 15px);
+    left: calc(50% - 180px);
+}
 
 #volumeSetting{
     margin: 0 auto;
