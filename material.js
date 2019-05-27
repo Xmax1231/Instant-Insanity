@@ -1,6 +1,19 @@
 const BRICKFACEKEYS = [ 'right', 'left', 'top', 'bottom', 'front', 'back' ]
 const BACKGROUNDFACEKEYS = [ 'left', 'right', 'top', 'bottom', 'front', 'back' ]
 const WALLKEYS = new Set([ 'left', 'right', 'front', 'back' ])
+let itemsToLoad = 0
+  , itemsLoaded = 0
+  , loading = document.getElementById('loading')
+  , loadingCnt = document.getElementById('loadingCnt')
+function loadEnd () {
+  itemsLoaded++
+
+  if (itemsLoaded == itemsToLoad) 
+    loading.hidden = true
+
+  loadingCnt.innerText = `(${itemsLoaded}/${itemsToLoad})`
+}
+
 class MaterialManager {
   constructor (arr) {
     this.list = {}
@@ -39,23 +52,31 @@ class MaterialManager {
   }
 
   addBackground ({ label, sameWall = false } = {}) {
+    loading.hidden = false
+    itemsToLoad ++
     this.list[label] = {
       type: MaterialManager.BACKGROUND,
       textures: 
         new THREE.CubeTextureLoader()
           .load(BACKGROUNDFACEKEYS.map(i =>
-            `img/${label}-${sameWall && WALLKEYS.has(i) ? 'wall' : i}.png`))
+            `img/${label}-${sameWall && WALLKEYS.has(i) ? 'wall' : i}.png`),
+            e => loadEnd(),
+            )
     }
   }
 
   addBrickStyle ({ label, length } = {}) {
+    loading.hidden = false
+    itemsToLoad += length
     this.list[label] = {
       type: MaterialManager.BRICKSTYLE,
       textures: 
         Array.from({ length }, (_, i) =>
           new THREE
             .TextureLoader()
-            .load(`img/${label}-${i + 1}.png`))
+            .load(`img/${label}-${i + 1}.png`,
+              e => loadEnd(),
+              ))
     }
   }
 }
