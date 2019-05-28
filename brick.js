@@ -1,6 +1,4 @@
-import { getMaterial } from './material.js';
-
-const BRICKFACEKEYS = ["right", "left", "top", "bottom", "front", "back"]
+import { BRICKFACEKEYS } from './material.js';
 
 const POSSIBLEQUATERNION = [];
 for (let y = 0; y < 4; y++) {
@@ -33,13 +31,12 @@ class Brick {
    * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
   constructor(app, facePattern) {
-    let textures = getMaterial(app.materialName).fileNames
+    let textures = app.materialManager.get(app.materialName)
       , geometry = new THREE.BoxGeometry(2, 2, 2)
-      , material = BRICKFACEKEYS.map(k =>
+      , material = BRICKFACEKEYS.map(k => 
         new THREE.MeshPhongMaterial({
-          map: new THREE
-            .TextureLoader()
-            .load('img/' + textures[facePattern[k]]),
+          map: textures[facePattern[k]],
+          transparent: true,
         }))
     this.app = app
     this.materialName = app.materialName
@@ -254,7 +251,6 @@ class Brick {
         angle = 4 - angle;
       }
       this.rotateX(angle);
-      this.app.draw(); // Temp
       return;
     }
 
@@ -266,7 +262,6 @@ class Brick {
         angle = 4 - angle;
       }
       this.rotateY(angle);
-      this.app.draw(); // Temp
       return;
     }
 
@@ -278,7 +273,6 @@ class Brick {
         angle = 4 - angle;
       }
       this.rotateZ(angle);
-      this.app.draw(); // Temp
       return;
     }
   }
@@ -291,22 +285,25 @@ class GameBrick extends Brick {
    * @param {!string} materialName - 材質名稱
    * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor(app, materialName, facePattern) {
-    super(app, materialName, facePattern)
+  constructor(app, facePattern) {
+    super(app, facePattern)
   }
 
   rotateX(angle) {
     super.rotateX(angle)
+    this.app.draw()
     this.app.game.stepCounter++;
   }
 
   rotateY(angle) {
     super.rotateY(angle)
+    this.app.draw()
     this.app.game.stepCounter++;
   }
 
   rotateZ(angle) {
     super.rotateZ(angle)
+    this.app.draw()
     this.app.game.stepCounter++;
   }
 }
@@ -318,8 +315,15 @@ class SelectorBrick extends Brick {
    * @param {!string} materialName - 材質名稱
    * @param {{top:number, bottom:number, left:number, right:number, front:number, back:number}} facePattern
    */
-  constructor(app, materialName, facePattern) {
-    super(app, materialName, facePattern)
+  constructor(app, facePattern, materialName) {
+    [ app.materialName, materialName ] = [ materialName, app.materialName ]
+    super(app, facePattern);
+    [ app.materialName, materialName ] = [ materialName, app.materialName ]
+  }
+
+  mouseUpEvent() {
+    super.mouseUpEvent()
+    this.app.materialName = this.materialName
   }
 }
 

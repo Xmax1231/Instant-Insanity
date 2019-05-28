@@ -20,8 +20,8 @@ class Displayer {
       displayer: this,
       deltaXY (dx, dy) {
         let { displayer: { displayType } } = this
-        this.theta += (dy / 500) * (displayType == Displayer.GAMMING ? 1 : -1)
-        this.phi += (dx / 500) * (displayType == Displayer.GAMMING ? 1 : -1)
+        this.theta += (dy / 500) * (displayType == Displayer.GAMMING || displayType == Displayer.SELECTING ? 1 : -1)
+        this.phi += (dx / 500) * (displayType == Displayer.GAMMING || displayType == Displayer.SELECTING ? 1 : -1)
         if (this.theta > .4)
           this.theta = .4
         else if (this.theta < -.4)
@@ -46,10 +46,12 @@ class Displayer {
     this.selectorBricks = []
     this.gameGroup = new THREE.Group()
     this.selectorGroup = new THREE.Group()
+    this.selectorBrickStartY = 0
     this.appWidth = 0
     this.appHeight = 0
     this.appElem = appElem
-    this.appElem.appendChild(this.renderer.domElement)
+    this.domElement = this.renderer.domElement
+    appElem && this.appElem.appendChild(this.domElement)
     this.camera.position.set(4, 4, 4)
     this.camera.lookAt(0, 0, 0)
     this.pointLight.position.setFromMatrixPosition(this.camera.matrix)
@@ -57,7 +59,7 @@ class Displayer {
     this.scene.add(this.gameGroup)
     this.scene.add(this.selectorGroup)
     this.calcCamera()
-    this.resize()
+    appElem && this.resize()
     window.addEventListener('resize', () => this.resize())
     window.addEventListener('mousedown', e => this.mouseDownEvent(e))
     window.addEventListener('mousemove', e => this.mouseMoveEvent(e))
@@ -88,6 +90,9 @@ class Displayer {
    */
   resize(width, height) {
     let { appElem, renderer, camera } = this
+    if (! appElem) 
+      return
+
     if (width == null || height == null) {
       let b = appElem.getBoundingClientRect()
       width = b.width
@@ -140,9 +145,26 @@ class Displayer {
    */
   setBrickSelectors(bricks) {
     let selectorBricks = Array.from(bricks)
+      , startY = Math.floor(bricks.length / 5) / 2 * 3 - 1.5
+      , k = 0
+    this.selectorBrickStartY = startY
     this.selectorBricks = selectorBricks
-    this.selectorGroup.children = selectorBricks.map(b =>
+    this.selectorGroup.children = bricks.map(b => 
       b.renderObject)
+    for (let i = 0, l = bricks.length; i < l; i += 5) {
+      let r = Math.min(l - i, 5)
+        , startX = r / 2 * 3 - 1.5
+      for (let j = 0; j < r; j++) {
+        Object.assign(bricks[k++].renderObject.position, {
+          x: startX,
+          y: startY,
+        })
+
+        startX -= 3
+      }
+
+      startY -= 3
+    }
   }
 
   /**
@@ -238,10 +260,15 @@ class Displayer {
    * @param {Event} e
    */
   calcMouseRay(e) {
-    let { displayType, mouseVector, appWidth, appHeight, rayCaster, camera, gameBricks, selectorBricks } = this
-      , bricks, id2obj = {}, intersects, brick, faceNorm
-    mouseVector.x = ( e.clientX / appWidth ) * 2 - 1
-    mouseVector.y = - ( e.clientY / appHeight ) * 2 + 1
+    let { displayType, mouseVector, appWidth, appHeight, rayCaster, camera, gameBricks, selectorBricks, appElem } = this
+      , relativePoint, appBound, bricks, id2obj = {}, intersects, brick, faceNorm
+    appBound = appElem.getBoundingClientRect()
+    relativePoint = {
+      x: e.clientX - appBound.x,
+      y: e.clientY - appBound.y,
+    }
+    mouseVector.x = ( relativePoint.x / appWidth ) * 2 - 1
+    mouseVector.y = - ( relativePoint.y / appHeight ) * 2 + 1
     rayCaster.setFromCamera(mouseVector, camera)
     switch (displayType) {
       case Displayer.BACKGROUND:
@@ -272,8 +299,61 @@ class Displayer {
   }
 }
 
+class Displayer4BrickStyle extends Displayer {
+  constructor (appElem) {
+    super(appElem)
+    this.cameraInfo.deltaXY = function (dx, dy) {
+      let { displayer: { displayType } } = this
+      this.theta += (dy / 25)
+      this.phi += (dx / 500) * (displayType == Displayer.GAMMING || displayType == Displayer.SELECTING ? 1 : -1)
+      if (this.theta > 222)
+        this.theta = 222
+      else if (this.theta < -222)
+        this.theta = -222
+      if (this.phi > 2)
+        this.phi -= 2
+      else if (this.phi < -2)
+        this.phi += 2
+    }
+  }
+
+  applyContainer(appElem) {
+    appElem.appendChild(this.renderer.domElement)
+    this.appElem = appElem
+    this.resize()
+  }
+
+  mouseDownEvent(e) {
+    if (e.path[0] != this.domElement) 
+      return
+    else 
+      super.mouseDownEvent(e)
+  }
+
+  wheelEvent(e) {
+    if (this.mouseInfo.mouseDown) {
+      super.wheelEvent(e)
+    } else {
+      this.cameraInfo.theta += e.wheelDeltaY / 50
+      this.calcCamera()
+    }
+  }
+
+  calcCamera() {
+    let { camera, cameraInfo, pointLight } = this
+      , { r, theta, phi } = cameraInfo
+    let _ = r
+      , x = _ * Math.cos(phi * Math.PI)
+      , y = theta
+      , z = _ * Math.sin(phi * Math.PI)
+    camera.position.set(x, y, z)
+    this.camera.lookAt(0, this.camera.position.y, 0)
+    pointLight.position.setFromMatrixPosition(camera.matrix)
+  }
+}
+
 Displayer.BACKGROUND = 0
 Displayer.GAMMING = 1
 Displayer.SELECTING = 2
 
-export {Displayer};
+export {Displayer,Displayer4BrickStyle};

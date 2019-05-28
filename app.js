@@ -1,6 +1,7 @@
 import { Game } from './game.js';
-import { Displayer } from './displayer.js';
-import { getMaterial } from './material.js';
+import { Displayer, Displayer4BrickStyle } from './displayer.js';
+import { SelectorBrick } from './brick.js';
+import { MaterialManager } from './material.js';
 
 /**
  * 控制遊戲畫面
@@ -10,13 +11,151 @@ class App {
    * 初始化App
    */
   constructor() {
+    this.materialManager = new MaterialManager([{
+          type: MaterialManager.BACKGROUND, 
+          label: 'bg-sky',
+        }, {
+          type: MaterialManager.BACKGROUND, 
+          label: 'bg-02',
+        }, {
+          type: MaterialManager.BACKGROUND, 
+          sameWall: true,
+          label: 'bg-03',
+        }, {
+          type: MaterialManager.BACKGROUND, 
+          sameWall: true,
+          label: 'bg-04',
+        }, {
+          type: MaterialManager.BACKGROUND, 
+          sameWall: true,
+          label: 'bg-04-1',
+        }, {
+          type: MaterialManager.BACKGROUND, 
+          sameWall: true,
+          label: 'bg-04-2',
+        }, {
+          type: MaterialManager.BACKGROUND, 
+          sameWall: true,
+          label: 'bg-04-3',
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: 'dice',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '01',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '02',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '03',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '04',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '05',
+          length: 7,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '06',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '07',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '08-octangle-full',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '09',
+          length: 7,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '10',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '11-octangle-transparet',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '12',
+          length: 7,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '13',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '14',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '15',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '16',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '17',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '18',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '19',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '20',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE, 
+          label: '21',
+          length: 9,
+        },
+      ])
     this.displayer = new Displayer(document.getElementById('render'));
+    this.displayer4BrickStyle = new Displayer4BrickStyle(null);
     this.brickCount = 4;
-    this.materialName = 'octangle-full';
+    this.materialName = '08-octangle-full';
+    this.backgroundMaterialName = 'bg-sky';
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
-    this.displayer.scene.background = new THREE.CubeTextureLoader().load(getMaterial('bg-sky').fileNames.map(n => `img/${n}`))
+    let facePattern = { top: 0, bottom: 1, front: 2, back: 3, right: 4, left: 5 }
+    this.brickStyles = this.materialManager.brickStyles.map(n => new SelectorBrick(this, facePattern, n))
+    this.displayer4BrickStyle.setBrickSelectors(this.brickStyles)
+    this.changeBackground()
+  }
+
+  changeBackground(label) {
+    this.displayer.scene.background = 
+    this.displayer4BrickStyle.scene.background = 
+    this.materialManager.get(label || this.backgroundMaterialName)
+  }
+
+  displayBrickStyle(appElem) {
+    this.displayer4BrickStyle.applyContainer(appElem)
+    this.displayer4BrickStyle.resize()
+    Object.assign(this.displayer4BrickStyle.cameraInfo, {
+      r: 8, 
+      theta: this.displayer4BrickStyle.selectorBrickStartY, 
+      phi: .5,
+    })
+    this.displayer4BrickStyle.calcCamera()
   }
 
   // Home page
@@ -37,6 +176,7 @@ class App {
   gotoHome() {
     this.clearPage();
     this.displayer.display(Displayer.BACKGROUND)
+    this.displayer4BrickStyle.display(Displayer.BACKGROUND)
     var home_div = document.createElement("div");
     var icon_div = document.createElement("div");
     var start_btn = document.createElement("button");
@@ -73,6 +213,7 @@ class App {
     this.clearPage();
     this.game = new Game(this)
     this.displayer.display(Displayer.GAMMING)
+    this.displayer4BrickStyle.display(Displayer.GAMMING)
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
@@ -240,7 +381,8 @@ class App {
    */
   gotoSetting() {
     this.clearPage();
-    this.displayer.display(Displayer.SELECTING)
+    // this.displayer.display(Displayer.SELECTING)
+    this.displayer4BrickStyle.display(Displayer.SELECTING)
     var setting_div = document.createElement("div");
     var brickNumSetting_div = document.createElement("div");
     var brickStyleSetting_div = document.createElement("div");
@@ -259,7 +401,6 @@ class App {
     setting_div.id = "setting";
     brickNumSetting_div.id = "brickNumSetting";
     brickStyleSetting_div.id = "brickStyleSetting";
-    brickStyleSetting_div.style = "display: none"; // Temporary
     brickNumTXT_div.id = "brickNumTXT";
     increaseBrickCount_div.id = "increaseBrickCount";
     BrickCount_div.id = "BrickCount";
@@ -280,11 +421,13 @@ class App {
     brickNumSetting_div.appendChild(increaseBrickCount_div);
     brickStyleSetting_div.appendChild(brickStyleTXT_div);
     brickStyleSetting_div.appendChild(brickShow_div);
+    // setting_div.appendChild(document.createElement('div')).innerHTML = `<div style="font-size: 16px">Backgrounds: ` + this.materialManager.backgrounds.map(l => `<a onclick="app.changeBackground('${l}')" href="javascript:">[${l}]</a>`).join(':') + `</div>`
     setting_div.appendChild(brickNumSetting_div);
     setting_div.appendChild(brickStyleSetting_div);
 
     document.getElementById("game").appendChild(gohome_btn);
     document.getElementById("game").appendChild(setting_div);
+    this.displayBrickStyle(brickShow_div);
   }
 
   /**
