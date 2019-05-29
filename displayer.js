@@ -1,4 +1,4 @@
-const SKIP_ELEM_IDS = new Set([ 'volume' ])
+const SKIP_ELEM_IDS = new Set([ 'pauseBackgroundPage' ])
 
 /**
  * 顯示方塊
@@ -173,7 +173,7 @@ class Displayer {
    */
   mouseDownEvent(e) {
     let { mouseInfo } = this
-    if (SKIP_ELEM_IDS.has(e.path[0].id) || mouseInfo.mouseDown) 
+    if (e.path.some(e => SKIP_ELEM_IDS.has(e.id)) || mouseInfo.mouseDown)
       return
 
     if (e.type == 'touchstart') {
