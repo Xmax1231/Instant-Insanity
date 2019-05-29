@@ -3,6 +3,9 @@ import { Displayer, Displayer4BrickStyle } from './displayer.js';
 import { SelectorBrick } from './brick.js';
 import { MaterialManager } from './material.js';
 
+
+const STORAGEKEY = 'InsanityCannabisData';
+
 /**
  * 控制遊戲畫面
  */
@@ -135,6 +138,7 @@ class App {
     this.game = null;
     this.volume = 1;
     this.bgm = null; // TODO
+    this.loadData();
     let facePattern = { top: 0, bottom: 1, front: 2, back: 3, right: 4, left: 5 }
     this.brickStyles = this.materialManager.brickStyles.map(n => new SelectorBrick(this, facePattern, n))
     this.displayer4BrickStyle.setBrickSelectors(this.brickStyles)
@@ -242,6 +246,7 @@ class App {
     exit_btn.onclick = () => { this.exit(); };
     volume_ipt.oninput = () => {
       this.setVolume(volume_ipt.value);
+      this.storeData();
     };
 
     play_div.id = "play";
@@ -559,6 +564,7 @@ class App {
     }
     this.brickCount++;
     document.getElementById("BrickCount").innerText = this.brickCount.toString();
+    this.storeData();
   }
 
   /**
@@ -571,6 +577,7 @@ class App {
     }
     this.brickCount--;
     document.getElementById("BrickCount").innerText = this.brickCount.toString();
+    this.storeData();
   }
 
   /**
@@ -590,6 +597,44 @@ class App {
    */
   pickupGift(achievementId) {
     // TODO
+  }
+
+
+  // Other
+
+  /**
+   * 儲存資料到localStorage
+   */
+  storeData() {
+    let data = {};
+    data.brickCount = this.brickCount;
+    data.materialName = this.materialName;
+    data.volume = this.volume;
+    localStorage.setItem(STORAGEKEY, JSON.stringify(data));
+  }
+
+  /**
+   * 從localStorage擷取資料
+   */
+  loadData() {
+    let data = localStorage.getItem(STORAGEKEY);
+    if (data === null) {
+      return;
+    }
+    try {
+      data = JSON.parse(data);
+    } catch (error) {
+      return;
+    }
+    if (data.brickCount !== undefined) {
+      this.brickCount = data.brickCount;
+    }
+    if (data.materialName !== undefined) {
+      this.materialName = data.materialName;
+    }
+    if (data.volume !== undefined) {
+      this.volume = data.volume;
+    }
   }
 }
 
