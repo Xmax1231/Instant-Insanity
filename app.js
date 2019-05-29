@@ -220,7 +220,11 @@ class App {
     // var canvas_div = document.createElement("div");
     var timemoveblock_div = document.createElement("div");
     var time_div = document.createElement("div");
+    var time_lb = document.createElement("span");
+    var time_num = document.createElement("span");
     var move_div = document.createElement("div");
+    var move_lb = document.createElement("span");
+    var move_num = document.createElement("span");
     var pauseBackgroundPage_div = document.createElement("div");
     var pausePage_div = document.createElement("div");
     var continue_btn = document.createElement("button");
@@ -246,7 +250,11 @@ class App {
     // canvas_div.id = "canvas-area";
     timemoveblock_div.id = "timemoveblock";
     time_div.id = "time";
+    time_lb.id = "time_lb";
+    time_num.id = "time_num";
     move_div.id = "move";
+    move_lb.id = "move_lb";
+    move_num.id = "move_num";
     pauseBackgroundPage_div.id = "pauseBackgroundPage";
     pausePage_div.id = "pausePage";
     continue_btn.id = "continue";
@@ -258,9 +266,16 @@ class App {
     volume_ipt.id = "volume";
     output_div.id = "output";
 
+    time_lb.classList.add("lb");
+    time_num.classList.add("num");
+    move_lb.classList.add("lb");
+    move_num.classList.add("num");
+
     submit_btn.innerText = "submit";
-    time_div.innerText = "time:00.00";
-    move_div.innerText = "move:0";
+    time_lb.innerText = "time:";
+    time_num.innerText = "12345"
+    move_lb.innerText = "move:";
+    move_num.innerText = "0";
     continue_btn.innerText = "繼續遊戲";
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
@@ -277,6 +292,10 @@ class App {
     play_div.appendChild(pause_btn);
     timemoveblock_div.appendChild(time_div);
     timemoveblock_div.appendChild(move_div);
+    time_div.appendChild(time_lb);
+    time_div.appendChild(time_num);
+    move_div.appendChild(move_lb);
+    move_div.appendChild(move_num);
     pauseBackgroundPage_div.appendChild(pausePage_div);
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);
@@ -292,7 +311,7 @@ class App {
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
 
     this.timeInt = setInterval(() => {
-      time_div.innerText = 'Time: ' + Math.floor(this.game.getTime());
+      time_num.innerText = Math.floor(this.game.getTime());
     }, 100);
 
     let game_div = document.createElement('div');
@@ -350,7 +369,7 @@ class App {
           el.classList.add('face' + this.game.bricks[bid].facePattern[face]);
         });
       }
-      move_div.innerText = 'Move: ' + this.game.getStepFormatted();
+      move_num.innerText = this.game.getStepFormatted();
     }
 
     document.getElementById("game").appendChild(game_div);
@@ -402,7 +421,7 @@ class App {
     brickNumSetting_div.appendChild(increaseBrickCount_div);
     brickStyleSetting_div.appendChild(brickStyleTXT_div);
     brickStyleSetting_div.appendChild(brickShow_div);
-    setting_div.appendChild(document.createElement('div')).innerHTML = `<div style="font-size: 16px">Backgrounds: ` + this.materialManager.backgrounds.map(l => `<a onclick="app.changeBackground('${l}')" href="javascript:">[${l}]</a>`).join(':') + `</div>`
+    // setting_div.appendChild(document.createElement('div')).innerHTML = `<div style="font-size: 16px">Backgrounds: ` + this.materialManager.backgrounds.map(l => `<a onclick="app.changeBackground('${l}')" href="javascript:">[${l}]</a>`).join(':') + `</div>`
     setting_div.appendChild(brickNumSetting_div);
     setting_div.appendChild(brickStyleSetting_div);
 
