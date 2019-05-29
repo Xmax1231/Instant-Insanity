@@ -193,6 +193,64 @@ class Game {
     });
     return result;
   }
+
+  /**
+   * 取得單一方塊的答案
+   * @param {number} brickId - 第幾個方塊
+   */
+  getSingleAnswer(brickId) {
+    let answer = [];
+    let quaternion = this.bricks[brickId].renderObject.quaternion.clone();
+    let topVector = new THREE.Vector3(0, 1, 0).applyQuaternion(quaternion).round();
+    let axis = null, angle;
+    if (topVector.equals(new THREE.Vector3(0, 0, 1))) {
+      answer.push(['X', 1]);
+      axis = new THREE.Vector3(1, 0, 0);
+      angle = -Math.PI / 2;
+    } else if (topVector.equals(new THREE.Vector3(0, -1, 0))) {
+      answer.push(['X', 2]);
+      axis = new THREE.Vector3(1, 0, 0);
+      angle = -Math.PI / 2 * 2;
+    } else if (topVector.equals(new THREE.Vector3(0, 0, -1))) {
+      answer.push(['X', 3]);
+      axis = new THREE.Vector3(1, 0, 0);
+      angle = -Math.PI / 2 * 3;
+    } else if (topVector.equals(new THREE.Vector3(1, 0, 0))) {
+      answer.push(['Z', 1]);
+      axis = new THREE.Vector3(0, 0, 1);
+      angle = -Math.PI / 2 * 3;
+    } else if (topVector.equals(new THREE.Vector3(-1, 0, 0))) {
+      answer.push(['Z', 3]);
+      axis = new THREE.Vector3(0, 0, 1);
+      angle = -Math.PI / 2 * 3;
+    }
+    if (axis !== null) {
+      quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(axis, angle));
+    }
+
+    let rightVector = new THREE.Vector3(1, 0, 0).applyQuaternion(quaternion).round();
+    if (rightVector.equals(new THREE.Vector3(0, 0, 1))) {
+      answer.push(['Y', 1]);
+    } else if (rightVector.equals(new THREE.Vector3(-1, 0, 0))) {
+      answer.push(['Y', 2]);
+    } else if (rightVector.equals(new THREE.Vector3(0, 0, -1))) {
+      answer.push(['Y', 3]);
+    }
+    return answer;
+  }
+
+  /**
+   * 取得所有方塊的答案
+   */
+  getAnswer() {
+    let answer = [];
+    for (let brickId = 0; brickId < this.app.brickCount; brickId++) {
+      this.getSingleAnswer(brickId).forEach((ans, _) => {
+        answer.push([brickId, ans[0], ans[1]]);
+      });
+    }
+    return answer;
+  }
 }
 
 
