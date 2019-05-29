@@ -103,9 +103,7 @@ class Game {
 
     this.app.displayer.setGameBricks(this.bricks);
 
-    this.timeCounter = 0;
-    this.stepCounter = 0;
-    this.start();
+    this.restart();
   }
 
   start() {
@@ -157,6 +155,19 @@ class Game {
 
   getStepFormatted() {
     return this.getStep();
+  }
+
+  /**
+   * 重新開始
+   */
+  restart() {
+    for (let bid = 0; bid < this.app.brickCount; bid++) {
+      this.bricks[bid].facePattern = Object.assign({}, this.bricks[bid].facePatternOriginal);
+      this.bricks[bid].renderObject.quaternion.set(0, 0, 0, 1);
+    }
+    this.timeCounter = 0;
+    this.stepCounter = 0;
+    this.start();
   }
 
   /**
