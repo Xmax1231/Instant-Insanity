@@ -324,6 +324,7 @@ class SelectorBrick extends Brick {
   mouseUpEvent() {
     super.mouseUpEvent()
     this.app.materialName = this.materialName
+    this.app.storeData()
   }
 }
 
