@@ -240,6 +240,9 @@ class App {
     var volume_icon = document.createElement("div");
     var volume_ipt = document.createElement("input");
     var output_div = document.createElement("div");
+    var bgmCredit_div = document.createElement("div");
+    var bgmCreditText = document.createTextNode("現在播放：");
+    var bgmCreditLink = document.createElement("a");
 
     pause_btn.onclick = () => { this.pause(); };
     submit_btn.onclick = () => { this.submit(); };
@@ -270,6 +273,11 @@ class App {
     volume_icon.id = "volume_icon";
     volume_ipt.id = "volume";
     output_div.id = "output";
+    bgmCredit_div.id = "bgmCredit";
+    bgmCreditLink.id = "bgmCreditLink";
+    bgmCreditLink.href = `https://youtu.be/${this.bgm_player.getVideoData().video_id}`;
+    bgmCreditLink.target = "_blank";
+    bgmCreditLink.innerText = this.bgm_player.getVideoData().title;
 
     time_lb.classList.add("lb");
     time_num.classList.add("num");
@@ -309,6 +317,9 @@ class App {
     volumeSetting_div.appendChild(volume_icon);
     volumeSetting_div.appendChild(volume_ipt);
     volumeSetting_div.appendChild(output_div);
+    pausePage_div.appendChild(bgmCredit_div);
+    bgmCredit_div.appendChild(bgmCreditText);
+    bgmCredit_div.appendChild(bgmCreditLink);
 
     pauseBackgroundPage_div.style.display = "none";
 

@@ -131,7 +131,7 @@ button:focus{
 #pausePage{
     margin: 0px auto;
     width: 500px;
-    height: 250px;
+    height: 285px;
     position: relative;
     transform:translateY(50%);
     border: 2px black solid;
@@ -144,6 +144,10 @@ button:focus{
     border: 2px black solid;
     border-radius:10px;
     background: rgb(255, 255, 255);
+}
+#bgmCredit {
+    font-size: 12px;
+    text-align: center;
 }
 #setting{
     margin: 0px auto;
