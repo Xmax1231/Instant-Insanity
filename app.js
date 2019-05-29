@@ -1,19 +1,165 @@
 import { Game } from './game.js';
-import { Displayer } from './displayer.js';
+import { Displayer, Displayer4BrickStyle } from './displayer.js';
+import { SelectorBrick } from './brick.js';
+import { MaterialManager } from './material.js';
+
+
+const STORAGEKEY = 'InsanityCannabisData';
 
 /**
  * 控制遊戲畫面
  */
-class App { // eslint-disable-line no-unused-vars
+class App {
   /**
    * 初始化App
    */
   constructor(bgm_player) {
-    this.displayer = new Displayer(null); // TODO
-    this.brickCount = 4; // TODO
-    this.game = new Game();
+    this.materialManager = new MaterialManager([{
+          type: MaterialManager.BACKGROUND,
+          label: 'bg-sky',
+        }, {
+          type: MaterialManager.BACKGROUND,
+          label: 'bg-02',
+        }, {
+          type: MaterialManager.BACKGROUND,
+          sameWall: true,
+          label: 'bg-03',
+        }, {
+          type: MaterialManager.BACKGROUND,
+          sameWall: true,
+          label: 'bg-04',
+        }, {
+          type: MaterialManager.BACKGROUND,
+          sameWall: true,
+          label: 'bg-04-1',
+        }, {
+          type: MaterialManager.BACKGROUND,
+          sameWall: true,
+          label: 'bg-04-2',
+        }, {
+          type: MaterialManager.BACKGROUND,
+          sameWall: true,
+          label: 'bg-04-3',
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: 'dice',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '01',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '02',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '03',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '04',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '05',
+          length: 7,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '06',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '07',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '08-octangle-full',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '09',
+          length: 7,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '10',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '11-octangle-transparet',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '12',
+          length: 7,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '13',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '14',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '15',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '16',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '17',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '18',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '19',
+          length: 8,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '20',
+          length: 9,
+        }, {
+          type: MaterialManager.BRICKSTYLE,
+          label: '21',
+          length: 9,
+        },
+      ])
+    this.displayer = new Displayer(document.getElementById('render'));
+    this.displayer4BrickStyle = new Displayer4BrickStyle(null);
+    this.brickCount = 4;
+    this.materialName = '08-octangle-full';
+    this.backgroundMaterialName = 'bg-sky';
+    this.game = null;
     this.volume = 75;
     this.bgm_player = bgm_player;
+    this.loadData();
+    let facePattern = { top: 0, bottom: 1, front: 2, back: 3, right: 4, left: 5 }
+    this.brickStyles = this.materialManager.brickStyles.map(n => new SelectorBrick(this, facePattern, n))
+    this.displayer4BrickStyle.setBrickSelectors(this.brickStyles)
+    this.changeBackground()
+  }
+
+  changeBackground(label) {
+    this.displayer.scene.background =
+    this.displayer4BrickStyle.scene.background =
+    this.materialManager.get(label || this.backgroundMaterialName)
+  }
+
+  displayBrickStyle(appElem) {
+    this.displayer4BrickStyle.applyContainer(appElem)
+    this.displayer4BrickStyle.resize()
+    Object.assign(this.displayer4BrickStyle.cameraInfo, {
+      r: 8,
+      theta: this.displayer4BrickStyle.selectorBrickStartY,
+      phi: .5,
+    })
+    this.displayer4BrickStyle.calcCamera()
   }
 
   // Home page
@@ -33,6 +179,8 @@ class App { // eslint-disable-line no-unused-vars
    */
   gotoHome() {
     this.clearPage();
+    this.displayer.display(Displayer.BACKGROUND)
+    this.displayer4BrickStyle.display(Displayer.BACKGROUND)
     var home_div = document.createElement("div");
     var icon_div = document.createElement("div");
     var start_btn = document.createElement("button");
@@ -48,6 +196,7 @@ class App { // eslint-disable-line no-unused-vars
     start_btn.id = "start";
     setting_btn.id = "gotoSetting";
     achievement_btn.id = "gotoAchievement";
+    achievement_btn.style = "display: none"; // Temporary
 
     start_btn.innerText = "開始";
     setting_btn.innerText = "設定";
@@ -66,13 +215,22 @@ class App { // eslint-disable-line no-unused-vars
    */
   start() {
     this.clearPage();
+    this.game = new Game(this)
+    this.displayer.display(Displayer.GAMMING)
+    this.displayer4BrickStyle.display(Displayer.GAMMING)
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
     var submit_btn = document.createElement("button");
     // var canvas_div = document.createElement("div");
     var timemoveblock_div = document.createElement("div");
     var time_div = document.createElement("div");
+    var time_lb = document.createElement("span");
+    var time_num = document.createElement("span");
+    this.time_num = time_num; // For other functions access
     var move_div = document.createElement("div");
+    var move_lb = document.createElement("span");
+    var move_num = document.createElement("span");
+    this.move_num = move_num; // For other functions access
     var pauseBackgroundPage_div = document.createElement("div");
     var pausePage_div = document.createElement("div");
     var continue_btn = document.createElement("button");
@@ -98,7 +256,11 @@ class App { // eslint-disable-line no-unused-vars
     // canvas_div.id = "canvas-area";
     timemoveblock_div.id = "timemoveblock";
     time_div.id = "time";
+    time_lb.id = "time_lb";
+    time_num.id = "time_num";
     move_div.id = "move";
+    move_lb.id = "move_lb";
+    move_num.id = "move_num";
     pauseBackgroundPage_div.id = "pauseBackgroundPage";
     pausePage_div.id = "pausePage";
     continue_btn.id = "continue";
@@ -109,9 +271,16 @@ class App { // eslint-disable-line no-unused-vars
     volume_ipt.id = "volume";
     output_div.id = "output";
 
+    time_lb.classList.add("lb");
+    time_num.classList.add("num");
+    move_lb.classList.add("lb");
+    move_num.classList.add("num");
+
     submit_btn.innerText = "submit";
-    time_div.innerText = "time:00.00";
-    move_div.innerText = "move:0";
+    time_lb.innerText = "time:";
+    time_num.innerText = "12345"
+    move_lb.innerText = "move:";
+    move_num.innerText = "0";
     continue_btn.innerText = "繼續遊戲";
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
@@ -128,6 +297,10 @@ class App { // eslint-disable-line no-unused-vars
     play_div.appendChild(pause_btn);
     timemoveblock_div.appendChild(time_div);
     timemoveblock_div.appendChild(move_div);
+    time_div.appendChild(time_lb);
+    time_div.appendChild(time_num);
+    move_div.appendChild(move_lb);
+    move_div.appendChild(move_num);
     pauseBackgroundPage_div.appendChild(pausePage_div);
     pausePage_div.appendChild(continue_btn);
     pausePage_div.appendChild(restart_btn);
@@ -141,8 +314,74 @@ class App { // eslint-disable-line no-unused-vars
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
+
     this.bgm_player.setVolume(this.volume);
-    this.bgm_player.playVideo()
+    this.bgm_player.playVideo();
+
+    this.timeInt = setInterval(() => {
+      time_num.innerText = Math.floor(this.game.getTime());
+    }, 100);
+
+    let game_div = document.createElement('div');
+    game_div.style = 'position: absolute; top: 5%; left: 10%; background: rgba(128, 128, 128, 0.5); display: none;';
+
+    let brick_table = document.createElement('table');
+
+    let createBrick = (brickId, face) => {
+      let brick = document.createElement('div');
+      brick.id = 'brick' + brickId + face;
+      if (face == 'top' || face == 'bottom') {
+        brick.className = 'facetop';
+      } else {
+        brick.className = 'faceside';
+      }
+      return brick;
+    }
+
+    for (let brickId = 0; brickId < this.brickCount; brickId++) {
+      // top
+      let tr_top = document.createElement('tr');
+      let td_top = document.createElement('td');
+      td_top.colSpan = 4;
+      td_top.style = 'text-align: center;';
+      td_top.appendChild(createBrick(brickId, 'top'));
+      tr_top.appendChild(td_top);
+      brick_table.appendChild(tr_top);
+      // side
+      let tr_side = document.createElement('tr');
+      ['left', 'front', 'right', 'back'].forEach(face => {
+        let td_side = document.createElement('td');
+        td_side.appendChild(createBrick(brickId, face));
+        tr_side.appendChild(td_side);
+      });
+      brick_table.appendChild(tr_side);
+      // bottom
+      let tr_bottom = document.createElement('tr');
+      let td_bottom = document.createElement('td');
+      td_bottom.colSpan = 4;
+      td_bottom.style = 'text-align: center;';
+      td_bottom.appendChild(createBrick(brickId, 'bottom'));
+      tr_bottom.appendChild(td_bottom);
+      brick_table.appendChild(tr_bottom);
+    }
+
+    game_div.appendChild(brick_table);
+
+    this.draw = () => {
+      for (let bid = 0; bid < this.brickCount; bid++) {
+        ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
+          const el = document.getElementById('brick' + bid + face);
+          for (let bid2 = 1; bid2 <= this.brickCount; bid2++) {
+            el.classList.remove('face' + bid2);
+          }
+          el.classList.add('face' + this.game.bricks[bid].facePattern[face]);
+        });
+      }
+      move_num.innerText = this.game.getStepFormatted();
+    }
+
+    document.getElementById("game").appendChild(game_div);
+    this.draw();
   }
 
   /**
@@ -150,6 +389,8 @@ class App { // eslint-disable-line no-unused-vars
    */
   gotoSetting() {
     this.clearPage();
+    // this.displayer.display(Displayer.SELECTING)
+    this.displayer4BrickStyle.display(Displayer.SELECTING)
     var setting_div = document.createElement("div");
     var brickNumSetting_div = document.createElement("div");
     var brickStyleSetting_div = document.createElement("div");
@@ -178,8 +419,8 @@ class App { // eslint-disable-line no-unused-vars
 
     brickNumTXT_div.innerText = "方塊數：";
     brickStyleTXT_div.innerText = "方塊樣式：";
-    increaseBrickCount_div.innerHTML = "+";
-    decreaseBrickCount_div.innerHTML = "-";
+    // increaseBrickCount_div.innerHTML = "+";
+    // decreaseBrickCount_div.innerHTML = "-";
     BrickCount_div.innerText = this.brickCount.toString();
 
     brickNumSetting_div.appendChild(brickNumTXT_div);
@@ -188,11 +429,13 @@ class App { // eslint-disable-line no-unused-vars
     brickNumSetting_div.appendChild(increaseBrickCount_div);
     brickStyleSetting_div.appendChild(brickStyleTXT_div);
     brickStyleSetting_div.appendChild(brickShow_div);
+    // setting_div.appendChild(document.createElement('div')).innerHTML = `<div style="font-size: 16px">Backgrounds: ` + this.materialManager.backgrounds.map(l => `<a onclick="app.changeBackground('${l}')" href="javascript:">[${l}]</a>`).join(':') + `</div>`
     setting_div.appendChild(brickNumSetting_div);
     setting_div.appendChild(brickStyleSetting_div);
 
     document.getElementById("game").appendChild(gohome_btn);
     document.getElementById("game").appendChild(setting_div);
+    this.displayBrickStyle(brickShow_div);
   }
 
   /**
@@ -260,14 +503,22 @@ class App { // eslint-disable-line no-unused-vars
    * 暫停遊戲
    */
   pause() {
+    this.game.pause();
     document.getElementById('pauseBackgroundPage').style.display = 'block';
   }
 
   /**
    * 檢查是否通關
+   * @todo 應該要顯示結算畫面，尚未完成，暫時直接開始新遊戲
    */
   submit() {
-    // TODO
+    if (this.game.isResolve()) {
+      clearInterval(this.timeInt);
+      alert('Mission clear! Starting a new game.');
+      this.start(); // Temporary
+    } else {
+      alert('Not yet');
+    }
   }
 
   // Game page: pause
@@ -276,14 +527,19 @@ class App { // eslint-disable-line no-unused-vars
    * 繼續遊戲
    */
   continue() {
+    this.game.start();
     document.getElementById('pauseBackgroundPage').style.display = 'none';
   }
 
   /**
    * 重新開始遊戲
+   * @todo 應該為同一關卡重新開始，尚未完成
    */
   restart() {
+    this.game.restart();
     document.getElementById('pauseBackgroundPage').style.display = 'none';
+    this.time_num.innerText = 0;
+    this.move_num.innerText = 0;
   }
 
   /**
@@ -298,28 +554,39 @@ class App { // eslint-disable-line no-unused-vars
    * @param {number} value
    */
   setVolume(value) {
-    console.log("setVolume: " + value);
     document.getElementById("output").innerHTML = value;
+    this.volume = value;
     this.bgm_player.setVolume(value);
+    this.storeData();
   }
 
 
   // Setting page
 
   /**
-   * 增加遊戲方塊數
+   * 增加遊戲方塊數，上限為8個
    */
   increaseBrickCount() {
+    if (this.brickCount >= 8) {
+      alert('上限為8個方塊');
+      return;
+    }
     this.brickCount++;
     document.getElementById("BrickCount").innerText = this.brickCount.toString();
+    this.storeData();
   }
 
   /**
-   * 減少遊戲方塊數
+   * 減少遊戲方塊數，下限為2個
    */
   decreaseBrickCount() {
+    if (this.brickCount <= 2) {
+      alert('下限為2個方塊');
+      return;
+    }
     this.brickCount--;
     document.getElementById("BrickCount").innerText = this.brickCount.toString();
+    this.storeData();
   }
 
   /**
@@ -337,8 +604,46 @@ class App { // eslint-disable-line no-unused-vars
    * TODO
    * @param {number} achievementId - TODO
    */
-  pickupGift(achievementId) { // eslint-disable-line no-unused-vars
+  pickupGift(achievementId) {
     // TODO
+  }
+
+
+  // Other
+
+  /**
+   * 儲存資料到localStorage
+   */
+  storeData() {
+    let data = {};
+    data.brickCount = this.brickCount;
+    data.materialName = this.materialName;
+    data.volume = this.volume;
+    localStorage.setItem(STORAGEKEY, JSON.stringify(data));
+  }
+
+  /**
+   * 從localStorage擷取資料
+   */
+  loadData() {
+    let data = localStorage.getItem(STORAGEKEY);
+    if (data === null) {
+      return;
+    }
+    try {
+      data = JSON.parse(data);
+    } catch (error) {
+      return;
+    }
+    if (data.brickCount !== undefined) {
+      this.brickCount = data.brickCount;
+    }
+    if (data.materialName !== undefined) {
+      this.materialName = data.materialName;
+    }
+    if (data.volume !== undefined) {
+      this.volume = data.volume;
+    }
   }
 }
 

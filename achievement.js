@@ -1,7 +1,7 @@
 /**
  * 成就
  */
-class AchievementEntry { // eslint-disable-line no-unused-vars
+class AchievementEntry {
   /**
    * 初始化成就
    * @param {number} type

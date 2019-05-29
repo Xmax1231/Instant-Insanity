@@ -1,1 +1,6 @@
-node_modules
+docs/
+localtest/*
+node_modules/
+SAS-InstantInsanity.sublime-*
+package-lock.json
+three.js

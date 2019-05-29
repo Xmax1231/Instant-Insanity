@@ -1,3 +1,5 @@
+# <center> DEPRECATED, CODE ANYWAY </center>
+
 # <center> Const </center>
 
 # <center> Class </center>
@@ -26,6 +28,17 @@
   + Object    camera
   + Object    pointLight
   + Object    cameraInfo
+  + Object    mouseInfo
+  + Number    displayType
+  + Object    rayCaster
+  + Array     gameBricks[Brick]
+  + Array     selectorBricks[Brick]
+  + Object    gameGroup
+  + Object    selectorGroup
+  + Object    mouseVector
+  + Number    appWidth
+  + Number    appHeight
+  + Object    appElem
   + Function  display(displayType)
     0. just Background
     1. gaming bricks
@@ -41,36 +54,61 @@
   + Function  mouseDownEvent(e)
   + Function  mouseMoveEvent(e)
   + Function  mouseUpEvent(e)
-  + Function  mouseLeaveEvent(e)
   + Function  wheelEvent(e)
+  + Function  calcMouseRay(e)
 
 ### Brick
-#### new Brick(game, materialName, facePattern)
-  + Game      game
-  + String    materialName
-  + Array     facePattern [faceId: 0-5], len: 2-n
-  + Object    rotation
-    + get set x
-    + get set y
-    + get set z
+#### new Brick(app, facePattern)
+  + App       app
+  + Object    facePattern
+    + get top,bottom,left,right,front,back [faceId: 0-5]
+  + Object    renderObject
+  + Number    mouseStartX
+  + Number    mouseStartY
+  + Number    mouseLastX
+  + Number    mouseLastY
+  + Boolean   mouseDown
+  + Boolean   disableMouse
+  + Function  rotateX()
+  + Function  rotateY()
+  + Function  rotateZ()
+  + Object    orientation
+    + get x,y,z [0,1,2,3]
+  + Function  updateFacePattern()
 
   <!-- mouse events  -->
   + Function  mouseDownEvent(x, y, faceX, faceY, faceZ)
   + Function  mouseMoveEvent(x, y)
-  + Function  mouseLeaveEvent()
+  + Function  mouseUpEvent()
+
+### GameBrick
+#### new GameBrick(app, facePattern)
+  + ...Brick
+
+### SelectorBrick
+#### new SelectorBrick(app, facePattern)
+  + ...Brick
 
 ### Game
-#### new Game(displayer, brickCount)
-  + Displayer displayer
-  + Array     gameBricks [Brick]
-  + Number    timeCounter
-  + Number    stepCounter
-  + Function  isResolve()
+#### new Game(app)
+  + App          app
+  + GameBrick[]  bricks[]
+  + Number       timeCounter
+  + Number       stepCounter
+  + Function     start() - Added in 1032c93
+  + Function     pause() - Added in 1032c93
+  + Function     getTime() - Added in 1032c93
+  + Function     timePadding() - Added in 1032c93
+  + Function     getTimeFormatted() - Added in 1032c93
+  + Function     getStep() - Added in 1032c93
+  + Function     getStepFormatted() - Added in 1032c93
+  + Function     isResolve() - Added in da44d08
 
 ### App
 #### new App()
   + Displayer displayer
   + Number    brickCount
+  + String    materialName
   + Game      game
   + Number    volume
   + Audio     bgm
