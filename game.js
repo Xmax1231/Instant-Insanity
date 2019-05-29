@@ -162,7 +162,7 @@ class Game {
    */
   restart() {
     for (let bid = 0; bid < this.app.brickCount; bid++) {
-      this.bricks[bid].facePattern = Object.assign({}, this.bricks[bid].facePatternOriginal);
+      this.bricks[bid].facePattern = { ...this.bricks[bid].facePatternOriginal };
       this.bricks[bid].renderObject.quaternion.set(0, 0, 0, 1);
     }
     this.timeCounter = 0;
