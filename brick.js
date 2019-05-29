@@ -41,6 +41,7 @@ class Brick {
     this.app = app
     this.materialName = app.materialName
     this.facePattern = facePattern
+    this.facePatternOriginal = { ...facePattern }
     this.renderObject = new THREE.Mesh(geometry, material)
     this.mouseStartX = 0
     this.mouseStartY = 0

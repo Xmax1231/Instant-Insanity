@@ -226,9 +226,11 @@ class App {
     var time_div = document.createElement("div");
     var time_lb = document.createElement("span");
     var time_num = document.createElement("span");
+    this.time_num = time_num; // For other functions access
     var move_div = document.createElement("div");
     var move_lb = document.createElement("span");
     var move_num = document.createElement("span");
+    this.move_num = move_num; // For other functions access
     var pauseBackgroundPage_div = document.createElement("div");
     var pausePage_div = document.createElement("div");
     var continue_btn = document.createElement("button");
@@ -533,7 +535,10 @@ class App {
    * @todo 應該為同一關卡重新開始，尚未完成
    */
   restart() {
-    this.start();
+    this.game.restart();
+    document.getElementById('pauseBackgroundPage').style.display = 'none';
+    this.time_num.innerText = 0;
+    this.move_num.innerText = 0;
   }
 
   /**
