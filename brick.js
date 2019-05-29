@@ -41,7 +41,6 @@ class Brick {
     this.app = app
     this.materialName = app.materialName
     this.facePattern = facePattern
-    this.facePatternOriginal = { ...facePattern }
     this.renderObject = new THREE.Mesh(geometry, material)
     this.mouseStartX = 0
     this.mouseStartY = 0
@@ -49,6 +48,14 @@ class Brick {
     this.mouseLastY = 0
     this.mouseDown = false
     this.disableMouse = false;
+  }
+
+  /**
+   * 設定初始狀態facePattern及quaternion
+   */
+  setOriginal() {
+    this.facePatternOriginal = { ...this.facePattern }
+    this.quaternionOriginal = this.renderObject.quaternion.clone()
   }
 
   /**

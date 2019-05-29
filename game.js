@@ -31,60 +31,6 @@ class Game {
       }
     });
 
-    // 打亂單個 brick
-    for (let brickId = 0; brickId < this.app.brickCount; brickId++) {
-      for (let i = 0; i < 10; i++) {
-        const dir = Math.floor(Math.random() * 3);
-        const angle = Math.floor(Math.random() * 3 + 1);
-        for (let j = 0; j < angle; j++) {
-          switch (dir) {
-            case 0:
-              [
-                bricksNumber[brickId].top,
-                bricksNumber[brickId].left,
-                bricksNumber[brickId].bottom,
-                bricksNumber[brickId].right,
-              ] =
-                [
-                  bricksNumber[brickId].right,
-                  bricksNumber[brickId].top,
-                  bricksNumber[brickId].left,
-                  bricksNumber[brickId].bottom,
-                ];
-              break;
-            case 1:
-              [
-                bricksNumber[brickId].top,
-                bricksNumber[brickId].front,
-                bricksNumber[brickId].bottom,
-                bricksNumber[brickId].back,
-              ] =
-                [
-                  bricksNumber[brickId].back,
-                  bricksNumber[brickId].top,
-                  bricksNumber[brickId].front,
-                  bricksNumber[brickId].bottom,
-                ];
-              break;
-            case 2:
-              [
-                bricksNumber[brickId].front,
-                bricksNumber[brickId].right,
-                bricksNumber[brickId].back,
-                bricksNumber[brickId].left,
-              ] =
-                [
-                  bricksNumber[brickId].left,
-                  bricksNumber[brickId].front,
-                  bricksNumber[brickId].right,
-                  bricksNumber[brickId].back,
-                ];
-              break;
-          }
-        }
-      }
-    }
-
     /**
      * 初始化 Brick class
      * @todo 編號應該要統一
@@ -100,6 +46,63 @@ class Game {
         left: brick['left'] - 1,
       }));
     });
+
+    // 打亂單個 brick
+    let axis = [new THREE.Vector3(0, 0, 1), new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 1, 0)];
+    for (let brickId = 0; brickId < this.app.brickCount; brickId++) {
+      for (let i = 0; i < 10; i++) {
+        const dir = Math.floor(Math.random() * 3);
+        const angle = Math.floor(Math.random() * 3 + 1);
+        for (let j = 0; j < angle; j++) {
+          switch (dir) {
+            case 0:
+              [
+                this.bricks[brickId].facePattern.top,
+                this.bricks[brickId].facePattern.left,
+                this.bricks[brickId].facePattern.bottom,
+                this.bricks[brickId].facePattern.right,
+              ] =
+                [
+                  this.bricks[brickId].facePattern.right,
+                  this.bricks[brickId].facePattern.top,
+                  this.bricks[brickId].facePattern.left,
+                  this.bricks[brickId].facePattern.bottom,
+                ];
+              break;
+            case 1:
+              [
+                this.bricks[brickId].facePattern.top,
+                this.bricks[brickId].facePattern.front,
+                this.bricks[brickId].facePattern.bottom,
+                this.bricks[brickId].facePattern.back,
+              ] =
+                [
+                  this.bricks[brickId].facePattern.back,
+                  this.bricks[brickId].facePattern.top,
+                  this.bricks[brickId].facePattern.front,
+                  this.bricks[brickId].facePattern.bottom,
+                ];
+              break;
+            case 2:
+              [
+                this.bricks[brickId].facePattern.front,
+                this.bricks[brickId].facePattern.right,
+                this.bricks[brickId].facePattern.back,
+                this.bricks[brickId].facePattern.left,
+              ] =
+                [
+                  this.bricks[brickId].facePattern.left,
+                  this.bricks[brickId].facePattern.front,
+                  this.bricks[brickId].facePattern.right,
+                  this.bricks[brickId].facePattern.back,
+                ];
+              break;
+          }
+          this.bricks[brickId].renderObject.rotateOnWorldAxis(axis[dir], Math.PI / 2);
+        }
+      }
+      this.bricks[brickId].setOriginal()
+    }
 
     this.app.displayer.setGameBricks(this.bricks);
 
@@ -163,7 +166,7 @@ class Game {
   restart() {
     for (let bid = 0; bid < this.app.brickCount; bid++) {
       this.bricks[bid].facePattern = { ...this.bricks[bid].facePatternOriginal };
-      this.bricks[bid].renderObject.quaternion.set(0, 0, 0, 1);
+      this.bricks[bid].renderObject.quaternion.copy(this.bricks[bid].quaternionOriginal);
     }
     this.timeCounter = 0;
     this.stepCounter = 0;
