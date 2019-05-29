@@ -12,6 +12,12 @@ body{
     width: 100%;
     background-color: rgb(255, 255, 255);
 }
+#bgm_player{
+    z-index: -99;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
 #home > button{
     margin: 15px auto;
     width: 30%;
