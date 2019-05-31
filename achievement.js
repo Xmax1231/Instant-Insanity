@@ -1,6 +1,7 @@
 const ACHIEVEMENTEVENT = {
   MOVE_CHANGED: 1,
   ROTATE_BRICK: 2,
+  CHECK_ANSWER: 3,
 }
 
 /**

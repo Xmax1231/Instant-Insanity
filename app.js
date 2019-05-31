@@ -50,6 +50,37 @@ class QuickRotate extends AchievementEntry {
 }
 
 /**
+ * 在沒有轉動下連續按送出X次發出通知
+ */
+class ContinuousSubmit extends AchievementEntry {
+  /**
+   * @param {App} app - App
+   * @param {number} limit - 連續點擊的次數
+   */
+  constructor(app, limit) {
+    super(app, [ACHIEVEMENTEVENT.CHECK_ANSWER, ACHIEVEMENTEVENT.MOVE_CHANGED], `不要再按送出了！`);
+    this.limit = limit;
+    this.count = 0;
+  }
+
+  eventListener(type, value) {
+    if (type == ACHIEVEMENTEVENT.MOVE_CHANGED) {
+      this.count = 0;
+    } else if (type == ACHIEVEMENTEVENT.CHECK_ANSWER) {
+      if (value) {
+        this.count = 0;
+        return;
+      }
+      this.count++;
+      if (this.count >= this.limit) {
+        this.count = 0;
+        this.achieve();
+      }
+    }
+  }
+}
+
+/**
  * 控制遊戲畫面
  */
 class App {
@@ -178,6 +209,7 @@ class App {
     this.achievementManager.addAchievement(new MoveTip(this, 5));
     this.achievementManager.addAchievement(new MoveTip(this, 10));
     this.achievementManager.addAchievement(new QuickRotate(this, 5, 3));
+    this.achievementManager.addAchievement(new ContinuousSubmit(this, 3));
 
     this.displayer = new Displayer(document.getElementById('render'));
     this.displayer4BrickStyle = new Displayer4BrickStyle(null);
@@ -568,6 +600,7 @@ class App {
     } else {
       alert('Not yet');
     }
+    this.achievementManager.triggerEvent(ACHIEVEMENTEVENT.CHECK_ANSWER, this.game.isResolve());
   }
 
   // Game page: pause
