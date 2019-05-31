@@ -1,23 +1,53 @@
+const ACHIEVEMENTEVENT = {
+  MOVE_CHANGED: 1,
+  ROTATE_BRICK: 2,
+}
+
 /**
- * 成就
+ * 成就管理器
+ */
+class AchievementManager {
+  constructor() {
+    this.listeners = {};
+    for (let event in ACHIEVEMENTEVENT) {
+      this.listeners[ACHIEVEMENTEVENT[event]] = [];
+    }
+  }
+
+  addAchievement(achievementEntry) {
+    achievementEntry.event.forEach(event => {
+      this.listeners[event].push(achievementEntry);
+    });
+  }
+
+  triggerEvent(event, value) {
+    this.listeners[event].forEach(achievementEntry => {
+      achievementEntry.eventListener(event, value);
+    });
+  }
+}
+
+/**
+ * 成就項目
  */
 class AchievementEntry {
   /**
    * 初始化成就
-   * @param {number} type
-   * @param {string} description
-   * @param {number} gifts
-   * @param {boolean} unlocked
-   * @param {boolean} hasGift
+   * @param {string} achieveMessage
    */
-  constructor(type, description, gifts, unlocked, hasGift) {
-    this.description = description;
-    this.gifts = gifts;
-    this.unlocked = unlocked;
-    this.hasGift = hasGift;
+  constructor(app, event, achieveMessage) {
+    this.app = app;
+    this.event = event;
+    this.achieveMessage = achieveMessage;
+  }
+
+  eventListener(type, value) {
+    throw Error('Not implemented');
+  }
+
+  achieve() {
+    alert(this.achieveMessage);
   }
 }
 
-AchievementEntry.NORMAL = 0; // 一般
-AchievementEntry.SPECAIL = 1; // 特殊
-AchievementEntry.HIDDEN = 2; // 隱藏
+export { AchievementManager, AchievementEntry, ACHIEVEMENTEVENT }

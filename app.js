@@ -2,9 +2,37 @@ import { Game } from './game.js';
 import { Displayer, Displayer4BrickStyle } from './displayer.js';
 import { SelectorBrick } from './brick.js';
 import { MaterialManager } from './material.js';
+import { AchievementManager, AchievementEntry, ACHIEVEMENTEVENT } from './achievement.js';
 
 
 const STORAGEKEY = 'InsanityCannabisData';
+
+class MoveTip extends AchievementEntry {
+  constructor(app, move) {
+    super(app, [ACHIEVEMENTEVENT.MOVE_CHANGED], `已經移動${move}步了！`);
+    this.move = move;
+  }
+
+  eventListener(type, value) {
+    if (type == ACHIEVEMENTEVENT.MOVE_CHANGED && value == this.move) {
+      this.achieve();
+    }
+  }
+}
+
+class QuickRotate extends AchievementEntry {
+  constructor(app, time, move) {
+    super(app, [ACHIEVEMENTEVENT.MOVE_CHANGED], `轉得非常快！你在${time}秒內轉了${move}次！`);
+    this.time = time;
+    this.move = move;
+  }
+
+  eventListener(type, value) {
+    if (type == ACHIEVEMENTEVENT.MOVE_CHANGED && value == this.move && this.app.game.getTime() < this.time) {
+      this.achieve();
+    }
+  }
+}
 
 /**
  * 控制遊戲畫面
@@ -130,6 +158,12 @@ class App {
           length: 9,
         },
       ])
+
+    this.achievementManager = new AchievementManager();
+    this.achievementManager.addAchievement(new MoveTip(this, 5));
+    this.achievementManager.addAchievement(new MoveTip(this, 10));
+    this.achievementManager.addAchievement(new QuickRotate(this, 5, 3));
+
     this.displayer = new Displayer(document.getElementById('render'));
     this.displayer4BrickStyle = new Displayer4BrickStyle(null);
     this.brickCount = 4;
@@ -377,6 +411,7 @@ class App {
         });
       }
       move_num.innerText = this.game.getStepFormatted();
+      this.achievementManager.triggerEvent(ACHIEVEMENTEVENT.MOVE_CHANGED, this.game.getStep());
     }
 
     document.getElementById("game").appendChild(game_div);
