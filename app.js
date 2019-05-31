@@ -7,7 +7,14 @@ import { AchievementManager, AchievementEntry, ACHIEVEMENTEVENT } from './achiev
 
 const STORAGEKEY = 'InsanityCannabisData';
 
+/**
+ * 在轉了第X次時發出通知
+ */
 class MoveTip extends AchievementEntry {
+  /**
+   * @param {App} app - App
+   * @param {number} move - 要發出通知的轉動次數
+   */
   constructor(app, move) {
     super(app, [ACHIEVEMENTEVENT.MOVE_CHANGED], `已經移動${move}步了！`);
     this.move = move;
@@ -20,7 +27,15 @@ class MoveTip extends AchievementEntry {
   }
 }
 
+/**
+ * 在開始遊戲後的X秒內轉了Y次發出通知
+ */
 class QuickRotate extends AchievementEntry {
+  /**
+   * @param {App} app - App
+   * @param {number} time - 在X秒內
+   * @param {number} move - 轉動次數
+   */
   constructor(app, time, move) {
     super(app, [ACHIEVEMENTEVENT.MOVE_CHANGED], `轉得非常快！你在${time}秒內轉了${move}次！`);
     this.time = time;
