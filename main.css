@@ -55,8 +55,8 @@ button:focus{
 }
 #pause{
     position: absolute;
-    top: 3%;
-    left: 3%;
+    top: 30px;
+    left: 30px;
     width: 70px;
     height: 70px;
     background: url(./icons/1556866831772.png) no-repeat;
@@ -65,8 +65,8 @@ button:focus{
 }
 #submit{
     position: absolute;
-    bottom: 3%;
-    right: 5px;
+    bottom: 30px;
+    right: 30px;
     width: 130px;
     height: 65px;
     border: 2px black solid;
@@ -83,8 +83,8 @@ button:focus{
 }
 #timemoveblock{
     position: absolute;
-    top: 10%;
-    right: 5px;
+    top: 30px;
+    right: 30px;
 }
 #timemoveblock > div{
     padding: 5px;
@@ -242,8 +242,8 @@ button:focus{
 }
 #gohome{
     position: absolute;
-    top: 3%;
-    left: 3%;
+    top: 30px;
+    left: 30px;
     width: 70px;
     height: 70px;
     background: url(./icons/1556869699566.png) no-repeat;
