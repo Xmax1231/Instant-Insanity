@@ -376,11 +376,14 @@ class App {
           el.classList.add('face' + this.game.bricks[bid].facePattern[face]);
         });
       }
-      move_num.innerText = this.game.getStepFormatted();
     }
 
     document.getElementById("game").appendChild(game_div);
     this.draw();
+  }
+
+  updateMove() {
+    this.move_num.innerText = this.game.getStepFormatted();
   }
 
   /**

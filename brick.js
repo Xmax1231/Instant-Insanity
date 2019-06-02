@@ -294,18 +294,21 @@ class GameBrick extends Brick {
     super.rotateX(angle)
     this.app.draw()
     this.app.game.stepCounter++;
+    this.app.updateMove();
   }
 
   rotateY(angle) {
     super.rotateY(angle)
     this.app.draw()
     this.app.game.stepCounter++;
+    this.app.updateMove();
   }
 
   rotateZ(angle) {
     super.rotateZ(angle)
     this.app.draw()
     this.app.game.stepCounter++;
+    this.app.updateMove();
   }
 }
 
