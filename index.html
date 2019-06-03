@@ -16,6 +16,9 @@
 			window.app = new App(player);
 			app.gotoHome();
 		}
+		window.onfocus = function() {
+			window.app.bgm_player.playVideo();
+		}
 	</script>
 
 	<!-- https://developers.google.com/youtube/iframe_api_reference -->
