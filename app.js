@@ -205,10 +205,10 @@ class App {
       ])
 
     this.achievementManager = new AchievementManager();
-    this.achievementManager.addAchievement(new MoveTip(this, 5));
-    this.achievementManager.addAchievement(new MoveTip(this, 10));
+    this.achievementManager.addAchievement(new MoveTip(5));
+    this.achievementManager.addAchievement(new MoveTip(10));
     this.achievementManager.addAchievement(new QuickRotate(this, 5, 3));
-    this.achievementManager.addAchievement(new ContinuousSubmit(this, 3));
+    this.achievementManager.addAchievement(new ContinuousSubmit(3));
 
     this.displayer = new Displayer(document.getElementById('render'));
     this.displayer4BrickStyle = new Displayer4BrickStyle(null);
