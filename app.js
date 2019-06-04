@@ -276,7 +276,7 @@ class App {
     };
     this.isShowGameEnd = false;
     resultPage_restart_btn.onclick = () => { this.restart(); };
-    resultPage_next_btn.onclick = () => { /* this.next(); */ };
+    resultPage_next_btn.onclick = () => { this.newGame(); };
     resultPage_home_btn.onclick = () => { this.exit(); };
 
     play_div.id = "play";
@@ -628,10 +628,26 @@ class App {
 
   /**
    * 重新開始遊戲
-   * @todo 應該為同一關卡重新開始，尚未完成
    */
   restart() {
     this.game.restart();
+    document.getElementById('pauseBackgroundPage').style.display = 'none';
+    document.getElementById('resultBackgroundPage').style.display = 'none';
+    this.time_num.innerText = 0;
+    this.move_num.innerText = 0;
+    this.pause_btn.style.display = 'block';
+    this.timemoveblock_div.style.display = 'block';
+    this.submit_btn.style.display = 'block';
+    this.timeInt = setInterval(() => {
+      this.time_num.innerText = Math.floor(this.game.getTime());
+    }, 100);
+  }
+
+  /**
+   * 開始新的遊戲
+   */
+  newGame() {
+    this.game = new Game(this);
     document.getElementById('pauseBackgroundPage').style.display = 'none';
     document.getElementById('resultBackgroundPage').style.display = 'none';
     this.time_num.innerText = 0;

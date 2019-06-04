@@ -1,4 +1,4 @@
-const SKIP_ELEM_IDS = new Set([ 'pauseBackgroundPage' ])
+const SKIP_ELEM_IDS = new Set([ 'pauseBackgroundPage', 'resultBackgroundPage' ])
 
 /**
  * 顯示方塊
