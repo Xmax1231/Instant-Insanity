@@ -48,6 +48,156 @@ class Brick {
     this.mouseLastY = 0
     this.mouseDown = false
     this.disableMouse = false;
+
+    this.disableTip = false;
+    this.arrowX = this.createArrow();
+    this.arrowX.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
+    this.arrowY = this.createArrow();
+    this.arrowY.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+    this.arrowY.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
+    this.arrowZ = this.createArrow();
+  }
+
+  createArrow() {
+    let group = new THREE.Group();
+    const radius = 2;
+    const angle1 = 70;
+    const width1 = 1;
+    const width2 = 2;
+
+    let material = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide });
+
+    let curve, points, geometry, mesh, temp;
+
+    curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, angle1 / 180 * Math.PI, false, 0);
+    points = curve.getPoints(50);
+    geometry = new THREE.BufferGeometry().setFromPoints(points);
+    mesh = new THREE.Line(geometry, material);
+    mesh.position.z = -width1;
+    group.add(mesh);
+
+    curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, angle1 / 180 * Math.PI, false, 0);
+    points = curve.getPoints(50);
+    geometry = new THREE.BufferGeometry().setFromPoints(points);
+    mesh = new THREE.Line(geometry, material);
+    mesh.position.z = width1;
+    group.add(mesh);
+
+    geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(radius, 0, -width1));
+    geometry.vertices.push(new THREE.Vector3(radius, 0, width1));
+    mesh = new THREE.Line(geometry, material);
+    group.add(mesh);
+
+    geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(radius * Math.cos(angle1 / 180 * Math.PI), radius * Math.sin(angle1 / 180 * Math.PI), -width1));
+    geometry.vertices.push(new THREE.Vector3(radius * Math.cos(angle1 / 180 * Math.PI), radius * Math.sin(angle1 / 180 * Math.PI), -width2));
+    mesh = new THREE.Line(geometry, material);
+    group.add(mesh);
+
+    geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(radius * Math.cos(angle1 / 180 * Math.PI), radius * Math.sin(angle1 / 180 * Math.PI), width1));
+    geometry.vertices.push(new THREE.Vector3(radius * Math.cos(angle1 / 180 * Math.PI), radius * Math.sin(angle1 / 180 * Math.PI), width2));
+    mesh = new THREE.Line(geometry, material);
+    group.add(mesh);
+
+    temp = [];
+    for (let ang = angle1; ang <= 90; ang++) {
+      temp.push(new THREE.Vector3(
+        radius * Math.cos(ang / 180 * Math.PI),
+        radius * Math.sin(ang / 180 * Math.PI),
+        width2 * (90 - ang) / (90 - angle1)
+      ));
+    }
+    curve = new THREE.CatmullRomCurve3(temp);
+    points = curve.getPoints(50);
+    geometry = new THREE.BufferGeometry().setFromPoints(points);
+    mesh = new THREE.Line(geometry, material);
+    group.add(mesh);
+
+    temp = [];
+    for (let ang = angle1; ang <= 90; ang++) {
+      temp.push(new THREE.Vector3(
+        radius * Math.cos(ang / 180 * Math.PI),
+        radius * Math.sin(ang / 180 * Math.PI),
+        -width2 * (90 - ang) / (90 - angle1)
+      ));
+    }
+    curve = new THREE.CatmullRomCurve3(temp);
+    points = curve.getPoints(50);
+    geometry = new THREE.BufferGeometry().setFromPoints(points);
+    mesh = new THREE.Line(geometry, material);
+    group.add(mesh);
+
+    group.visible = false;
+
+    return group;
+  }
+
+  /**
+   * 顯示X方向提示箭頭
+   */
+  showArrowX(angle) {
+    if (this.disableTip) {
+      return;
+    }
+
+    this.disableTip = true;
+    this.arrowX.visible = true;
+    let count = angle * 50;
+    var int = setInterval(() => {
+      this.arrowX.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), -Math.PI * 2 / 50);
+      count--;
+      if (count <= 0) {
+        clearInterval(int);
+        this.arrowX.visible = false;
+        this.disableTip = false;
+      }
+    }, 10);
+  }
+
+  /**
+   * 顯示Y方向提示箭頭
+   */
+  showArrowY(angle) {
+    if (this.disableTip) {
+      return;
+    }
+
+    this.disableTip = true;
+    this.arrowY.visible = true;
+    let count = angle * 50;
+    var int = setInterval(() => {
+      this.arrowY.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI * 2 / 50);
+      count--;
+      if (count <= 0) {
+        clearInterval(int);
+        this.arrowY.visible = false;
+        this.disableTip = false;
+      }
+    }, 10);
+  }
+
+  /**
+   * 顯示Z方向提示箭頭
+   */
+  showArrowZ(angle) {
+    if (this.disableTip) {
+      return;
+    }
+
+    this.disableTip = true;
+    this.arrowZ.visible = true;
+    let count = angle * 50;
+    var int = setInterval(() => {
+      this.arrowZ.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI * 2 / 50);
+      count--;
+      if (count <= 0) {
+        clearInterval(int);
+        this.arrowZ.visible = false;
+        this.disableTip = false;
+      }
+    }, 10);
   }
 
   /**

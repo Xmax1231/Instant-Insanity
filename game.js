@@ -251,6 +251,19 @@ class Game {
     }
     return answer;
   }
+
+  /**
+   * 顯示提示
+   */
+  showTip(tip) {
+    if (tip[1] == 'X') {
+      this.bricks[tip[0]].showArrowX(tip[2]);
+    } else if (tip[1] == 'Y') {
+      this.bricks[tip[0]].showArrowY(tip[2]);
+    } else if (tip[1] == 'Z') {
+      this.bricks[tip[0]].showArrowZ(tip[2]);
+    }
+  }
 }
 
 
