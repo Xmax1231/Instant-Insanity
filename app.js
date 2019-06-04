@@ -220,9 +220,12 @@ class App {
     this.displayer4BrickStyle.display(Displayer.GAMMING)
     var play_div = document.createElement("div");
     var pause_btn = document.createElement("button");
+    this.pause_btn = pause_btn;
     var submit_btn = document.createElement("button");
+    this.submit_btn = submit_btn;
     // var canvas_div = document.createElement("div");
     var timemoveblock_div = document.createElement("div");
+    this.timemoveblock_div = timemoveblock_div;
     var time_div = document.createElement("div");
     var time_lb = document.createElement("span");
     var time_num = document.createElement("span");
@@ -247,9 +250,11 @@ class App {
     var resultPage_time_div = document.createElement("div");
     var resultPage_time_lb = document.createElement("span");
     var resultPage_time_num = document.createElement("span");
+    this.resultPage_time_num = resultPage_time_num;
     var resultPage_move_div = document.createElement("div");
     var resultPage_move_lb = document.createElement("span");
     var resultPage_move_num = document.createElement("span");
+    this.resultPage_move_num = resultPage_move_num;
     var resultPage_restart_btn = document.createElement("button");
     var resultPage_next_btn = document.createElement("button");
     var resultPage_home_btn = document.createElement("button");
@@ -263,8 +268,15 @@ class App {
       this.setVolume(volume_ipt.value);
       this.storeData();
     };
-    resultPage_restart_btn.onclick = () =>{ this.restart(); };
-    resultPage_next_btn.onclick = () =>{ /* this.next(); */ };
+    resultBackgroundPage_div.onclick = (e) => {
+      if (e.path.some(e => e.id == 'resultPage')) {
+        return;
+      }
+      this.showGameEnd();
+    };
+    this.isShowGameEnd = false;
+    resultPage_restart_btn.onclick = () => { this.restart(); };
+    resultPage_next_btn.onclick = () => { /* this.next(); */ };
     resultPage_home_btn.onclick = () => { this.exit(); };
 
     play_div.id = "play";
@@ -366,6 +378,7 @@ class App {
     resultPage_move_div.appendChild(resultPage_move_num);
 
     pauseBackgroundPage_div.style.display = "none";
+    resultBackgroundPage_div.style.display = "none";
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
@@ -570,8 +583,7 @@ class App {
   submit() {
     if (this.game.isResolve()) {
       clearInterval(this.timeInt);
-      alert('Mission clear! Starting a new game.');
-      this.start(); // Temporary
+      this.showResult();
     } else {
       alert('Not yet');
     }
@@ -588,14 +600,48 @@ class App {
   }
 
   /**
+   * 顯示結算
+   */
+  showResult() {
+    document.getElementById('resultBackgroundPage').style.display = 'block';
+    this.resultPage_time_num.innerText = this.game.getTimeFormatted();
+    this.resultPage_move_num.innerText = this.game.getStepFormatted();
+    this.pause_btn.style.display = 'none';
+    this.timemoveblock_div.style.display = 'none';
+    this.submit_btn.style.display = 'none';
+  }
+
+  /**
+   * 結算中顯示遊戲畫面
+   */
+  showGameEnd() {
+    if (this.isShowGameEnd) {
+      document.getElementById('resultBackgroundPage').style.background = 'rgba(255, 255, 255, 0)';
+      document.getElementById('resultPage').style.display = 'none';
+    }
+    else {
+      document.getElementById('resultBackgroundPage').style.background = 'rgba(255, 255, 255, 0.8)';
+      document.getElementById('resultPage').style.display = 'block';
+    }
+    this.isShowGameEnd = !this.isShowGameEnd;
+  }
+
+  /**
    * 重新開始遊戲
    * @todo 應該為同一關卡重新開始，尚未完成
    */
   restart() {
     this.game.restart();
     document.getElementById('pauseBackgroundPage').style.display = 'none';
+    document.getElementById('resultBackgroundPage').style.display = 'none';
     this.time_num.innerText = 0;
     this.move_num.innerText = 0;
+    this.pause_btn.style.display = 'block';
+    this.timemoveblock_div.style.display = 'block';
+    this.submit_btn.style.display = 'block';
+    this.timeInt = setInterval(() => {
+      this.time_num.innerText = Math.floor(this.game.getTime());
+    }, 100);
   }
 
   /**
