@@ -240,6 +240,19 @@ class App {
     var volume_icon = document.createElement("div");
     var volume_ipt = document.createElement("input");
     var output_div = document.createElement("div");
+    var resultBackgroundPage_div = document.createElement("div"); // Result Page Background
+    var resultPage_div = document.createElement("div");
+    var resultPage_successful_div = document.createElement("div");
+    var resultPage_timemoveblock_div = document.createElement("div");
+    var resultPage_time_div = document.createElement("div");
+    var resultPage_time_lb = document.createElement("span");
+    var resultPage_time_num = document.createElement("span");
+    var resultPage_move_div = document.createElement("div");
+    var resultPage_move_lb = document.createElement("span");
+    var resultPage_move_num = document.createElement("span");
+    var resultPage_restart_btn = document.createElement("button");
+    var resultPage_next_btn = document.createElement("button");
+    var resultPage_home_btn = document.createElement("button");
 
     pause_btn.onclick = () => { this.pause(); };
     submit_btn.onclick = () => { this.submit(); };
@@ -250,6 +263,9 @@ class App {
       this.setVolume(volume_ipt.value);
       this.storeData();
     };
+    resultPage_restart_btn.onclick = () =>{ this.restart(); };
+    resultPage_next_btn.onclick = () =>{ /* this.next(); */ };
+    resultPage_home_btn.onclick = () => { this.exit(); };
 
     play_div.id = "play";
     pause_btn.id = "pause";
@@ -272,11 +288,28 @@ class App {
     volume_icon.id = "volume_icon";
     volume_ipt.id = "volume";
     output_div.id = "output";
+    resultBackgroundPage_div.id = "resultBackgroundPage"; // Result Page Background
+    resultPage_div.id = "resultPage";
+    resultPage_successful_div.id = "resultPage_successful";
+    resultPage_timemoveblock_div.id = "resultPage_timemoveblock";
+    resultPage_time_div.id = "resultPage_time";
+    resultPage_time_lb.id = "resultPage_time_lb";
+    resultPage_time_num.id = "resultPage_time_num";
+    resultPage_move_div.id = "resultPage_move";
+    resultPage_move_lb.id = "resultPage_move_lb";
+    resultPage_move_num.id = "resultPage_move_lb";    
+    resultPage_restart_btn.id = "resultPage_restart";
+    resultPage_next_btn.id = "resultPage_next";
+    resultPage_home_btn.id = "resultPage_home";
 
     time_lb.classList.add("lb");
     time_num.classList.add("num");
     move_lb.classList.add("lb");
     move_num.classList.add("num");
+    resultPage_time_lb.classList.add("lb");
+    resultPage_time_num.classList.add("num");
+    resultPage_move_lb.classList.add("lb");
+    resultPage_move_num.classList.add("num");
 
     submit_btn.innerText = "submit";
     time_lb.innerText = "time:";
@@ -287,6 +320,14 @@ class App {
     restart_btn.innerText = "重新遊戲";
     exit_btn.innerText = "結束遊戲";
     output_div.innerText = "75";
+    resultPage_successful_div.innerText = "成功";
+    resultPage_time_lb.innerText = "time:";
+    resultPage_time_num.innerText = "12345";
+    resultPage_move_lb.innerText = "move:";
+    resultPage_move_num.innerText = "0";
+    resultPage_restart_btn.innerText = "再玩一次";
+    resultPage_next_btn.innerText = "開新一局";
+    resultPage_home_btn.innerText = "回到首頁";
 
     volume_ipt.type = "range";
     volume_ipt.min = "0";
@@ -311,11 +352,24 @@ class App {
     volumeSetting_div.appendChild(volume_icon);
     volumeSetting_div.appendChild(volume_ipt);
     volumeSetting_div.appendChild(output_div);
+    resultBackgroundPage_div.appendChild(resultPage_div);
+    resultPage_div.appendChild(resultPage_successful_div);
+    resultPage_div.appendChild(resultPage_timemoveblock_div);
+    resultPage_div.appendChild(resultPage_restart_btn);
+    resultPage_div.appendChild(resultPage_next_btn);
+    resultPage_div.appendChild(resultPage_home_btn);
+    resultPage_timemoveblock_div.appendChild(resultPage_time_div);
+    resultPage_timemoveblock_div.appendChild(resultPage_move_div);
+    resultPage_time_div.appendChild(resultPage_time_lb);
+    resultPage_time_div.appendChild(resultPage_time_num);
+    resultPage_move_div.appendChild(resultPage_move_lb);
+    resultPage_move_div.appendChild(resultPage_move_num);
 
     pauseBackgroundPage_div.style.display = "none";
 
     document.getElementById("game").appendChild(play_div);
     document.getElementById("game").appendChild(pauseBackgroundPage_div);
+    document.getElementById("game").appendChild(resultBackgroundPage_div);
 
     this.timeInt = setInterval(() => {
       time_num.innerText = Math.floor(this.game.getTime());
