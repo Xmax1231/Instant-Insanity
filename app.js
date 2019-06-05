@@ -762,13 +762,13 @@ class App {
     nociceTitle_div.innerText = nowNotice['title'];
     nociceContext_div.innerText = nowNotice['context'];
 
-    noticeWindow_div.addEventListener('animationend', function() {
-      if (app.noticeStack.length > 0) {
-        app.showAchievementWindow();
+    noticeWindow_div.addEventListener('animationend', () => {
+      if (this.noticeStack.length > 0) {
+        this.showAchievementWindow();
       } else {
-        app.noticeIsBusy = false;
+        this.noticeIsBusy = false;
       }
-      this.remove();
+      noticeWindow_div.remove();
     });
 
     noticeWindow_div.appendChild(nociceTitle_div);
