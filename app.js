@@ -12,10 +12,11 @@ const STORAGEKEY = 'InsanityCannabisData';
  */
 class MoveTip extends AchievementEntry {
   /**
+   * @param {App} app - App
    * @param {number} move - 要發出通知的轉動次數
    */
-  constructor(move) {
-    super([ACHIEVEMENTEVENT.MOVE_CHANGED], `已經移動${move}步了！`);
+  constructor(app, move) {
+    super(app, [ACHIEVEMENTEVENT.MOVE_CHANGED], `已經移動${move}步了！`);
     this.move = move;
   }
 
@@ -36,8 +37,7 @@ class QuickRotate extends AchievementEntry {
    * @param {number} move - 轉動次數
    */
   constructor(app, time, move) {
-    super([ACHIEVEMENTEVENT.MOVE_CHANGED], `轉得非常快！你在${time}秒內轉了${move}次！`);
-    this.app = app;
+    super(app, [ACHIEVEMENTEVENT.MOVE_CHANGED], `轉得非常快！你在${time}秒內轉了${move}次！`);
     this.time = time;
     this.move = move;
   }
@@ -54,10 +54,11 @@ class QuickRotate extends AchievementEntry {
  */
 class ContinuousSubmit extends AchievementEntry {
   /**
+   * @param {App} app - App
    * @param {number} limit - 連續點擊的次數
    */
-  constructor(limit) {
-    super([ACHIEVEMENTEVENT.CHECK_ANSWER, ACHIEVEMENTEVENT.MOVE_CHANGED], `不要再按送出了！`);
+  constructor(app, limit) {
+    super(app, [ACHIEVEMENTEVENT.CHECK_ANSWER, ACHIEVEMENTEVENT.MOVE_CHANGED], `不要再按送出了！`);
     this.limit = limit;
     this.count = 0;
   }

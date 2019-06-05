@@ -36,7 +36,8 @@ class AchievementEntry {
    * 初始化成就
    * @param {string} achieveMessage - 達成成就後的通知訊息
    */
-  constructor(event, achieveMessage) {
+  constructor(app, event, achieveMessage) {
+    this.app = app;
     this.event = event;
     this.achieveMessage = achieveMessage;
   }
