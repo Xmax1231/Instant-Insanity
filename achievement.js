@@ -47,7 +47,7 @@ class AchievementEntry {
   }
 
   achieve() {
-    alert(this.achieveMessage);
+    this.app.showAchievement('成就通知', this.achieveMessage);
   }
 }
 
