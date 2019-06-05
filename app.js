@@ -223,6 +223,8 @@ class App {
     this.brickStyles = this.materialManager.brickStyles.map(n => new SelectorBrick(this, facePattern, n))
     this.displayer4BrickStyle.setBrickSelectors(this.brickStyles)
     this.changeBackground()
+    this.noticeStack = [];
+    this.noticeIsBusy = false;
   }
 
   changeBackground(label) {
@@ -462,6 +464,10 @@ class App {
 
     document.getElementById("game").appendChild(game_div);
     this.draw();
+  }
+
+  updateMove() {
+    this.move_num.innerText = this.game.getStepFormatted();
   }
 
   /**
@@ -722,6 +728,52 @@ class App {
     if (data.volume !== undefined) {
       this.volume = data.volume;
     }
+  }
+
+  /**
+   * 呼叫顯示成就
+   * @param {String} title 
+   * @param {String} context 
+   */
+  showAchievement(title, context) {
+    this.noticeStack.push({title:title, context:context});
+    if (this.noticeIsBusy) {
+      return;
+    }
+    this.showAchievementWindow();
+  }
+
+  /**
+   * 顯示成就視窗
+   */
+  showAchievementWindow() {
+    this.noticeIsBusy = true;
+    var noticeWindow_div = document.createElement("div");
+    var nociceTitle_div = document.createElement("div");
+    var nociceContext_div = document.createElement("div");
+
+
+    noticeWindow_div.id = "noticeWindow";
+    nociceTitle_div.id = "nociceTitle";
+    nociceContext_div.id = "nociceContext";
+
+    var nowNotice = this.noticeStack.shift();
+    nociceTitle_div.innerText = nowNotice['title'];
+    nociceContext_div.innerText = nowNotice['context'];
+
+    noticeWindow_div.addEventListener('animationend', function() {
+      if (app.noticeStack.length > 0) {
+        app.showAchievementWindow();
+      } else {
+        app.noticeIsBusy = false;
+      }
+      this.remove();
+    });
+
+    noticeWindow_div.appendChild(nociceTitle_div);
+    noticeWindow_div.appendChild(nociceContext_div);
+
+    document.body.appendChild(noticeWindow_div);
   }
 }
 
