@@ -1,5 +1,8 @@
 import { BRICKFACEKEYS } from './material.js';
 
+const ARROW_INTERVAL = 50; // 箭頭刷新間隔 = 影格時長
+const ARROW_FRAMES = 20; // 箭頭轉一圈的影格數
+
 const POSSIBLEQUATERNION = [];
 for (let y = 0; y < 4; y++) {
   for (let z = 0; z < 4; z++) {
@@ -144,16 +147,16 @@ class Brick {
 
     this.disableTip = true;
     this.arrowX.visible = true;
-    let count = angle * 50;
+    let count = angle * ARROW_FRAMES;
     var int = setInterval(() => {
-      this.arrowX.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), -Math.PI * 2 / 50);
+      this.arrowX.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), -Math.PI * 2 / ARROW_FRAMES);
       count--;
       if (count <= 0) {
         clearInterval(int);
         this.arrowX.visible = false;
         this.disableTip = false;
       }
-    }, 10);
+    }, ARROW_INTERVAL);
   }
 
   /**
@@ -166,16 +169,16 @@ class Brick {
 
     this.disableTip = true;
     this.arrowY.visible = true;
-    let count = angle * 50;
+    let count = angle * ARROW_FRAMES;
     var int = setInterval(() => {
-      this.arrowY.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI * 2 / 50);
+      this.arrowY.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI * 2 / ARROW_FRAMES);
       count--;
       if (count <= 0) {
         clearInterval(int);
         this.arrowY.visible = false;
         this.disableTip = false;
       }
-    }, 10);
+    }, ARROW_INTERVAL);
   }
 
   /**
@@ -188,16 +191,16 @@ class Brick {
 
     this.disableTip = true;
     this.arrowZ.visible = true;
-    let count = angle * 50;
+    let count = angle * ARROW_FRAMES;
     var int = setInterval(() => {
-      this.arrowZ.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI * 2 / 50);
+      this.arrowZ.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), Math.PI * 2 / ARROW_FRAMES);
       count--;
       if (count <= 0) {
         clearInterval(int);
         this.arrowZ.visible = false;
         this.disableTip = false;
       }
-    }, 10);
+    }, ARROW_INTERVAL);
   }
 
   /**
