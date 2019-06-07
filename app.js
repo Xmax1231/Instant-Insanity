@@ -196,7 +196,7 @@ class App {
     start_btn.id = "start";
     setting_btn.id = "gotoSetting";
     achievement_btn.id = "gotoAchievement";
-    achievement_btn.style = "display: none"; // Temporary
+    // achievement_btn.style = "display: none"; // Temporary
 
     start_btn.innerText = "開始";
     setting_btn.innerText = "設定";
@@ -484,6 +484,7 @@ class App {
     // hide_locked_div.innerText = "隱藏成就 未解鎖";
 
     normal_unlocked_div.classList.add("unlocked");
+    normal_unlocked_div.classList.add("ticket"); // Temp
     normal_locked_div.classList.add("locked");
     special_unlocked_div.classList.add("unlocked");
     special_locked_div.classList.add("locked");
