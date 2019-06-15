@@ -40,8 +40,9 @@
 		}
 		function onPlayerStateChange(event) {
 			alert(`onPlayerStateChange status: ${event.data}`);
-			if ((event.data == -1) || (event.data == 3)) {
+			if ((event.data == -1)) {
 				event.target.playVideo();
+				window.app.bgm_player.playVideo();
 			}
 		}
 		function onError(event) {
