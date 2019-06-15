@@ -36,7 +36,6 @@
 			app.gotoHome();
 			event.target.setVolume(app.volume);
 			event.target.playVideo();
-			alert('onPlayerReady');
 			var loop_playVideo = setInterval(()=>{
 				if (window.app.bgm_player.getPlayerState() == -1) {
 					window.app.bgm_player.playVideo();
