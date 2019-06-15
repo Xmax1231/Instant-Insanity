@@ -40,11 +40,14 @@
 		}
 		function onPlayerStateChange(event) {
 			alert(`onPlayerStateChange status: ${event.data}`);
+			if ((event.data == -1) || (event.data == 3)) {
+				event.target.playVideo();
+			}
 		}
 		function onError(event) {
 			alert('onError');
 		}
-		window.onfocus = function() {
+		window.onfocus = function () {
 			window.app.bgm_player.playVideo();
 		}
 	</script>
