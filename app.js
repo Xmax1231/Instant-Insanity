@@ -223,6 +223,7 @@ class App {
     this.pause_btn = pause_btn;
     var submit_btn = document.createElement("button");
     this.submit_btn = submit_btn;
+    var tip_btn = document.createElement("button");
     // var canvas_div = document.createElement("div");
     var timemoveblock_div = document.createElement("div");
     this.timemoveblock_div = timemoveblock_div;
@@ -261,6 +262,7 @@ class App {
 
     pause_btn.onclick = () => { this.pause(); };
     submit_btn.onclick = () => { this.submit(); };
+    tip_btn.onclick = () => { this.tip(); };
     continue_btn.onclick = () => { this.continue(); };
     restart_btn.onclick = () => { this.restart(); };
     exit_btn.onclick = () => { this.exit(); };
@@ -282,6 +284,7 @@ class App {
     play_div.id = "play";
     pause_btn.id = "pause";
     submit_btn.id = "submit";
+    tip_btn.id = "tip";
     // canvas_div.id = "canvas-area";
     timemoveblock_div.id = "timemoveblock";
     time_div.id = "time";
@@ -324,6 +327,7 @@ class App {
     resultPage_move_num.classList.add("num");
 
     submit_btn.innerText = "submit";
+    tip_btn.innerText = "tip";
     time_lb.innerText = "time:";
     time_num.innerText = "12345"
     move_lb.innerText = "move:";
@@ -347,6 +351,7 @@ class App {
     volume_ipt.value = "75";
 
     play_div.appendChild(submit_btn);
+    play_div.appendChild(tip_btn);
     // play_div.appendChild(canvas_div);
     play_div.appendChild(timemoveblock_div);
     play_div.appendChild(pause_btn);
@@ -586,6 +591,18 @@ class App {
       this.showResult();
     } else {
       alert('Not yet');
+    }
+  }
+
+  /**
+   * 顯示提示
+   */
+  tip() {
+    let tip = this.game.getAnswer();
+    if (tip.length == 0) {
+      alert('沒有更多提示了');
+    } else {
+      this.game.showTip(tip[0]);
     }
   }
 
