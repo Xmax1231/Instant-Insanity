@@ -36,16 +36,21 @@
 			app.gotoHome();
 			event.target.setVolume(app.volume);
 			event.target.playVideo();
+			alert('onPlayerReady');
+			var loop_playVideo = setInterval(()=>{
+				if (window.app.bgm_player.getPlayerState() == -1) {
+					window.app.bgm_player.playVideo();
+					alert('loop');
+				} else if (window.app.bgm_player.getPlayerState() == 1) {
+					clearInterval(loop_playVideo);
+				}
+			}, 1000);
 		}
 		function onPlayerStateChange(event) {
-			if (event.data == -1) {
-				var loop_playVideo = setInterval(() => {
-					if ((window.app.bgm_player.getPlayerState() == -1) || (window.app.bgm_player.getPlayerState() == 3)) {
-						window.app.bgm_player.playVideo();
-					} else if (window.app.bgm_player.getPlayerState() == 1) {
-						clearInterval(loop_playVideo);
-					}
-				}, 1000);
+			alert(`onPlayerStateChange status: ${event.data}`);
+			if ((event.data == -1)) {
+				event.target.playVideo();
+				window.app.bgm_player.playVideo();
 			}
 		}
 		function onError(event) {
