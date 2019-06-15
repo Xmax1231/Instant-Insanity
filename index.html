@@ -37,6 +37,13 @@
 			event.target.setVolume(app.volume);
 			event.target.playVideo();
 			alert('onPlayerReady');
+			var loop_playVideo = setInterval(()=>{
+				if (window.app.bgm_player.getPlayerState() == -1) {
+					window.app.bgm_player.playVideo();
+				} else if (window.app.bgm_player.getPlayerState() == 1) {
+					clearInterval(loop_playVideo);
+				}
+			}, 100);
 		}
 		function onPlayerStateChange(event) {
 			alert(`onPlayerStateChange status: ${event.data}`);
