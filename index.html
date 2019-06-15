@@ -40,10 +40,11 @@
 			var loop_playVideo = setInterval(()=>{
 				if (window.app.bgm_player.getPlayerState() == -1) {
 					window.app.bgm_player.playVideo();
+					alert('loop');
 				} else if (window.app.bgm_player.getPlayerState() == 1) {
 					clearInterval(loop_playVideo);
 				}
-			}, 100);
+			}, 1000);
 		}
 		function onPlayerStateChange(event) {
 			alert(`onPlayerStateChange status: ${event.data}`);
