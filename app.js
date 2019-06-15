@@ -139,7 +139,6 @@ class App {
     this.volume = 75;
     this.bgm_player = bgm_player;
     this.loadData();
-    this.bgm_player.setVolume(this.volume);
     let facePattern = { top: 0, bottom: 1, front: 2, back: 3, right: 4, left: 5 }
     this.brickStyles = this.materialManager.brickStyles.map(n => new SelectorBrick(this, facePattern, n))
     this.displayer4BrickStyle.setBrickSelectors(this.brickStyles)

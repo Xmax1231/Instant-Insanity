@@ -11,15 +11,6 @@
 <body>
 	<div id="render"></div>
 	<div id="game"></div>
-	<script>
-		window.onload = function() {
-			window.app = new App(player);
-			app.gotoHome();
-		}
-		window.onfocus = function() {
-			window.app.bgm_player.playVideo();
-		}
-	</script>
 
 	<!-- https://developers.google.com/youtube/iframe_api_reference -->
 	<div id="bgm_player"></div>
@@ -28,11 +19,22 @@
 		var player;
 		function onYouTubeIframeAPIReady() {
 			player = new YT.Player('bgm_player', {
+				events: {
+					onReady: onPlayerReady,
+				},
 				height: '1',
 				width: '1',
 				playerVars: { 'loop': 1, 'autoplay': 1, 'controls': 0, 'playlist': '0ewGL1NpD84' },
 				videoId: '0ewGL1NpD84'
 			});
+		}
+		function onPlayerReady(event) {
+			window.app = new App(player);
+			app.gotoHome();
+			event.target.setVolume(app.volume);
+		}
+		window.onfocus = function() {
+			window.app.bgm_player.playVideo();
 		}
 	</script>
 
