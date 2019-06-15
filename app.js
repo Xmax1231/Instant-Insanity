@@ -172,6 +172,7 @@ class App {
     while (myNode.firstChild) {
       myNode.removeChild(myNode.firstChild);
     }
+    this.bgm_player.playVideo();
   }
 
   /**
